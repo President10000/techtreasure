@@ -1,6 +1,6 @@
 import Meta from "../components/Meta";
 import BreadCrumb from "../components/BreadCrumb";
-import "../styles/singleProduct.css";
+
 import ProductCard from "../components/ProductCard";
 import ReactStars from "react-rating-stars-component";
 import ReactImageZoom from "react-image-zoom";

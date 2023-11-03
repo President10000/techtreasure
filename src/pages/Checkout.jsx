@@ -1,6 +1,6 @@
 import Meta from "../components/Meta";
 import BreadCrumb from "../components/BreadCrumb";
-import "../styles/checkout.css";
+
 import { Link } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import watch from "../images/watch.jpg";
