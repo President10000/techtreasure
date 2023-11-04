@@ -14,6 +14,7 @@
   --color-777777: #777777;
   --color-1c1c1b: #1c1c1b;
 }
+
 .section-heading {
   font-size: 26px;
   line-height: 32px;
@@ -56,6 +57,16 @@ a {
   padding: 13px 33px;
   border-radius: 25px;
 }
+@media screen and (max-width: 400px) {
+  .button {
+    padding: 8px 18px;
+  }
+}
+@media screen and (max-width: 525px) {
+  .button {
+    padding: 8px 18px;
+  }
+}
 
 .button:hover {
   background-color: var(--color-febd69);
@@ -71,6 +82,7 @@ a {
 .header-upper {
   background-color: var(--color-131921);
 }
+
 .header-upper .input-group-text {
   background-color: var(--color-febd69);
 }
@@ -107,6 +119,23 @@ a {
 .header-bottom .dropdown-item:hover {
   background-color: transparent;
   color: var(--color-febd69) !important;
+}
+@media screen and (max-width: 400px) {
+  .header-upper .company-name {
+    font-size: 20px !important;
+  }
+}
+@media screen and (max-width: 525px) {
+  .header-upper .company-name {
+    font-size: 20px !important;
+  }
+}
+@media screen and (max-width: 768px) {
+}
+@media screen and (max-width: 1024px) {
+  .header-upper .company-name {
+    font-size: 25px;
+  }
 }
 
 /* header end here */

@@ -13,7 +13,7 @@ const Home = () => {
       {/* first section */}
       <Container class1="home-wrapper-1 py-5">
         <div className="row">
-          <div className="col-6">
+          <div className="col-lg-6 col-md-12 col-sm-12">
             <div className="main-banner position-relative  ">
               <img
                 src="/images/main-banner-1.jpg"
@@ -28,8 +28,8 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-6 ">
-            <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center ">
+          <div className="col-xxl-6 col-lg-6  co-md-12 col-sm-12 col-12 col-12 mt-sm-3 mt-lg-0 ">
+            <div className="d-flex    mt-3 mt-xxl-0 flex-wrap gap-10 justify-content-between align-items-center">
               {/* first img */}
               <div className="small-banner position-relative ">
                 <img

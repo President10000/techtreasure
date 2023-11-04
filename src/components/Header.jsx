@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <>
       {/* first header */}
-      <header className="header-top-strip py-3 ">
+      <header className="header-top-strip d-none d-xxl-block py-3 ">
         <div className="container-xxl">
           <div className="row">
             <div className="col-6">
@@ -26,16 +26,16 @@ const Header = () => {
       </header>
 
       {/* second header */}
-      <header className="header-upper py-3   ">
+      <header className="header-upper py-3  ">
         <div className="container-xxl">
-          <div className="row align-items-center">
-            <div className="col-2 ">
-              <h2 className="company-name">
-                <Link className="text-white">TechTreasure</Link>
+          <div className="row align-items-center d-flex flex-grow-1">
+            <div className="name-div col-lg-2 col-md-12 col-4 mt-xs-2 ">
+              <h2 className="company-name m-0">
+                <Link className="text-white  ">TechTreasure</Link>
               </h2>
             </div>
 
-            <div className="col-5">
+            <div className="col-lg-5  col-md-12 col-8 mt-sm-3 mb-lg-3">
               <div className="input-group ">
                 <input
                   type="text"
