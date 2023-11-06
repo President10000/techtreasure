@@ -3,8 +3,36 @@ import BreadCrumb from "../components/BreadCrumb";
 import { Link } from "react-router-dom";
 import Container from "../components/Container";
 import Custominput from "../components/Custominput";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../features/user/userSlice";
+
+const loginSchema = yup.object({
+  email: yup
+    .string()
+    .email("Email should be valid")
+    .required("Email is required"),
+
+  password: yup.string().required("Password is required"),
+});
 
 const Login = () => {
+  const dispatch = useDispatch();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+
+      password: "",
+    },
+    validationSchema: loginSchema,
+
+    onSubmit: (values) => {
+      dispatch(loginUser(values));
+    },
+  });
+
   return (
     <>
       <Meta title={"Login"} />
@@ -14,13 +42,33 @@ const Login = () => {
           <div className="col-12">
             <div className="auth-card">
               <h3 className="text-center mb-3 ">Login</h3>
-              <form action="" className="d-flex flex-column gap-15">
-                <Custominput type="email" name="email" placeholder="Email" />
+              <form
+                action=""
+                onSubmit={formik.handleSubmit}
+                className="d-flex flex-column gap-15"
+              >
+                <Custominput
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  values={formik.values.email}
+                  onChange={formik.handleChange("email")}
+                  onBlur={formik.handleBlur("email")}
+                />
+                <div className="error">
+                  {formik.touched.email && formik.errors.email}
+                </div>
                 <Custominput
                   type="password"
                   name="password"
                   placeholder="Password"
+                  values={formik.values.password}
+                  onChange={formik.handleChange("password")}
+                  onBlur={formik.handleBlur("password")}
                 />
+                <div className="error">
+                  {formik.touched.password && formik.errors.password}
+                </div>
 
                 <div>
                   <Link to="/forgot-password">Forgot Password ?</Link>
