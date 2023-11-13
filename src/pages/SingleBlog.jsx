@@ -5,6 +5,7 @@ import blog from "../images/blog-1.jpg";
 import { Link } from "react-router-dom";
 import Container from "../components/Container";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import "../components/blogCard/blogcard.css";
 const SingleBlog = () => {
   return (
     <>

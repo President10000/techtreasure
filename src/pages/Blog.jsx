@@ -1,6 +1,6 @@
 import Meta from "../components/Meta";
 import BreadCrumb from "../components/BreadCrumb";
-import BlogCard from "../components/BlogCard";
+import BlogCard from "../components/blogCard/BlogCard";
 import Container from "../components/Container";
 
 const Blog = () => {

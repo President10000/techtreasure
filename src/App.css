@@ -57,7 +57,7 @@ a {
   padding: 13px 33px;
   border-radius: 25px;
 }
-@media screen and (max-width: 400px) {
+/* @media screen and (max-width: 400px) {
   .button {
     padding: 8px 18px;
   }
@@ -66,7 +66,7 @@ a {
   .button {
     padding: 8px 18px;
   }
-}
+} */
 
 .button:hover {
   background-color: var(--color-febd69);
@@ -259,115 +259,10 @@ footer .input-group-text {
 /* Home page end */
 
 /* Blog Part Start */
-.blog-card {
-  background-color: white;
-  border-radius: 10px;
-}
-.blog-card img {
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-}
-.blog-content {
-  padding: 15px;
-}
-.blog-content p.date {
-  font-size: 13px;
-  line-height: 24px;
-  text-transform: uppercase;
-  letter-spacing: 0;
-  font-weight: 400;
-  color: var(--color-777777);
-  padding: 0;
-}
-.blog-content h5 {
-  font-size: 18px;
-  color: var(--color-131921);
-  /* line-height: 24px;
-  text-transform: none;
-  letter-spacing: 0;
-  font-weight: 500;
-  padding: 0; */
-}
-.blog-content p.desc {
-  font-size: 13px;
-  line-height: 22px;
-  color: var(--color-777777);
-}
-
-.single-blog-card h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--color-1c1c1b);
-}
-.single-blog-card p {
-  font-size: 14px;
-  line-height: 22px;
-  color: var(--color-777777);
-}
-.single-blog-card a {
-  font-size: 18px;
-  color: var(--color-777777);
-  margin-bottom: 20px;
-}
 
 /* Blog Part End */
 
 /* Product Card Start */
-.product-card {
-  padding: 15px;
-  background-color: white;
-  border-radius: 10px;
-  overflow: hidden;
-  width: 100%;
-}
-.product-card .product-image {
-  height: 270px;
-}
-.product-card .product-image > img {
-  object-fit: contain;
-}
-.product-card .product-image > img:last-child {
-  display: none;
-}
-.product-card:hover .product-image > img:nth-child(1) {
-  display: none;
-}
-.product-card:hover .product-image > img:last-child {
-  display: block;
-}
-
-.product-card:hover .action-bar {
-  right: 13px;
-}
-.product-card .product-details h6 {
-  color: var(--color-bf4800);
-  font-size: 13px;
-}
-.product-card .product-details h5 {
-  color: var(--color-1c1c1b);
-  font-size: 15px;
-  /* line-height: 24px;
-  font-weight: 500; */
-}
-.product-card .product-details p.price {
-  font-size: 16px;
-  color: var(--color-1c1c1b);
-}
-.product-card p.description {
-  font-size: 13px;
-  line-height: 22px;
-  color: var(--color-777777);
-  margin-right: 20px;
-}
-.action-bar {
-  top: 10%;
-  right: -23px;
-  transition: 0.3s;
-}
-.wishlist-icon {
-  top: 2%;
-  right: 15px;
-}
 
 /* Product Card End */
 
@@ -829,4 +724,60 @@ footer .input-group-text {
   color: (var(--color-1c1c1b));
 }
 
-/* cart end here */
+/* cart end here  */
+
+/* Hide the header-top-strip element on screens smaller than 576px wide
+ @media (max-width: 576px) {
+  .header-top-strip {
+    display: none;
+  }
+}  */
+
+/* Center the header-upper and header-bottom elements on smaller screens */
+/* @media (max-width: 768px) {
+  .header-upper {
+    justify-content: center;
+  }
+
+  .header-bottom {
+    justify-content: space-between;
+  }
+} */
+
+/* Change the flex direction of the menu-bottom element to column on smaller screens */
+/* @media (max-width: 992px) {
+  .menu-bottom {
+    flex-direction: column;
+  }
+} */
+
+/* Make the dropdown menu full width on smaller screens */
+/* @media (max-width: 768px) {
+  .dropdown-menu {
+    width: 100%;
+  }
+} */
+
+/* Make the dropdown items full width on smaller screens */
+/* @media (max-width: 768px) {
+  .dropdown-item {
+    width: 100%;
+  }
+} */
+/* Make the header font size smaller on smaller screens */
+/* @media (max-width: 576px) {
+  .header h2 {
+    font-size: 1.5rem;
+  }
+
+  .header .dropdown-menu {
+    font-size: 1rem;
+  }
+} */
+
+/* Make the header icons smaller on smaller screens */
+/* @media (max-width: 576px) {
+  .header .fs-6 {
+    font-size: 1rem;
+  }
+}   */

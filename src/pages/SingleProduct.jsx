@@ -1,7 +1,7 @@
 import Meta from "../components/Meta";
 import BreadCrumb from "../components/BreadCrumb";
 
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/productCard/ProductCard";
 import ReactStars from "react-rating-stars-component";
 import ReactImageZoom from "react-image-zoom";
 import { useState } from "react";
