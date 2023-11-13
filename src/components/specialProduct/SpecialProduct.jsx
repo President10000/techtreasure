@@ -1,5 +1,7 @@
 import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
+import "./specialProduct.css";
+// import "../productCard/productcard.css";
 const SpecialProduct = () => {
   return (
     <div className="col-6 mb-3">

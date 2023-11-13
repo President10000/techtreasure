@@ -80,7 +80,7 @@ const ProductCard = (props) => {
 
   return (
     <>
-      {data.map((item, index) => {
+      {/* {data.map((item, index) => {
         return (
           <div
             key={index}
@@ -145,7 +145,7 @@ const ProductCard = (props) => {
             </Link>
           </div>
         );
-      })}
+      })} */}
     </>
   );
 };

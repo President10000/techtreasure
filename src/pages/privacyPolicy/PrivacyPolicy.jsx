@@ -1,6 +1,7 @@
-import Meta from "../components/Meta";
-import BreadCrumb from "../components/BreadCrumb";
-import Container from "../components/Container";
+import Meta from "../../components/Meta";
+import BreadCrumb from "../../components/BreadCrumb";
+import Container from "../../components/Container";
+import "./privacyPolicy.css";
 const PrivacyPolicy = () => {
   return (
     <>

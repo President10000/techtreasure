@@ -1,7 +1,8 @@
-import Meta from "../components/Meta";
-import BreadCrumb from "../components/BreadCrumb";
-import Color from "../components/Color";
-import Container from "../components/Container";
+import Meta from "../../components/Meta";
+import BreadCrumb from "../../components/BreadCrumb";
+import Color from "../../components/Color";
+import Container from "../../components/Container";
+import "./wishlist_compare.css";
 const CompareProduct = () => {
   return (
     <>

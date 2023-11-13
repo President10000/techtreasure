@@ -1,12 +1,13 @@
 import ReactStars from "react-rating-stars-component";
-import Meta from "../components/Meta";
-import BreadCrumb from "../components/BreadCrumb";
+import Meta from "../../components/Meta";
+import BreadCrumb from "../../components/BreadCrumb";
 import { useEffect, useState } from "react";
-import ProductCard from "../components/productCard/ProductCard";
-import Color from "../components/Color";
-import Container from "../components/Container";
+import ProductCard from "../../components/productCard/ProductCard";
+import Color from "../../components/Color";
+import Container from "../../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../features/product/productSlice";
+import { getAllProducts } from "../../features/product/productSlice";
+import "./ourstore.css";
 
 const OurStore = () => {
   const [grid, setGrid] = useState(4);

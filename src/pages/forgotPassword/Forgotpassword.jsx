@@ -1,8 +1,9 @@
-import Meta from "../components/Meta";
-import BreadCrumb from "../components/BreadCrumb";
+import Meta from "../../components/Meta";
+import BreadCrumb from "../../components/BreadCrumb";
 import { Link } from "react-router-dom";
-import Container from "../components/Container";
-import Custominput from "../components/Custominput";
+import Container from "../../components/Container";
+import Custominput from "../../components/Custominput";
+import "./forgotpassword.css";
 const Forgotpassword = () => {
   return (
     <>
