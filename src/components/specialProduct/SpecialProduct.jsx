@@ -1,6 +1,6 @@
 import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
-import "./specialProduct.css";
+import "./specialproduct.css";
 // import "../productCard/productcard.css";
 const SpecialProduct = () => {
   return (
