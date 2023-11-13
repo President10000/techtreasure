@@ -232,11 +232,11 @@ footer .input-group-text {
   padding: 15px;
 }
 .categories > div {
-  width: 25%;
+  /* width: 25%; */
   padding: 10px 10px 10px 20px;
 }
 .categories > div > div {
-  width: 60%;
+  /* width: 60%; */
 }
 .categories > div:nth-child(1),
 .categories > div:nth-child(2),
