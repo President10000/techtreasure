@@ -1,5 +1,6 @@
 import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
+import "./header.css";
 
 const Header = () => {
   return (

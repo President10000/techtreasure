@@ -1,10 +1,11 @@
-import Meta from "../components/Meta";
-import BreadCrumb from "../components/BreadCrumb";
-import watch from "../images/watch.jpg";
+import Meta from "../../components/Meta";
+import BreadCrumb from "../../components/BreadCrumb";
+import watch from "../../images/watch.jpg";
 
 import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import Container from "../components/Container";
+import Container from "../../components/Container";
+import "./cart.css";
 
 const Cart = () => {
   return (

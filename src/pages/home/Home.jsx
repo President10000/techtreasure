@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 
-import BlogCard from "../components/blogCard/BlogCard";
-import ProductCard from "../components/productCard/ProductCard";
-import SpecialProduct from "../components/SpecialProduct";
-import Container from "../components/Container";
-import services from "../utils/Data";
+import BlogCard from "../../components/blogCard/BlogCard";
+import ProductCard from "../../components/productCard/ProductCard";
+import SpecialProduct from "../../components/specialProduct/SpecialProduct";
+import Container from "../../components/Container";
+import services from "../../utils/Data";
+import "./home.css";
+import "./famouscard.css";
 
 const Home = () => {
   return (

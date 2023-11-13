@@ -1,10 +1,11 @@
-import Meta from "../components/Meta";
-import BreadCrumb from "../components/BreadCrumb";
+import Meta from "../../components/Meta";
+import BreadCrumb from "../../components/BreadCrumb";
 import { IoHomeOutline } from "react-icons/io5";
 import { AiOutlineMail } from "react-icons/ai";
 import { BiPhoneCall } from "react-icons/bi";
 import { BsInfoCircle } from "react-icons/bs";
-import Container from "../components/Container";
+import Container from "../../components/Container";
+import "./contact.css";
 const Contact = () => {
   return (
     <>

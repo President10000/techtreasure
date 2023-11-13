@@ -1,25 +1,26 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
-import Home from "./pages/Home";
+import Home from "./pages/home/Home";
 import About from "./pages/About";
-import Contact from "./pages/Contact";
-import OurStore from "./pages/OurStore";
+import Contact from "./pages/contact/Contact";
+import OurStore from "./pages/ourstore/OurStore";
 import Blog from "./pages/Blog";
-import CompareProduct from "./pages/CompareProduct";
-import Wishlist from "./pages/Wishlist";
-import Login from "./pages/Login";
-import Forgotpassword from "./pages/Forgotpassword";
-import Signup from "./pages/Signup";
-import Resetpassword from "./pages/Resetpassword";
+import CompareProduct from "./pages/wishlist_Compare/CompareProduct";
+import Wishlist from "./pages/wishlist_Compare/Wishlist";
+import Login from "./pages/login/Login";
+import Forgotpassword from "./pages/forgotPassword/Forgotpassword";
+import Signup from "./pages/signUp/Signup";
+import Resetpassword from "./pages/resetPassword/Resetpassword";
+
 import SingleBlog from "./pages/SingleBlog";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
+import PrivacyPolicy from "./pages/privacyPolicy/PrivacyPolicy";
 import TermAndConditions from "./pages/TermAndConditions";
 import RefundPolicy from "./pages/RefundPolicy";
 import ShippingPolicy from "./pages/ShippingPolicy";
-import SingleProduct from "./pages/SingleProduct";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
+import SingleProduct from "./pages/singleProduct/SingleProduct";
+import Cart from "./pages/cart/Cart";
+import Checkout from "./pages/checkout/Checkout";
 
 const App = () => {
   return (

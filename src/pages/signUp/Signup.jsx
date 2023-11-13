@@ -1,12 +1,13 @@
-import Meta from "../components/Meta";
+import Meta from "../../components/Meta";
 
-import BreadCrumb from "../components/BreadCrumb";
-import Container from "../components/Container";
-import Custominput from "../components/Custominput";
+import BreadCrumb from "../../components/BreadCrumb";
+import Container from "../../components/Container";
+import Custominput from "../../components/Custominput";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../features/user/userSlice";
+import { registerUser } from "../../features/user/userSlice";
+import "./signup.css";
 
 const signUpSchema = yup.object({
   firstname: yup.string().required("Firstname is required"),
