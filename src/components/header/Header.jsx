@@ -3,6 +3,36 @@ import { BsSearch } from "react-icons/bs";
 import "./header.css";
 
 const Header = () => {
+  const navBar = [
+    {
+      path: "compare-product",
+      img: "/images/compare.svg",
+      title: "Compare Products",
+    },
+    {
+      path: "wishlist",
+      img: "/images/wishlist.svg",
+      title: "Wishlist",
+    },
+    {
+      path: "login",
+      img: "/images/user.svg",
+      title: "My Account",
+    },
+    {
+      path: "cart",
+      img: "/images/cart.svg",
+      title: "$500",
+      badge: "badge bg-white text-dark",
+      value: "0",
+    },
+  ];
+  const miniNav = [
+    { nav: "", title: "Home" },
+    { nav: "product", title: "OurStore" },
+    { nav: "blogs", title: "blogs" },
+    { nav: "contact", title: "contacts" },
+  ];
   return (
     <>
       {/* first header */}
@@ -27,16 +57,18 @@ const Header = () => {
       </header>
 
       {/* second header */}
-      <header className="header-upper py-3  ">
+      <header className="header-upper py-1 py-lg-2  ">
         <div className="container-xxl">
           <div className="row align-items-center d-flex flex-grow-1">
-            <div className="name-div col-lg-2 col-md-12 col-4 mt-xs-2 ">
-              <h2 className="company-name m-0">
-                <Link className="text-white  ">TechTreasure</Link>
-              </h2>
-            </div>
-
-            <div className="col-lg-5  col-md-12 col-8 mt-sm-3 mb-lg-3">
+            <div className="col-lg-6  col-md-12 col-12 mt-sm-3 mb-lg-3 align-items-center d-flex justify-content-center">
+              <div className="name-div col-md-2 col-2 d-none d-md-block align-items-center d-flex justify-content-center">
+                <h2 className="align-items-center d-flex justify-content-center mb-0">
+                  <Link to="/" className="text-green ">
+                    LOGO
+                  </Link>
+                  {/* <Link className="text-green d-block d-md-none">LOGO</Link> */}
+                </h2>
+              </div>
               <div className="input-group ">
                 <input
                   type="text"
@@ -50,57 +82,31 @@ const Header = () => {
                 </span>
               </div>
             </div>
-            <div className="col-5">
-              <div className="header-upper-links d-flex align-items-center justify-content-between">
-                <div>
-                  <Link
-                    to="/compare-product"
-                    className="d-flex align-items-center gap-10 text-white "
-                  >
-                    <img src="/images/compare.svg" alt="compare" />
-                    <p className="mb-0">
-                      Compare <br />
-                      Products
-                    </p>
-                  </Link>
-                </div>
-                <div>
-                  <Link
-                    to="/wishlist"
-                    className="d-flex align-items-center gap-10 text-white "
-                  >
-                    <img src="/images/wishlist.svg" alt="wishlist" />
-                    <p className="mb-0">
-                      Favourite <br />
-                      Wishlist
-                    </p>
-                  </Link>
-                </div>
-                <div>
-                  <Link
-                    to="/login"
-                    className="d-flex align-items-center gap-10 text-white "
-                  >
-                    <img src="/images/user.svg" alt="user" />
-                    <p className="mb-0">
-                      Log in <br />
-                      My Account
-                    </p>
-                  </Link>
-                </div>
-                <div>
-                  <Link
-                    to="/cart"
-                    className="d-flex align-items-center gap-10 text-white "
-                  >
-                    <img src="/images/cart.svg" alt="cart" />
-                    <div className="d-flex flex-column gap-10">
-                      <span className="badge bg-white text-dark">0</span>
-                      <p className="mb-0">$500</p>
-                    </div>
-                  </Link>
-                </div>
-              </div>
+            <div className="col-12  col-lg-6 py-1 ">
+              {
+                <ul
+                  className="d-flex align-items-center justify-content-between"
+                  style={{ paddingLeft: "0px", marginBottom: "0px" }}
+                >
+                  {navBar.map((item, i) => {
+                    const { path, img, title, badge, value } = item;
+                    return (
+                      <li key={i} style={{ listStyle: "none" }}>
+                        <Link
+                          to={`${path}`}
+                          className="d-flex badge-cart-head  align-items-center gap-10 text-white "
+                        >
+                          <img className="h-25 " src={`${img}`} alt="compare" />
+                          <span className={`${badge} m-1  badge-cart`}>
+                            {value}
+                          </span>
+                          <p className="mb-0 d-none d-sm-block">{title}</p>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              }
             </div>
           </div>
         </div>
@@ -112,50 +118,26 @@ const Header = () => {
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              <div className="menu-bottom d-flex align-items-center gap-30">
-                <div>
-                  <div className="dropdown">
-                    <button
-                      className="btn btn-secondary dropdown-toggle bg-transparent border-0 gap-15  d-flex align-items-center"
-                      type="button"
-                      id="dropdownMenuButton1"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <img src="/images/menu.svg" alt="" />
-                      <span className="me-5 d-inline-block">
-                        Shop Categories
-                      </span>
-                    </button>
-                    <ul
-                      className="dropdown-menu"
-                      aria-labelledby="dropdownMenuButton1"
-                    >
-                      <li>
-                        <Link className="dropdown-item text-white" to="">
-                          Action
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item text-white" to="">
-                          Another action
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item text-white" to="">
-                          Something else here
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="menu-links">
-                  <div className="d-flex align-items-center gap-15">
-                    <NavLink to="/">Home</NavLink>
-                    <NavLink to="/product">Our Store</NavLink>
-                    <NavLink to="/blogs">Blogs</NavLink>
-                    <NavLink to="/contact">Contacts</NavLink>
-                  </div>
+              <div className="menu-bottom d-flex align-items-center justify-content-center gap-30">
+                <div className="">
+                  <ul
+                    className="d-flex align-items-center gap-15"
+                    style={{ paddingLeft: "0px", marginBottom: "0px" }}
+                  >
+                    {miniNav.map((item, i) => {
+                      const { title, nav } = item;
+                      return (
+                        <li key={i} style={{ listStyle: "none" }}>
+                          <NavLink
+                            className="text-white text-uppercase"
+                            to={`/${nav}`}
+                          >
+                            {title}
+                          </NavLink>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
               </div>
             </div>
