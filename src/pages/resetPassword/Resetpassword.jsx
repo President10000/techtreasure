@@ -12,8 +12,8 @@ const Resetpassword = () => {
 
       <Container class1="login-wraper home-wrapper-2 py-5">
         <div className="row">
-          <div className="col-12">
-            <div className="auth-card">
+          <div className="col-12 d-flex align-item-center justify-content-center">
+            <div className="auth-card col-12 col-md-8 col-lg-6 ">
               <h3 className="text-center mb-3 ">Reset Password</h3>
               <form action="" className="d-flex flex-column gap-15">
                 <Custominput

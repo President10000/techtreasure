@@ -34,8 +34,8 @@
 .contact-inner-wrapper ul {
   list-style-type: none;
 }
-.contact-inner-wrapper address,
-.contact-inner-wrapper p,
-.contact-inner-wrapper a {
+.detail-wrapper address,
+.detail-wrapper p,
+.detail-wrapper a {
   color: var(--color-777777);
 }

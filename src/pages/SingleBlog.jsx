@@ -22,7 +22,12 @@ const SingleBlog = () => {
                 Go back to blog
               </Link>
               <h3 className="title">A Beautiful Sunday Morning Renaissance</h3>
-              <img src={blog} className="img-fluid w-100 my-4  " alt="blog" />
+              <img
+                style={{ maxHeight: "500px" }}
+                src={blog}
+                className="img-fluid w-100 my-4  "
+                alt="blog"
+              />
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
                 natus sapiente tempore iusto, fugit aperiam dicta nulla neque

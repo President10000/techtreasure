@@ -1,26 +1,26 @@
 import ReactStars from "react-rating-stars-component";
 import { Link, useLocation } from "react-router-dom";
-import wish from "../../images/wish.svg";
-import watch from "../../images/watch.jpg";
-import watch2 from "../../images/watch-2.jpg";
-import prodcompare from "../../images/prodcompare.svg";
-import view from "../../images/view.svg";
-import addcart from "../../images/add-cart.svg";
-import { useEffect } from "react";
 import "./productcard.css";
-const ProductCard = (props) => {
-  // console.log(props);
-  let location = useLocation();
 
+import { productcartimg } from "../../utils/Data.jsx";
+import { demoData } from "../../utils/Data.jsx";
+
+const ProductCard = (props) => {
+  const { prodcompare, view, addcart, wish, watch, watch2 } = productcartimg;
+  const { demoDescription, demoTitle, demoPrice, demoBrand } = demoData;
+  let location = useLocation();
   const { grid, data } = props;
 
-  if (location.pathname === "/") {
+  if (location.pathname === "/" || location.pathname === "/product/:id") {
     // If the current route is the home page, render the HomeProductCard component.
     return (
       <div
         className={`${
-          location.pathname == "/product" ? `gr-${grid}` : "col-3"
+          location.pathname == "/product"
+            ? `gr-${grid}`
+            : "col-6 col-md-4 col-lg-3"
         }`}
+        // className=""
       >
         <Link
           to={`${
@@ -42,10 +42,8 @@ const ProductCard = (props) => {
             <img src={watch2} className="img-fluid" alt="product image" />
           </div>
           <div className="product-details">
-            <h6 className="brand">Havels</h6>
-            <h5 className="product-title">
-              Kids headphones bulk 10 pack Multi colored for students
-            </h5>
+            <h6 className="brand">{demoBrand}</h6>
+            <h5 className="product-title">{demoTitle}</h5>
             <ReactStars
               edit={false}
               value={3}
@@ -54,11 +52,9 @@ const ProductCard = (props) => {
               activeColor="#ffd700"
             />
             <p className={`description ${grid === 12 ? "d-block" : "d-none "}`}>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat
-              recusandae cumque veritatis voluptatum modi. Provident aliquam
-              nisi ullam! Enim minus
+              {demoDescription}
             </p>
-            <p className="price">$100.00</p>
+            <p className="price">${demoPrice}.00</p>
           </div>
           <div className="action-bar position-absolute ">
             <div className="d-flex flex-column gap-15 ">
@@ -80,13 +76,17 @@ const ProductCard = (props) => {
 
   return (
     <>
-      {/* {data.map((item, index) => {
+      {data.map((item, index) => {
+        const { brand, title, price, images, description } = item;
         return (
           <div
             key={index}
             className={`${
-              location.pathname == "/product" ? `gr-${grid}` : "col-3"
+              location.pathname == "/product"
+                ? `gr-${grid}`
+                : "col-6 col-md-4 col-lg-3"
             }`}
+            // className=""
           >
             <Link
               to={`${
@@ -105,18 +105,18 @@ const ProductCard = (props) => {
               </div>
               <div className="product-image">
                 <img
-                  src="https://cdn.shopify.com/s/files/1/0057/8938/4802/files/1_5.png?v=1655537950"
+                  src={watch || images?.[0].url}
                   className="img-fluid"
                   alt="product image"
                 />
                 <img src={watch2} className="img-fluid" alt="product image" />
               </div>
               <div className="product-details">
-                <h6 className="brand">{item?.brand}</h6>
-                <h5 className="product-title">{item?.title}</h5>
+                <h6 className="brand">{brand}</h6>
+                <h5 className="product-title">{title}</h5>
                 <ReactStars
                   edit={false}
-                  value={+item?.totalrating}
+                  value={3}
                   count={5}
                   size={24}
                   activeColor="#ffd700"
@@ -125,9 +125,10 @@ const ProductCard = (props) => {
                   className={`description ${
                     grid === 12 ? "d-block" : "d-none "
                   }`}
-                  dangerouslySetInnerHTML={{ __html: item.description }}
-                ></p>
-                <p className="price">${item?.price}</p>
+                >
+                  {description}
+                </p>
+                <p className="price">${price}.00</p>
               </div>
               <div className="action-bar position-absolute ">
                 <div className="d-flex flex-column gap-15 ">
@@ -145,9 +146,11 @@ const ProductCard = (props) => {
             </Link>
           </div>
         );
-      })} */}
+      })}
     </>
   );
 };
 
 export default ProductCard;
+
+// responsive complete

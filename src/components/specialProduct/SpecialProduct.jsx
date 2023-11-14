@@ -4,7 +4,7 @@ import "./specialproduct.css";
 // import "../productCard/productcard.css";
 const SpecialProduct = () => {
   return (
-    <div className="col-6 mb-3">
+    <div className="col-12 col-md-6 col-lg-6 col-xxl-6  mb-3">
       <div className="special-product-card">
         <div className="d-flex justify-content-between ">
           <div>
@@ -55,3 +55,5 @@ const SpecialProduct = () => {
 };
 
 export default SpecialProduct;
+
+// responsive complete

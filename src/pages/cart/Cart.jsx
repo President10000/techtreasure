@@ -17,31 +17,34 @@ const Cart = () => {
           <div className="col-12">
             {/* cart header here */}
             <div className="cart-header d-flex py-3  justify-content-between align-items-center  ">
-              <h4 className="cart-col-1">Product</h4>
-              <h4 className="cart-col-2">Price</h4>
-              <h4 className="cart-col-3">Quantity</h4>
-              <h4 className="cart-col-4">Total</h4>
+              <h4 className="col-4">Product</h4>
+              <h4 className="col-2">Price</h4>
+              <h4 className="col-3">Quantity</h4>
+              <h4 className="col-2">Total</h4>
             </div>
             {/* cart data here */}
             <div className="cart-data d-flex  py-3 mb-2 justify-content-between align-items-center ">
-              <div className="cart-col-1 gap-15 d-flex align-items-center ">
-                <div className="w-25">
+              <div className=" gap-10 d-flex flex-column flex-lg-row align-items-center col-4">
+                <div className="w-75 w-lg-25 position-relative">
                   <img
                     src={watch}
                     alt="product image "
                     className="img-fluid "
                   />
+                  <button className="position-absolute top-0 start-0 rounded-2 ">
+                    <AiFillDelete className="text-danger    " />
+                  </button>
                 </div>
-                <div className="w-75">
-                  <p>GFFGDFA</p>
-                  <p>Size: hgd</p>
-                  <p>Color: gjg</p>
+                <div className="fs-6">
+                  <p className="mb-0">GFFGDFA</p>
+                  <p className="mb-0">Size: hgd</p>
+                  <p className="mb-0">Color: gjg</p>
                 </div>
               </div>
-              <div className="cart-col-2">
+              <div className="col-2">
                 <h5 className="price">$ 100.00</h5>
               </div>
-              <div className="cart-col-3  d-flex align-items-center gap-15 ">
+              <div className="  d-flex align-items-center gap-15 col-3">
                 <div>
                   <input
                     className="form-control"
@@ -52,11 +55,8 @@ const Cart = () => {
                     id=""
                   />
                 </div>
-                <div>
-                  <AiFillDelete className="text-danger " />
-                </div>
               </div>
-              <div className="cart-col-4">
+              <div className=" col-2">
                 <h5 className="price">$ 100.00</h5>
               </div>
             </div>

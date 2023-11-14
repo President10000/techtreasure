@@ -13,8 +13,8 @@ const Checkout = () => {
       <Meta title="Checkout" />
       <BreadCrumb title="Checkout" />
       <Container class1="checkout-wrapper home-wrapper-2 py-5">
-        <div className="row">
-          <div className="col-7">
+        <div className="row flex-wrap-reverse">
+          <div className="col-12 col-lg-6">
             <div className="checkout-left-data">
               <h3 className="website-name">TechTreasure</h3>
               <nav
@@ -131,7 +131,7 @@ const Checkout = () => {
               </form>
             </div>
           </div>
-          <div className="col-5">
+          <div className="col-12 col-lg-6">
             <div className="border-bottom py-4 ">
               <div className="d-flex gap-10 mb-2 align-items-center  ">
                 <div className="d-flex w-75  gap-10">
