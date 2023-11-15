@@ -142,3 +142,94 @@ export const productsToCompare = [
     sizes: ["S", "M", "XXL"],
   },
 ];
+
+export const Items_1 = [
+  { title: "Camera", qty: "10 items", img: "/images/camera.jpg" },
+  { title: "Smart TV", qty: "10 items", img: "/images/tv.jpg" },
+  { title: "Smart TV", qty: "10 items", img: "/images/headphone.jpg" },
+  { title: "Smart TV", qty: "10 items", img: "/images/camera.jpg" },
+  { title: "Smart TV", qty: "10 items", img: "/images/tv.jpg" },
+  { title: "Smart TV", qty: "10 items", img: "/images/headphone.jpg" },
+  // { title: "Smart TV", qty: "10 items", img: "/images/camera.jpg" },
+];
+
+export const homeProductApi = [
+  {
+    img: "/images/catbanner-04.jpg",
+    title: "SUPERCHARGED FOR PROS.",
+    subTitle: "iPad S13+ Pro",
+    price: "From $999.00",
+  },
+  {
+    img: "/images/catbanner-03.jpg",
+    title: "15% OFF.",
+    subTitle: "Smartwatch 7",
+    price: "From $999.00",
+  },
+  {
+    img: "/images/catbanner-02.jpg",
+    title: "NEW ARRIVAL",
+    subTitle: "Buy IPad Air",
+    price: "From $999.00",
+  },
+  {
+    img: "/images/catbanner-01.jpg",
+    title: "BEST SALE",
+    subTitle: "Laptops Max",
+    price: "From $999.00",
+  },
+];
+
+export const SCREEN_banners = [
+  {
+    img: "images/famous-1.jpg",
+    title: "BIG SCREEN",
+    subTitle: "Smart Watch Series 7",
+    price: "From $399.00 or $16.62/mo. for 24 mo.",
+  },
+  {
+    img: "images/famous-2.jpg",
+    title: "BIG SCREEN",
+    subTitle: "Smart Watch Series 7",
+    price: "From $399.00 or $16.62/mo. for 24 mo.",
+  },
+  {
+    img: "images/famous-3.jpg",
+    title: "BIG SCREEN",
+    subTitle: "Smart Watch Series 7",
+    price: "From $399.00 or $16.62/mo. for 24 mo.",
+  },
+  {
+    img: "images/famous-6.jpg",
+    title: "BIG SCREEN",
+    subTitle: "Smart Watch Series 7",
+    price: "From $399.00 or $16.62/mo. for 24 mo.",
+  },
+];
+
+export const Our_cunsumers = [
+  {
+    img: "images/brand-01.png",
+  },
+  {
+    img: "images/brand-02.png",
+  },
+  {
+    img: "images/brand-03.png",
+  },
+  {
+    img: "images/brand-04.png",
+  },
+  {
+    img: "images/brand-05.png",
+  },
+  {
+    img: "images/brand-06.png",
+  },
+  {
+    img: "images/brand-07.png",
+  },
+  {
+    img: "images/brand-08.png",
+  },
+];

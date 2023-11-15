@@ -23,6 +23,7 @@
   letter-spacing: 0.3px;
   text-transform: uppercase;
 }
+
 .main-banner-content h5 {
   font-size: 52px;
   line-height: 54px;
@@ -37,7 +38,31 @@
   color: var(--color-131921);
   letter-spacing: 0.4px;
 }
+@media screen and (max-width: 600px) {
+  .main-banner-content h4 {
+    font-size: 3vw;
+    margin: 0;
+    line-height: 12px;
+  }
+  .main-banner-content h5 {
+    font-size: 7vw;
+    margin: 0;
+  }
+  .main-banner-content p {
+    font-size: 3vw;
+    margin: 0;
+    line-height: 0px;
+    margin-bottom: 3vh;
+  }
+  .main-banner-content > a {
+    font-size: 3vw;
 
+    padding: 8px 18px;
+    /* margin: 0; */
+
+    /* line-height: 0px; */
+  }
+}
 .small-banner-content {
   top: 25%;
   left: 10%;
@@ -98,7 +123,8 @@
 }
 .categories > div:nth-child(1),
 .categories > div:nth-child(2),
-.categories > div:nth-child(3) {
+.categories > div:nth-child(3),
+.categories > div:nth-child(4) {
   border-right: 1px solid var(--color-ededed);
 }
 .categories > div:nth-child(5),
