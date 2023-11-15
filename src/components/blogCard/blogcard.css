@@ -60,3 +60,10 @@
   color: var(--color-777777);
   margin-bottom: 20px;
 }
+
+@media screen and (max-width: 600px) {
+  .blog-content a {
+    font-size: 3vw;
+    padding: 10px 20px;
+  }
+}
