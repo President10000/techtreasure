@@ -59,7 +59,7 @@ const Footer = () => {
                   <span>vihankushwahaa@</span>
                   <span>gmail.com</span>
                 </a>
-                <div className="social_icons d-flex align-items-center flex-wrap gap-30 mt-4 ">
+                <div className="social_icons d-flex align-items-center flex-wrap mt-4 ">
                   <a href="">
                     <BsLinkedin className="text-white fs-4" />
                   </a>

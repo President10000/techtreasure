@@ -4,12 +4,23 @@ import "./productcard.css";
 
 import { productcartimg } from "../../utils/Data.jsx";
 import { demoData } from "../../utils/Data.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { addToWishlist } from "../../features/product/productSlice.js";
 
 const ProductCard = (props) => {
   const { prodcompare, view, addcart, wish, watch, watch2 } = productcartimg;
   const { demoDescription, demoTitle, demoPrice, demoBrand } = demoData;
+  const { grid } = props;
+  const { data } = props;
   let location = useLocation();
-  const { grid, data } = props;
+  const productdata = data;
+
+  const dispatch = useDispatch();
+
+  const addtoWish = (prodId) => {
+    // console.log(id);
+    dispatch(addToWishlist(prodId));
+  };
 
   if (location.pathname === "/" || location.pathname === "/product/:id") {
     // If the current route is the home page, render the HomeProductCard component.
@@ -76,7 +87,7 @@ const ProductCard = (props) => {
 
   return (
     <>
-      {data.map((item, index) => {
+      {productdata.map((item, index) => {
         const { brand, title, price, images, description } = item;
         return (
           <div
@@ -99,7 +110,10 @@ const ProductCard = (props) => {
               className="product-card position-relative "
             >
               <div className="wishlist-icon position-absolute ">
-                <button className="border-0 bg-transparent ">
+                <button
+                  className="border-0 bg-transparent "
+                  onClick={(e) => addtoWish(item?._id)}
+                >
                   <img src={wish} alt="wishlist" />
                 </button>
               </div>

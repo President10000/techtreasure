@@ -14,13 +14,14 @@ export const getAllProducts = createAsyncThunk(
     }
   }
 );
-export const addToWishlistProduct = createAsyncThunk(
-  "product/get",
-  async (thunkAPI) => {
+export const addToWishlist = createAsyncThunk(
+  "product/wishlist",
+  async (prodId, thunkAPI) => {
+    console.log(prodId);
     try {
-      return await productService.getproducts();
+      return await productService.addToWishlist(prodId);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.Message);
     }
   }
 );
@@ -55,6 +56,24 @@ export const productSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.Message = action.payload.toString();
+      })
+      .addCase(addToWishlist.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addToWishlist.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.addToWishlist = action.payload;
+        state.Message = "product added to wishlist";
+        toast.success("Added to wishlist");
+      })
+      .addCase(addToWishlist.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.Message = action.payload;
+        toast.error("Failed to add to wishlist");
       });
   },
 });

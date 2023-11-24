@@ -1,6 +1,7 @@
 import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import "./header.css";
+import logo from "../../images/Rai_appliancs-removebg-preview.png";
 
 const Header = () => {
   const navBar = [
@@ -64,7 +65,11 @@ const Header = () => {
               <div className="name-div col-md-2 col-2 d-none d-md-block align-items-center d-flex justify-content-center">
                 <h2 className="align-items-center d-flex justify-content-center mb-0">
                   <Link to="/" className="text-green ">
-                    LOGO
+                    <img
+                      src={logo}
+                      style={{ width: "35px", height: "35px" }}
+                      alt="logo"
+                    />
                   </Link>
                   {/* <Link className="text-green d-block d-md-none">LOGO</Link> */}
                 </h2>

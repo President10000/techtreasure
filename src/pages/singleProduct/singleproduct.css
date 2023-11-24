@@ -138,3 +138,10 @@
   font-size: 14px;
   color: var(--color-777777);
 }
+
+@media screen and (max-width: 600px) {
+  .cart-button > button {
+    font-size: 3vw;
+    padding: 10px 20px;
+  }
+}

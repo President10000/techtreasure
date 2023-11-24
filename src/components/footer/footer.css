@@ -23,3 +23,6 @@ footer .input-group-text {
   color: white;
   padding: 8px 17px;
 }
+.social_icons {
+  gap: 30px;
+}
