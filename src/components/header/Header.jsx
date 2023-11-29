@@ -2,7 +2,7 @@ import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import "./header.css";
 import logo from "../../images/Rai_appliancs-removebg-preview.png";
-
+import { FaGripLinesVertical } from "react-icons/fa";
 const Header = () => {
   const navBar = [
     // {
@@ -34,6 +34,17 @@ const Header = () => {
     // { nav: "blogs", title: "blogs" },
     // { nav: "contact", title: "contacts" },
   ];
+
+  function pushIcon(miniNav) {
+    return miniNav.reduce((initial, nav, i, miniNavArr) => {
+      initial.push({ ...nav, type: "link" });
+      if (i != miniNavArr.length - 1) {
+        initial.push({ type: "icon" });
+      }
+      return initial;
+    }, []);
+  }
+
   return (
     <>
       {/* first header */}
@@ -124,26 +135,35 @@ const Header = () => {
           <div className="row">
             <div className="col-12">
               <div className="menu-bottom d-flex align-items-center justify-content-center ">
-                <div className="">
-                  <ul
-                    className="d-flex align-items-center gap-15"
-                    style={{ paddingLeft: "0px", marginBottom: "0px" }}
-                  >
-                    {miniNav.map((item, i) => {
-                      const { title, nav } = item;
+                <ul
+                  className="d-flex align-items-center justify-content-center gap-15"
+                  style={{ paddingLeft: "0px", marginBottom: "0px" }}
+                >
+                  {pushIcon(miniNav).map((item, i) => {
+                    const { title, nav, type } = item;
+                    if (type == "icon") {
                       return (
-                        <li key={i} style={{ listStyle: "none" }}>
-                          <NavLink
-                            className="text-white text-uppercase"
-                            to={`/${nav}`}
-                          >
-                            {title}
-                          </NavLink>
+                        <li
+                          key={i}
+                          style={{ listStyle: "none" }}
+                          className="text-white d-flex align-items-center justify-content-center"
+                        >
+                          <FaGripLinesVertical />
                         </li>
                       );
-                    })}
-                  </ul>
-                </div>
+                    }
+                    return (
+                      <li key={i} style={{ listStyle: "none" }}>
+                        <NavLink
+                          className="text-white text-uppercase"
+                          to={`/${nav}`}
+                        >
+                          {title}
+                        </NavLink>
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
             </div>
           </div>

@@ -54,15 +54,15 @@ a {
   color: white;
   border: none;
   font-size: 14px;
-  padding: 13px 33px;
+  padding: 5px 10px;
   border-radius: 25px;
 }
-/* @media screen and (max-width: 400px) {
+/* @media screen and (max-width: 500px) {
   .button {
-    padding: 8px 18px;
+    font-size: 10px;
   }
-}
-@media screen and (max-width: 525px) {
+} */
+/* @media screen and (max-width: 525px) {
   .button {
     padding: 8px 18px;
   }
