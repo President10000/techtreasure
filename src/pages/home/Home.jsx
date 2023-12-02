@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import "./home.css";
 import "./famouscard.css";
-
-import BlogCard from "../../components/blogCard/BlogCard";
+// import { MdSkipNext } from "react-icons/md";
+// import { MdSkipPrevious } from "react-icons/md";
+// import BlogCard from "../../components/blogCard/BlogCard";
 import ProductCard from "../../components/productCard/ProductCard";
 import SpecialProduct from "../../components/specialProduct/SpecialProduct";
 import Container from "../../components/Container";
@@ -13,10 +14,14 @@ import services, {
   SCREEN_banners,
   homeProductApi,
 } from "../../utils/Data";
+import { Banner_primery } from "../../utils/images_import";
+import { useState } from "react";
 
 // import mainbanner from "../../images/main-banner-02.jpg";
 
 const Home = () => {
+  const [service_transition,setService_transition]=useState(0)
+
   return (
     <>
       {/* first section */}
@@ -25,16 +30,16 @@ const Home = () => {
           <div className="col-lg-6 col-md-12 col-sm-12">
             <div className="main-banner position-relative  ">
               <img
-                src="/images/main-banner-1.jpg"
+                src={Banner_primery}
                 className="col-12 rounded-3"
                 alt="main banner"
               />
-              <div className="main-banner-content position-absolute">
+              {/* <div className="main-banner-content position-absolute">
                 <h4>SUPERCHARGED FOR PROS.</h4>
                 <h5>iPad S13+ Pro.</h5>
                 <p>From $999.00 or $41.62/mo.</p>
                 <Link className="button"> Buy Now</Link>
-              </div>
+              </div> */}
             </div>
           </div>
           {/* <div className="col-lg-6 col-md-12 col-sm-12">
@@ -55,21 +60,23 @@ const Home = () => {
           <div className="  col-xxl-6 col-lg-6  co-md-12 col-sm-12 col-12 col-12 mt-3 mt-lg-0 ">
             <ul
               style={{
+                height:"100%",
                 marginBottom: "0px",
                 paddingLeft: "0px",
-                marginTop: "1.5vw",
+                // marginTop: "1.5vw",
               }}
-              className="d-flex mt-xxl-0 flex-wrap gap-10 justify-content-around align-items-center"
+              className="d-flex mt-xxl-0 flex-wrap justify-content-around align-items-center"
             >
               {homeProductApi.map((item, i) => {
-                const { img, title, subTitle, price } = item;
+                // const { img, title, subTitle, price } = item;
+                const { img } = item;
                 return (
                   <li
                     key={i}
-                    className="col-12 col-md-5 position-relative"
+                    className="col-6 position-relative"
                     style={{
                       listStyle: "none",
-                      marginBottom: "2vw",
+                      padding:`0px ${i%2==0?'5px':'0px'} 5px ${i%2!=0?'5px':'0px'} `
                     }}
                   >
                     <img
@@ -77,11 +84,11 @@ const Home = () => {
                       className="col-12  rounded-3"
                       alt="main banner"
                     />
-                    <div className="small-banner-content position-absolute ">
+                    {/* <div className="small-banner-content position-absolute ">
                       <h4>{title}</h4>
                       <h5>{subTitle}</h5>
                       <p>{price}</p>
-                    </div>
+                    </div> */}
                   </li>
                 );
               })}
@@ -103,15 +110,16 @@ const Home = () => {
       {/* second section */}
       <Container class1="home-wrapper-2 py-5">
         <div className="row">
-          <div className="col-12">
-            <div className="services gap-15 d-flex flex-wrap  align-items-center justify-content-around">
+          <div className="col-12 d-flex align-items-center justify-content-center flex-column gap-10">
+            <div className="services position-relative gap-5 gap-md-15 d-flex overflow-hidden  align-items-center justify-content-around">
               {services?.map((service, index) => {
                 return (
                   <div
-                    className="col-5 d-flex align-items-center justify-content-center gap-15"
+                  style={{translate:`${service_transition*440}px`,transitionDuration:"1000ms"}}
+                    className="col-12 col-md-6 col-lg-5 d-flex align-items-center justify-content-center gap-15"
                     key={index}
                   >
-                    <img src={service.image} alt="services" />
+                    <img className="" src={service.image} alt="services" />
                     <div>
                       <h6>{service.title}</h6>
                       <p className="mb-0"> {service.tagline}</p>
@@ -119,13 +127,21 @@ const Home = () => {
                   </div>
                 );
               })}
+           
             </div>
+             <div className="d-flex align-items-center justify-content-center gap-2 px-3 py-2" >
+             {[2,1,0,-1,-2].map((num,i)=>{
+                return <button onClick={()=>setService_transition(num)} style={{width:"20px", height:"20px",backgroundColor:service_transition==num?"greenyellow":"gray", borderRadius:'100px'}} key={i}>
+
+                </button>
+              })}
+             </div>
           </div>
         </div>
       </Container>
 
       {/* third section */}
-      <Container class1="home-wrapper-2 py-5">
+      <Container class1="home-wrapper-2 pb-5">
         <div className="row">
           <div className="categories d-flex flex-wrap  justify-content-between align-items-center">
             {Items_1.map((item, i) => {
