@@ -7,8 +7,8 @@ const getproducts = async () => {
   }
 };
 const addToWishlist = async (prodId) => {
-  console.log(config);
-  console.log(prodId);
+  // console.log(config);
+  // console.log(prodId);
 
   const response = await axios.put(
     `${base_url}product/wishlist`,

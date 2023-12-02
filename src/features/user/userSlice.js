@@ -25,6 +25,17 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const getUserProductWishlist = createAsyncThunk(
+  "user/wishlist",
+  async (thunkAPI) => {
+    try {
+      return await authService.getUserWishlist();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.Message);
+    }
+  }
+);
+
 const getCustomerfromLocalStorage = localStorage.getItem("customer")
   ? JSON.parse(localStorage.getItem("customer"))
   : null;
@@ -33,6 +44,7 @@ const getCustomerfromLocalStorage = localStorage.getItem("customer")
 
 const initialstate = {
   user: getCustomerfromLocalStorage,
+
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -82,6 +94,29 @@ export const authSlice = createSlice({
         }
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.Message = action.payload.toString();
+
+        if (state.isError === true) {
+          toast.error(action.payload.toString());
+        }
+      })
+      .addCase(getUserProductWishlist.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUserProductWishlist.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.wishlist = action.payload;
+
+        // if (state.isSuccess === true) {
+        //   toast.info("User Wishlist Fetched Successfully");
+        // }
+      })
+      .addCase(getUserProductWishlist.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
