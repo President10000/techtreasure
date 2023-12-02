@@ -4,6 +4,7 @@ import addcart from "../images/add-cart.svg";
 import wish from "../images/wish.svg";
 import watch from "../images/watch.jpg";
 import watch2 from "../images/watch-2.jpg";
+import { Banner_01, Banner_02, Banner_03, Banner_04 } from "./images_import";
 
 const services = [
   {
@@ -155,25 +156,25 @@ export const Items_1 = [
 
 export const homeProductApi = [
   {
-    img: "/images/catbanner-04.jpg",
+    img:Banner_01,
     title: "SUPERCHARGED FOR PROS.",
     subTitle: "iPad S13+ Pro",
     price: "From $999.00",
   },
   {
-    img: "/images/catbanner-03.jpg",
+    img: Banner_02,
     title: "15% OFF.",
     subTitle: "Smartwatch 7",
     price: "From $999.00",
   },
   {
-    img: "/images/catbanner-02.jpg",
+    img:Banner_03,
     title: "NEW ARRIVAL",
     subTitle: "Buy IPad Air",
     price: "From $999.00",
   },
   {
-    img: "/images/catbanner-01.jpg",
+    img: Banner_04,
     title: "BEST SALE",
     subTitle: "Laptops Max",
     price: "From $999.00",

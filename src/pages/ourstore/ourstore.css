@@ -12,14 +12,14 @@
 .filter-card {
   background-color: white;
   border-radius: 10px;
-  padding: 10px 15px 25px;
+  padding: 10px 10px ;
 }
 .filter-title {
   font-size: 16px;
   line-height: 20px;
   font-weight: 600;
   color: var(--color-1c1c1b);
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 .list:hover {
   color: var(--color-febd69);
@@ -54,10 +54,10 @@
   flex-wrap: wrap;
   gap: 10px;
 }
-.colors li {
+.colors button {
   width: 20px;
   height: 20px;
-  background-color: red;
+  /* background-color: red; */
   border-radius: 50%;
 }
 .random-products h5 {

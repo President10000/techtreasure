@@ -63,12 +63,14 @@ const Cart = () => {
             {/* second time cart copy here */}
           </div>
           <div className="col-12 py-2 mt-4  ">
-            <div className="d-flex justify-content-between align-items-baseline  ">
-              <Link to="/product" className="button">
+            <div className="d-flex flex-column flex-md-row justify-content-evenly align-items-baseline  ">
+             <span className="w-100">
+             <Link to="/product" className="button ">
                 Continue To Shopping
               </Link>
+             </span>
 
-              <div className="d-flex flex-column align-items-end">
+              <div className="d-flex flex-column align-items-end w-100 text-end">
                 <h4>SubTotal: $ 1000 </h4>
                 <p>Taxes and shipping calculated at checkout</p>
                 <Link to="/checkout" className="button">

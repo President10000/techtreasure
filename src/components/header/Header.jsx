@@ -2,14 +2,14 @@ import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import "./header.css";
 import logo from "../../images/Rai_appliancs-removebg-preview.png";
-
+import { FaGripLinesVertical } from "react-icons/fa";
 const Header = () => {
   const navBar = [
-    {
-      path: "compare-product",
-      img: "/images/compare.svg",
-      title: "Compare Products",
-    },
+    // {
+    //   path: "compare-product",
+    //   img: "/images/compare.svg",
+    //   title: "Compare Products",
+    // },
     {
       path: "wishlist",
       img: "/images/wishlist.svg",
@@ -31,9 +31,20 @@ const Header = () => {
   const miniNav = [
     { nav: "", title: "Home" },
     { nav: "product", title: "OurStore" },
-    { nav: "blogs", title: "blogs" },
-    { nav: "contact", title: "contacts" },
+    // { nav: "blogs", title: "blogs" },
+    // { nav: "contact", title: "contacts" },
   ];
+
+  function pushIcon(miniNav) {
+    return miniNav.reduce((initial, nav, i, miniNavArr) => {
+      initial.push({ ...nav, type: "link" });
+      if (i != miniNavArr.length - 1) {
+        initial.push({ type: "icon" });
+      }
+      return initial;
+    }, []);
+  }
+
   return (
     <>
       {/* first header */}
@@ -87,10 +98,10 @@ const Header = () => {
                 </span>
               </div>
             </div>
-            <div className="col-12  col-lg-6 py-1 ">
+            <div className="col-12  col-lg-6 py-2 py-md-2 ">
               {
                 <ul
-                  className="d-flex align-items-center justify-content-between"
+                  className="d-flex align-items-center justify-content-evenly"
                   style={{ paddingLeft: "0px", marginBottom: "0px" }}
                 >
                   {navBar.map((item, i) => {
@@ -101,7 +112,7 @@ const Header = () => {
                           to={`${path}`}
                           className="d-flex badge-cart-head  align-items-center gap-10 text-white "
                         >
-                          <img className="h-25 " src={`${img}`} alt="compare" />
+                          <img className="icon" src={`${img}`} alt="compare" />
                           <span className={`${badge} m-1  badge-cart`}>
                             {value}
                           </span>
@@ -119,31 +130,40 @@ const Header = () => {
 
       {/* third header */}
 
-      <header className="header-bottom py-3">
+      <header className="header-bottom py-1 py-md-3">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              <div className="menu-bottom d-flex align-items-center justify-content-center gap-30">
-                <div className="">
-                  <ul
-                    className="d-flex align-items-center gap-15"
-                    style={{ paddingLeft: "0px", marginBottom: "0px" }}
-                  >
-                    {miniNav.map((item, i) => {
-                      const { title, nav } = item;
+              <div className="menu-bottom d-flex align-items-center justify-content-center ">
+                <ul
+                  className="d-flex align-items-center justify-content-center gap-15"
+                  style={{ paddingLeft: "0px", marginBottom: "0px" }}
+                >
+                  {pushIcon(miniNav).map((item, i) => {
+                    const { title, nav, type } = item;
+                    if (type == "icon") {
                       return (
-                        <li key={i} style={{ listStyle: "none" }}>
-                          <NavLink
-                            className="text-white text-uppercase"
-                            to={`/${nav}`}
-                          >
-                            {title}
-                          </NavLink>
+                        <li
+                          key={i}
+                          style={{ listStyle: "none" }}
+                          className="text-white d-flex align-items-center justify-content-center"
+                        >
+                          <FaGripLinesVertical />
                         </li>
                       );
-                    })}
-                  </ul>
-                </div>
+                    }
+                    return (
+                      <li key={i} style={{ listStyle: "none" }}>
+                        <NavLink
+                          className="text-white text-uppercase"
+                          to={`/${nav}`}
+                        >
+                          {title}
+                        </NavLink>
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
             </div>
           </div>
