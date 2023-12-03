@@ -15,13 +15,18 @@ import services, {
   homeProductApi,
 } from "../../utils/Data";
 import { Banner_primery } from "../../utils/images_import";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // import mainbanner from "../../images/main-banner-02.jpg";
 
 const Home = () => {
   const [service_transition,setService_transition]=useState(0)
-
+const [transitionLength,setTransitionLength]=useState(window.innerWidth<600?840:440)
+useEffect(()=>{
+addEventListener("resize",function(){
+  setTransitionLength(window.innerWidth<600?840:440)
+})
+},[])
   return (
     <>
       {/* first section */}
@@ -112,10 +117,11 @@ const Home = () => {
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-center flex-column gap-10">
             <div className="services position-relative gap-5 gap-md-15 d-flex overflow-hidden  align-items-center justify-content-around">
+              {console.log(transitionLength)}
               {services?.map((service, index) => {
                 return (
                   <div
-                  style={{translate:`${service_transition*440}px`,transitionDuration:"1000ms"}}
+                  style={{translate:`${service_transition*transitionLength}px`,transitionDuration:"1000ms"}}
                     className="col-12 col-md-6 col-lg-5 d-flex align-items-center justify-content-center gap-15"
                     key={index}
                   >
