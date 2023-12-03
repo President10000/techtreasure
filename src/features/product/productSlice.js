@@ -10,14 +10,14 @@ export const getAllProducts = createAsyncThunk(
     try {
       return await productService.getproducts();
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.Message);
     }
   }
 );
 export const addToWishlist = createAsyncThunk(
   "product/wishlist",
   async (prodId, thunkAPI) => {
-    console.log(prodId);
+    // console.log(prodId);
     try {
       return await productService.addToWishlist(prodId);
     } catch (error) {
