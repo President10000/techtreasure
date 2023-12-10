@@ -15,13 +15,20 @@ import services, {
   homeProductApi,
 } from "../../utils/Data";
 import { Banner_primery } from "../../utils/images_import";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // import mainbanner from "../../images/main-banner-02.jpg";
 
 const Home = () => {
-  const [service_transition,setService_transition]=useState(0)
-
+  const [service_transition, setService_transition] = useState(0);
+  const [transitionLength, setTransitionLength] = useState(
+    window.innerWidth < 600 ? 840 : 440
+  );
+  useEffect(() => {
+    addEventListener("resize", function () {
+      setTransitionLength(window.innerWidth < 600 ? 840 : 440);
+    });
+  }, []);
   return (
     <>
       {/* first section */}
@@ -60,7 +67,7 @@ const Home = () => {
           <div className="  col-xxl-6 col-lg-6  co-md-12 col-sm-12 col-12 col-12 mt-3 mt-lg-0 ">
             <ul
               style={{
-                height:"100%",
+                height: "100%",
                 marginBottom: "0px",
                 paddingLeft: "0px",
                 // marginTop: "1.5vw",
@@ -76,7 +83,9 @@ const Home = () => {
                     className="col-6 position-relative"
                     style={{
                       listStyle: "none",
-                      padding:`0px ${i%2==0?'5px':'0px'} 5px ${i%2!=0?'5px':'0px'} `
+                      padding: `0px ${i % 2 == 0 ? "5px" : "0px"} 5px ${
+                        i % 2 != 0 ? "5px" : "0px"
+                      } `,
                     }}
                   >
                     <img
@@ -112,10 +121,14 @@ const Home = () => {
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-center flex-column gap-10">
             <div className="services position-relative gap-5 gap-md-15 d-flex overflow-hidden  align-items-center justify-content-around">
+              {console.log(transitionLength)}
               {services?.map((service, index) => {
                 return (
                   <div
-                  style={{translate:`${service_transition*440}px`,transitionDuration:"1000ms"}}
+                    style={{
+                      translate: `${service_transition * transitionLength}px`,
+                      transitionDuration: "1000ms",
+                    }}
                     className="col-12 col-md-6 col-lg-5 d-flex align-items-center justify-content-center gap-15"
                     key={index}
                   >
@@ -127,15 +140,24 @@ const Home = () => {
                   </div>
                 );
               })}
-           
             </div>
-             <div className="d-flex align-items-center justify-content-center gap-2 px-3 py-2" >
-             {[2,1,0,-1,-2].map((num,i)=>{
-                return <button onClick={()=>setService_transition(num)} style={{width:"20px", height:"20px",backgroundColor:service_transition==num?"greenyellow":"gray", borderRadius:'100px'}} key={i}>
-
-                </button>
+            <div className="d-flex align-items-center justify-content-center gap-2 px-3 py-2">
+              {[2, 1, 0, -1, -2].map((num, i) => {
+                return (
+                  <button
+                    onClick={() => setService_transition(num)}
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      backgroundColor:
+                        service_transition == num ? "greenyellow" : "gray",
+                      borderRadius: "100px",
+                    }}
+                    key={i}
+                  ></button>
+                );
               })}
-             </div>
+            </div>
           </div>
         </div>
       </Container>
