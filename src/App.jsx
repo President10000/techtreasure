@@ -21,6 +21,7 @@ import ShippingPolicy from "./pages/ShippingPolicy";
 import SingleProduct from "./pages/singleProduct/SingleProduct";
 import Cart from "./pages/cart/Cart";
 import Checkout from "./pages/checkout/Checkout";
+import Profile from "./pages/profile/Profile";
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
             <Route path="checkout" element={<Checkout />} />
             <Route path="compare-product" element={<CompareProduct />} />
             <Route path="wishlist" element={<Wishlist />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="forgot-password" element={<Forgotpassword />} />

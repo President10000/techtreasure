@@ -5,10 +5,11 @@ import Container from "../../components/Container";
 import Custominput from "../../components/Custominput";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../features/user/userSlice";
 import "./signup.css";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 const signUpSchema = yup.object({
   firstname: yup.string().required("Firstname is required"),
   lastname: yup.string().required("Lastname is required"),
@@ -20,8 +21,9 @@ const signUpSchema = yup.object({
   mobile: yup.string().required("Mobile is required"),
   password: yup.string().required("Password is required"),
 });
-
 const Signup = () => {
+  const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -36,94 +38,105 @@ const Signup = () => {
 
     onSubmit: (values) => {
       dispatch(registerUser(values));
+      navigate("/");
     },
   });
+
+  useEffect(() => {
+    if (user) navigate("/profile");
+  }, [user]);
+
   return (
     <>
-      <Meta title={"Signup"} />
-      <BreadCrumb title="Signup" />
+      {!user ? (
+        <>
+          <Meta title={"Signup"} />
+          <BreadCrumb title="Signup" />
 
-      <Container class1="login-wraper home-wrapper-2 py-5">
-        <div className="row">
-          <div className="col-12 d-flex align-item-center justify-content-center">
-            <div className="auth-card col-12 col-md-8 col-lg-6">
-              <h3 className="text-center mb-3 ">Create account</h3>
-              <form
-                action=""
-                onSubmit={formik.handleSubmit}
-                className="d-flex flex-column gap-15"
-              >
-                <Custominput
-                  type="text"
-                  name="firstname"
-                  placeholder="First Name"
-                  value={formik.values.firstname}
-                  onChange={formik.handleChange("firstname")}
-                  onBlur={formik.handleBlur("firstname")}
-                />
-                <div className="error">
-                  {formik.touched.firstname && formik.errors.firstname}
-                </div>
-                <Custominput
-                  type="text"
-                  name="lastname"
-                  placeholder="Lastname"
-                  value={formik.values.lastname}
-                  onChange={formik.handleChange("lastname")}
-                  onBlur={formik.handleBlur("lastname")}
-                />
+          <Container class1="login-wraper home-wrapper-2 py-5">
+            <div className="row">
+              <div className="col-12 d-flex align-item-center justify-content-center">
+                <div className="auth-card col-12 col-md-8 col-lg-6">
+                <p className="already "> Already have an account <Link to="/login"  className="px-2 text-blue">login</Link> </p>
+                  <h3 className="text-center mb-3 ">Create account</h3>
+                  <form
+                    action=""
+                    onSubmit={formik.handleSubmit}
+                    className="d-flex flex-column gap-15"
+                  >
+                    <Custominput
+                      type="text"
+                      name="firstname"
+                      placeholder="First Name"
+                      value={formik.values.firstname}
+                      onChange={formik.handleChange("firstname")}
+                      onBlur={formik.handleBlur("firstname")}
+                    />
+                    <div className="error">
+                      {formik.touched.firstname && formik.errors.firstname}
+                    </div>
+                    <Custominput
+                      type="text"
+                      name="lastname"
+                      placeholder="Lastname"
+                      value={formik.values.lastname}
+                      onChange={formik.handleChange("lastname")}
+                      onBlur={formik.handleBlur("lastname")}
+                    />
 
-                <div className="error">
-                  {formik.touched.lastname && formik.errors.lastname}
-                </div>
+                    <div className="error">
+                      {formik.touched.lastname && formik.errors.lastname}
+                    </div>
 
-                <Custominput
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formik.values.email}
-                  onChange={formik.handleChange("email")}
-                  onBlur={formik.handleBlur("email")}
-                />
-                <div className="error">
-                  {formik.touched.email && formik.errors.email}
-                </div>
-                <Custominput
-                  type="tel"
-                  name="mobile"
-                  placeholder="Mobile Number"
-                  value={formik.values.mobile}
-                  onChange={formik.handleChange("mobile")}
-                  onBlur={formik.handleBlur("mobile")}
-                />
-                <div className="error">
-                  {formik.touched.mobile && formik.errors.mobile}
-                </div>
-                <Custominput
-                  className="mt-1"
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange("password")}
-                  onBlur={formik.handleBlur("password")}
-                />
-                <div className="error">
-                  {formik.touched.password && formik.errors.password}
-                </div>
+                    <Custominput
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      value={formik.values.email}
+                      onChange={formik.handleChange("email")}
+                      onBlur={formik.handleBlur("email")}
+                    />
+                    <div className="error">
+                      {formik.touched.email && formik.errors.email}
+                    </div>
+                    <Custominput
+                      type="tel"
+                      name="mobile"
+                      placeholder="Mobile Number"
+                      value={formik.values.mobile}
+                      onChange={formik.handleChange("mobile")}
+                      onBlur={formik.handleBlur("mobile")}
+                    />
+                    <div className="error">
+                      {formik.touched.mobile && formik.errors.mobile}
+                    </div>
+                    <Custominput
+                      className="mt-1"
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      value={formik.values.password}
+                      onChange={formik.handleChange("password")}
+                      onBlur={formik.handleBlur("password")}
+                    />
+                    <div className="error">
+                      {formik.touched.password && formik.errors.password}
+                    </div>
 
-                <div>
-                  <div className=" mt-3 d-flex justify-content-center gap-15 align-items-center   ">
-                    <button className="button border-0  " type="submit">
-                      Signup
-                    </button>
-                  </div>
+                    <div>
+                      <div className=" mt-3 d-flex justify-content-center gap-15 align-items-center   ">
+                        <button className="button border-0  " type="submit">
+                          Signup
+                        </button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
-              </form>
+              </div>
             </div>
-          </div>
-        </div>
-      </Container>
+          </Container>
+        </>
+      ) : null}
     </>
   );
 };

@@ -4,7 +4,9 @@ import "./header.css";
 // import logo from "../../images/Rai_appliancs-removebg-preview.png";
 import { FaGripLinesVertical } from "react-icons/fa";
 import { Logo } from "../../utils/logo_import";
+import { useSelector } from "react-redux";
 const Header = () => {
+  const user = useSelector((state) => state.auth.user);
   const navBar = [
     // {
     //   path: "compare-product",
@@ -17,7 +19,7 @@ const Header = () => {
       title: "Wishlist",
     },
     {
-      path: "login",
+      path: "profile",
       img: "/images/user.svg",
       title: "My Account",
     },
@@ -77,11 +79,7 @@ const Header = () => {
               <div className="name-div col-md-2 col-2 d-none d-md-block align-items-center d-flex justify-content-center">
                 <h2 className="align-items-center d-flex justify-content-center mb-0">
                   <Link to="/" className="text-green ">
-                    <img
-                      src={Logo}
-                      style={{ width: "50px" }}
-                      alt="logo"
-                    />
+                    <img src={Logo} style={{ width: "50px" }} alt="logo" />
                   </Link>
                   {/* <Link className="text-green d-block d-md-none">LOGO</Link> */}
                 </h2>
@@ -110,7 +108,13 @@ const Header = () => {
                     return (
                       <li key={i} style={{ listStyle: "none" }}>
                         <Link
-                          to={`${path}`}
+                          to={
+                            path == "profile"
+                              ? user
+                                ? `/${path}`
+                                : `/login`
+                              : `/${path}`
+                          }
                           className="d-flex badge-cart-head  align-items-center gap-10 text-white "
                         >
                           <img className="icon" src={`${img}`} alt="compare" />
