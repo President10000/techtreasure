@@ -1,4 +1,4 @@
-import ReactStars from "react-rating-stars-component";
+// import ReactStars from "react-rating-stars-component";
 import Meta from "../../components/Meta";
 import BreadCrumb from "../../components/BreadCrumb";
 import { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ import { RiArrowUpSFill } from "react-icons/ri";
 import "./ourstore.css";
 
 const OurStore = () => {
-  const [grid, setGrid] = useState(1);
+  const [grid, setGrid] = useState(window.innerWidth > 1000?4:window.innerWidth < 600?12:6);
 
   const [category, setCategory] = useState(window.innerWidth > 1000);
   const [FilterBy, setFilterBy] = useState(window.innerWidth > 1000);
@@ -20,7 +20,7 @@ const OurStore = () => {
   const [tags, setTags] = useState(window.innerWidth > 1000);
 
   const productState = useSelector((state) => state.product.products);
-  console.log(productState);
+  // console.log(productState);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const OurStore = () => {
     <>
       <Meta title="Our Store" />
       <BreadCrumb title="Our Store" />
-      <Container class1="store-wrapper home-wrapper-2 py-5 ">
+      <Container class1="store-wrapper home-wrapper-2 py-3 ">
         <div className="row">
           <div className="mb-2 col-12 col-lg-3 d-flex flex-column align-item-center justify-content-start row-gap-2">
             {/* first div */}
@@ -313,10 +313,10 @@ const OurStore = () => {
               </div>
             </div>
             <div className="products-list pb-5 ">
-              <div className="d-flex gap-1 flex-wrap ">
+              <div className="d-flex gap-1 flex-wrap justify-content-center">
                 <ProductCard
                   grid={grid}
-                  data={productState ? productState : []}
+                  productdata={productState ? productState : []}
                 />
               </div>
             </div>

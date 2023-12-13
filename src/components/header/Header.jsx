@@ -49,7 +49,7 @@ const Header = () => {
   return (
     <>
       {/* first header */}
-      <header className="header-top-strip d-none d-xxl-block py-3 ">
+      {/* <header className="header-top-strip d-none d-xxl-block py-3 ">
         <div className="container-xxl">
           <div className="row">
             <div className="col-6">
@@ -67,13 +67,13 @@ const Header = () => {
             </div>
           </div>
         </div>
-      </header>
+      </header> */}
 
       {/* second header */}
-      <header className="header-upper py-1 py-lg-2  ">
+      <header className="header-upper py-1   ">
         <div className="container-xxl">
           <div className="row align-items-center d-flex flex-grow-1">
-            <div className="col-lg-6  col-md-12 col-12 mt-sm-3 mb-lg-3 align-items-center d-flex justify-content-center">
+            <div className="col-lg-6  col-md-12 col-12  align-items-center d-flex justify-content-center">
               <div className="name-div col-md-2 col-2 d-none d-md-block align-items-center d-flex justify-content-center">
                 <h2 className="align-items-center d-flex justify-content-center mb-0">
                   <Link to="/" className="text-green ">
@@ -131,7 +131,7 @@ const Header = () => {
 
       {/* third header */}
 
-      <header className="header-bottom py-1 py-md-3">
+      <header className="header-bottom py-1 ">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
