@@ -6,8 +6,8 @@ const BreadCrumb = (props) => {
       <div className="container-xxl">
         <div className="row">
           <div className="col-12">
-            <p className="text-center mb-0 ">
-              <Link to="/" className="text-dark">
+            <p className="text-center mb-0 " style={{fontSize:'small'}}>
+              <Link to="/" className="text-dark" >
                 Home &nbsp;
               </Link>{" "}
               / {title}

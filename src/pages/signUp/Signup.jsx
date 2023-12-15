@@ -11,15 +11,31 @@ import "./signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 const signUpSchema = yup.object({
-  firstname: yup.string().required("Firstname is required"),
-  lastname: yup.string().required("Lastname is required"),
+  firstname: yup
+    .string()
+    .required("Firstname is required")
+    .min(3, "Too Short!")
+    .max(20, "Too Long!"),
+  lastname: yup
+    .string()
+    .required("Lastname is required")
+    .min(3, "Too Short!")
+    .max(20, "Too Long!"),
 
   email: yup
     .string()
     .email("Email should be valid")
     .required("Email is required"),
-  mobile: yup.string().required("Mobile is required"),
-  password: yup.string().required("Password is required"),
+  mobile: yup
+    .string()
+    .required("Mobile is required")
+    .min(10, "Not valid!")
+    .max(10, "Not valid!"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(4, "Too Short!")
+    .max(100, "Too Long!"),
 });
 const Signup = () => {
   const user = useSelector((state) => state.auth.user);
@@ -57,7 +73,13 @@ const Signup = () => {
             <div className="row">
               <div className="col-12 d-flex align-item-center justify-content-center">
                 <div className="auth-card col-12 col-md-8 col-lg-6">
-                <p className="already "> Already have an account <Link to="/login"  className="px-2 text-blue">login</Link> </p>
+                  <p className="already ">
+                    {" "}
+                    Already have an account{" "}
+                    <Link to="/login" className="px-2 text-blue">
+                      login
+                    </Link>{" "}
+                  </p>
                   <h3 className="text-center mb-3 ">Create account</h3>
                   <form
                     action=""

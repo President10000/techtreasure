@@ -21,6 +21,7 @@ const ProductCard = ({ grid, productdata }) => {
 
   if (location.pathname === "/" || location.pathname === "/product/:id") {
     // If the current route is the home page, render the HomeProductCard component.
+    const { brand, title, price, images, description }=productdata
     return (
       <div
         className={`${
@@ -41,16 +42,26 @@ const ProductCard = ({ grid, productdata }) => {
         >
           <div className="wishlist-icon position-absolute ">
             <button className="border-0 bg-transparent ">
-              <img src={wish} alt="wishlist" />
+              {/* <img src={wish} alt="wishlist" /> */}w
             </button>
           </div>
           <div className="product-image">
-            <img src={watch} className="img-fluid" alt="product image" />
-            <img src={watch2} className="img-fluid" alt="product image" />
+            {/* <img src={watch} className="img-fluid" alt="product image" />
+            <img src={watch2} className="img-fluid" alt="product image" /> */}
+            <img
+                  src={images.primary[0].url}
+                  className="img-fluid"
+                  alt="product image"
+                />
+                <img
+                  src={images.primary[0].url}
+                  className="img-fluid"
+                  alt="product image"
+                />
           </div>
           <div className="product-details">
-            <h6 className="brand">{demoBrand}</h6>
-            <h5 className="product-title">{demoTitle}</h5>
+            <h6 className="brand">{brand}</h6>
+            <h5 className="product-title">  {title.length > 50 ? title.slice(0, 50) + "..." : title}</h5>
             <ReactStars
               edit={false}
               value={3}
@@ -59,9 +70,9 @@ const ProductCard = ({ grid, productdata }) => {
               activeColor="#ffd700"
             />
             <p className={`description ${grid === 12 ? "d-block" : "d-none "}`}>
-              {demoDescription}
+            {description.head_desc}
             </p>
-            <p className="price">${demoPrice}.00</p>
+            <p className="price">${price}.00</p>
           </div>
           <div className="action-bar position-absolute ">
             <div className="d-flex flex-column gap-15 ">
@@ -85,8 +96,7 @@ const ProductCard = ({ grid, productdata }) => {
     <>
       {productdata?.map((item, index) => {
         const { brand, title, price, images, description } = item;
-        console.log(index == 0 && item);
-        console.log(location.pathname)
+        // console.log(index == 0 && item);
         return (
           <div
             key={index}

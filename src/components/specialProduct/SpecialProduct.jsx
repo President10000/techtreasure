@@ -2,17 +2,18 @@ import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 import "./specialproduct.css";
 // import "../productCard/productcard.css";
-const SpecialProduct = () => {
+const SpecialProduct = ({productdata}) => {
+  const {local_price, brand, title, price, images, description }=productdata
   return (
     <div className="col-12 col-md-6 col-lg-6 col-xxl-6  mb-3">
       <div className="special-product-card">
         <div className="d-flex justify-content-between ">
           <div>
-            <img src="images/watch.jpg" className="img-fluid" alt="watch" />
+            <img src={images.primary[0].url} className="img-fluid" alt="watch" />
           </div>
           <div className="special-product-content">
-            <h5 className="brand">Samsung</h5>
-            <h5 className="title">Samsung Galaxy Note10+ 256GB Aura Black</h5>
+            <h5 className="brand">{brand}</h5>
+            <h5 className="title"> {title.length > 50 ? title.slice(0, 50) + "..." : title}</h5>
             <ReactStars
               edit={false}
               value={3}
@@ -21,7 +22,7 @@ const SpecialProduct = () => {
               activeColor="#ffd700"
             />
             <p className="price">
-              <span className="red-p">$100</span> &nbsp; <strike>$200</strike>
+              <span className="red-p">${price}</span> &nbsp; <strike>${local_price}</strike>
             </p>
             <div className="discount-till d-flex align-items-center gap-10  ">
               <p className="mb-0">
