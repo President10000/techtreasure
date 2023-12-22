@@ -16,19 +16,35 @@ import services, {
 } from "../../utils/Data";
 import { Banner_primery } from "../../utils/images_import";
 import { useEffect, useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { popular, today_Special } from "../../features/product/productSlice";
 // import mainbanner from "../../images/main-banner-02.jpg";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const populerProducts = useSelector((state) => state.product.popular);
+  const today_Special_products = useSelector((state) => state.product.today_Special);
   const [service_transition, setService_transition] = useState(0);
   const [transitionLength, setTransitionLength] = useState(
     window.innerWidth < 600 ? 840 : 440
   );
+
   useEffect(() => {
-    addEventListener("resize", function () {
+    function getProducs() {
+      if (!populerProducts.length) dispatch(popular());
+      if (!today_Special_products.length) dispatch(today_Special());
+    }
+    getProducs();
+
+    function transition() {
       setTransitionLength(window.innerWidth < 600 ? 840 : 440);
-    });
-  }, []);
+    }
+    addEventListener("resize", transition);
+    return () => {
+      removeEventListener("resize", transition);
+    };
+  }, [dispatch, populerProducts.length,today_Special_products.length]);
+
   return (
     <>
       {/* first section */}
@@ -163,7 +179,7 @@ const Home = () => {
       </Container>
 
       {/* third section */}
-      <Container class1="home-wrapper-2 pb-5">
+      {/* <Container class1="home-wrapper-2 pb-5">
         <div className="row">
           <div className="categories d-flex flex-wrap  justify-content-between align-items-center">
             {Items_1.map((item, i) => {
@@ -183,18 +199,17 @@ const Home = () => {
             })}
           </div>
         </div>
-      </Container>
+      </Container> */}
 
       {/* fourth section */}
       <Container class1="featured-wrapper py-5 home-wrapper-2 ">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">Fetured Collection</h3>
+            <h3 className="section-heading">Most Polular</h3>
           </div>
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {populerProducts.map((item, i) => {
+            return <ProductCard productdata={item} key={i} />;
+          })}
         </div>
       </Container>
 
@@ -226,14 +241,13 @@ const Home = () => {
       <Container class1=" special-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">Special Products</h3>
+            <h3 className="section-heading">Todays Special</h3>
           </div>
         </div>
         <div className="row ">
-          <SpecialProduct />
-          <SpecialProduct />
-          <SpecialProduct />
-          <SpecialProduct />
+          {today_Special_products.map((item, i) => {
+            return <SpecialProduct productdata={item} key={i} />;
+          })}
         </div>
       </Container>
 
@@ -245,10 +259,9 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {populerProducts.map((item, i) => {
+            return <ProductCard productdata={item} key={i} />;
+          })}
         </div>
       </Container>
 

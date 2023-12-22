@@ -1,4 +1,4 @@
-import ReactStars from "react-rating-stars-component";
+// import ReactStars from "react-rating-stars-component";
 import Meta from "../../components/Meta";
 import BreadCrumb from "../../components/BreadCrumb";
 import { useEffect, useState } from "react";
@@ -6,56 +6,73 @@ import ProductCard from "../../components/productCard/ProductCard";
 // import Color from "../../components/Color";
 import Container from "../../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../../features/product/productSlice";
+import {
+  getAllProducts,
+  getProductsByCategory,
+} from "../../features/product/productSlice";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { RiArrowUpSFill } from "react-icons/ri";
 import "./ourstore.css";
-
 const OurStore = () => {
-  const [grid, setGrid] = useState(1);
+  const query = new URLSearchParams(window.location.search);
+  const category = query.get("category");
+  const [grid, setGrid] = useState(
+    window.innerWidth > 1000 ? 4 : window.innerWidth < 600 ? 12 : 6
+  );
 
-  const [category, setCategory] = useState(window.innerWidth > 1000);
+  // const [category, setCategory] = useState(window.innerWidth > 1000);
   const [FilterBy, setFilterBy] = useState(window.innerWidth > 1000);
   const [availiblity, setAvailiblity] = useState(window.innerWidth > 1000);
   const [tags, setTags] = useState(window.innerWidth > 1000);
 
   const productState = useSelector((state) => state.product.products);
-  console.log(productState);
+  const refresh = useSelector((state) => state.product.refresh);
+  const productStateByCategory = useSelector(
+    (state) => state.product.productsByCategory
+  );
+  // console.log(productState);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(category);
+    function getproducts() {
+      if (category) {
+        dispatch(getProductsByCategory(category.toLowerCase()));
+      } else {
+        dispatch(getAllProducts());
+      }
+    }
     getproducts();
-  }, []);
-
-  const getproducts = () => {
-    dispatch(getAllProducts());
-  };
-
+  }, [dispatch, category,refresh]);
   useEffect(() => {
-    addEventListener("resize", function () {
-      setCategory(window.innerWidth > 1000);
+    function resize() {
+      // setCategory(window.innerWidth > 1000);
       setFilterBy(window.innerWidth > 1000);
       setAvailiblity(window.innerWidth > 1000);
       setTags(window.innerWidth > 1000);
-    });
+    }
+    addEventListener("resize",resize);
+    return ()=>{
+      removeEventListener("resize",resize);
+    }
   }, []);
 
   return (
     <>
       <Meta title="Our Store" />
       <BreadCrumb title="Our Store" />
-      <Container class1="store-wrapper home-wrapper-2 py-5 ">
+      <Container class1="store-wrapper home-wrapper-2 py-3 ">
         <div className="row">
           <div className="mb-2 col-12 col-lg-3 d-flex flex-column align-item-center justify-content-start row-gap-2">
             {/* first div */}
-            <div className="filter-card align-item-center justify-content-start gap-1 ">
+            {/* <div className="filter-card align-item-center justify-content-start gap-1 ">
               <button
                 className="d-flex  align-item-center justify-content-start gap-2 px-2 w-100"
                 onClick={() => setCategory(!category)}
               >
                 <h3 className="filter-title fs-6 mb-0">Shop By Category</h3>
                 <span className="px-2 py-0">
-                 {category?<RiArrowUpSFill />: <IoMdArrowDropdown />}
+                  {category ? <RiArrowUpSFill /> : <IoMdArrowDropdown />}
                 </span>
               </button>
               {category ? (
@@ -73,7 +90,7 @@ const OurStore = () => {
               ) : (
                 ""
               )}
-            </div>
+            </div> */}
             {/* second div */}
             <div className="filter-card ">
               <button
@@ -82,7 +99,7 @@ const OurStore = () => {
               >
                 <h3 className="filter-title">Filter By </h3>
                 <span className="px-2 py-0">
-                {FilterBy?<RiArrowUpSFill />: <IoMdArrowDropdown />}
+                  {FilterBy ? <RiArrowUpSFill /> : <IoMdArrowDropdown />}
                 </span>
               </button>
               {FilterBy ? (
@@ -94,12 +111,16 @@ const OurStore = () => {
                   >
                     <button
                       className="d-flex  align-item-center justify-content-start gap-2 px-2 mt-2 "
-                      style={{width:"fit-content"}}
+                      style={{ width: "fit-content" }}
                       onClick={() => setAvailiblity(!availiblity)}
                     >
                       <h3 className=" fs-6">Availablity</h3>
                       <span className="px-2 py-0">
-                      {availiblity?<RiArrowUpSFill />: <IoMdArrowDropdown />}
+                        {availiblity ? (
+                          <RiArrowUpSFill />
+                        ) : (
+                          <IoMdArrowDropdown />
+                        )}
                       </span>
                     </button>
                     {availiblity && (
@@ -233,7 +254,7 @@ const OurStore = () => {
               >
                 <h3 className="filter-title fs-6">Products Tags</h3>
                 <span className="px-2 py-0">
-                {tags?<RiArrowUpSFill />: <IoMdArrowDropdown />}
+                  {tags ? <RiArrowUpSFill /> : <IoMdArrowDropdown />}
                 </span>
               </button>
               {tags && (
@@ -313,11 +334,20 @@ const OurStore = () => {
               </div>
             </div>
             <div className="products-list pb-5 ">
-              <div className="d-flex gap-1 flex-wrap ">
-                <ProductCard
-                  grid={grid}
-                  data={productState ? productState : []}
-                />
+              <div className="d-flex gap-1 flex-wrap justify-content-center">
+                {category ? (
+                  <ProductCard
+                    grid={grid}
+                    productdata={
+                      productStateByCategory ? productStateByCategory : []
+                    }
+                  />
+                ) : (
+                  <ProductCard
+                    grid={grid}
+                    productdata={productState ? productState : []}
+                  />
+                )}
               </div>
             </div>
           </div>

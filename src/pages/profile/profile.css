@@ -1,0 +1,11 @@
+.info li{
+display: flex;
+justify-content:flex-start;
+align-items: center;
+column-gap: 20px;
+padding: 5px 10px;
+}
+
+.info li p,h4{
+    margin-bottom: 0px;
+}

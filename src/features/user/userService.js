@@ -15,6 +15,9 @@ const login = async (userdata) => {
     return response.data;
   }
 };
+// const logout = async () => {
+//   localStorage.removeItem("customer");
+// };
 
 const getUserWishlist = async () => {
   // console.log(config);

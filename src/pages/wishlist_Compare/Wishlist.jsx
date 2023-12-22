@@ -17,7 +17,7 @@ const Wishlist = () => {
     dispatch(getUserProductWishlist());
   };
 
-  const wishlistState = useSelector((state) => state.auth.wishlist.wishlist);
+  const wishlistState = useSelector((state) => state.auth.wishlist?.wishlist);
   const removefromWishlist = (id) => {
     dispatch(addToWishlist(id));
     setTimeout(() => {
@@ -41,7 +41,7 @@ const Wishlist = () => {
               </h4>
             </div>
           )}
-          {wishlistState.map((item, index) => {
+          {wishlistState?.map((item, index) => {
             return (
               <div key={index} className="col-6 col-md-4 col-lg-3">
                 <div className="wishlist-card position-relative ">

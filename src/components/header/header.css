@@ -87,9 +87,24 @@
 .icon{
   height: 20px;
 }
+.category_list{
+  justify-content: center;
+}
 
 @media (min-width:765px) {
   .icon{
     height: 40px;
+  }
+}
+
+@media (max-width:650px) {
+  .categoey_font{
+    font-size:small;
+  }
+}
+
+@media (max-width:1000px) {
+  .category_list{
+    justify-content: flex-start;
   }
 }

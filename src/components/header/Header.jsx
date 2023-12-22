@@ -1,9 +1,21 @@
 import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import "./header.css";
-import logo from "../../images/Rai_appliancs-removebg-preview.png";
+// import logo from "../../images/Rai_appliancs-removebg-preview.png";
 import { FaGripLinesVertical } from "react-icons/fa";
+import { Logo } from "../../utils/logo_import";
+import { useSelector,useDispatch } from "react-redux";
+import { useState } from "react";
+import { setRefresh } from "../../features/product/productSlice";
 const Header = () => {
+  const dispatch=useDispatch()
+  const user = useSelector((state) => state.auth.user);
+
+
+  function onRefresh(){
+    dispatch(setRefresh())
+  }
+
   const navBar = [
     // {
     //   path: "compare-product",
@@ -16,7 +28,7 @@ const Header = () => {
       title: "Wishlist",
     },
     {
-      path: "login",
+      path: "profile",
       img: "/images/user.svg",
       title: "My Account",
     },
@@ -29,10 +41,16 @@ const Header = () => {
     },
   ];
   const miniNav = [
-    { nav: "", title: "Home" },
-    { nav: "product", title: "OurStore" },
-    // { nav: "blogs", title: "blogs" },
-    // { nav: "contact", title: "contacts" },
+    // { nav: "", title: "Home" },
+    { nav: "product", title: "mobiles" },
+    { title: "Syringe", nav: "OurStore" },
+    { title: "Ortho", nav: "OurStore" },
+    { title: "Pathology machine", nav: "OurStore" },
+    { title: "Pratient monitor", nav: "OurStore" },
+    { title: "Cartical care", nav: "OurStore" },
+    { title: "Baby", nav: "OurStore" },
+    { title: "Dental care", nav: "OurStore" },
+    { title: "Gauze product", nav: "OurStore" },
   ];
 
   function pushIcon(miniNav) {
@@ -45,10 +63,25 @@ const Header = () => {
     }, []);
   }
 
+  const [drag, setDrag] = useState(false);
+  const [translateX, setTransX] = useState(0);
+  function mouseDownHandler() {
+    setDrag(true);
+  }
+  function mouseMoveHandler(e) {
+    if (drag) {
+      console.log(e.movementX)
+      setTransX(pre=>pre+e.movementX)
+    }
+  }
+  function upHandler(){
+    setDrag(false)
+  }
+console.log(drag)
   return (
     <>
       {/* first header */}
-      <header className="header-top-strip d-none d-xxl-block py-3 ">
+      {/* <header className="header-top-strip d-none d-xxl-block py-3 ">
         <div className="container-xxl">
           <div className="row">
             <div className="col-6">
@@ -66,21 +99,17 @@ const Header = () => {
             </div>
           </div>
         </div>
-      </header>
+      </header> */}
 
       {/* second header */}
-      <header className="header-upper py-1 py-lg-2  ">
+      <header className="header-upper py-1   ">
         <div className="container-xxl">
           <div className="row align-items-center d-flex flex-grow-1">
-            <div className="col-lg-6  col-md-12 col-12 mt-sm-3 mb-lg-3 align-items-center d-flex justify-content-center">
+            <div className="col-lg-6  col-md-12 col-12  align-items-center d-flex justify-content-center">
               <div className="name-div col-md-2 col-2 d-none d-md-block align-items-center d-flex justify-content-center">
                 <h2 className="align-items-center d-flex justify-content-center mb-0">
                   <Link to="/" className="text-green ">
-                    <img
-                      src={logo}
-                      style={{ width: "35px", height: "35px" }}
-                      alt="logo"
-                    />
+                    <img src={Logo} style={{ width: "50px" }} alt="logo" />
                   </Link>
                   {/* <Link className="text-green d-block d-md-none">LOGO</Link> */}
                 </h2>
@@ -101,7 +130,7 @@ const Header = () => {
             <div className="col-12  col-lg-6 py-2 py-md-2 ">
               {
                 <ul
-                  className="d-flex align-items-center justify-content-evenly"
+                  className="w-100 d-flex align-items-center justify-content-evenly"
                   style={{ paddingLeft: "0px", marginBottom: "0px" }}
                 >
                   {navBar.map((item, i) => {
@@ -109,7 +138,13 @@ const Header = () => {
                     return (
                       <li key={i} style={{ listStyle: "none" }}>
                         <Link
-                          to={`${path}`}
+                          to={
+                            path == "profile"
+                              ? user
+                                ? `/${path}`
+                                : `/login`
+                              : `/${path}`
+                          }
                           className="d-flex badge-cart-head  align-items-center gap-10 text-white "
                         >
                           <img className="icon" src={`${img}`} alt="compare" />
@@ -130,33 +165,37 @@ const Header = () => {
 
       {/* third header */}
 
-      <header className="header-bottom py-1 py-md-3">
+      <header className="header-bottom py-1 ">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              <div className="menu-bottom d-flex align-items-center justify-content-center ">
+              <div  className="menu-bottom d-flex align-items-center justify-content-center ">
                 <ul
-                  className="d-flex align-items-center justify-content-center gap-15"
+                onMouseMove={(e) => mouseMoveHandler(e)} onMouseUp={(e)=>upHandler(e)} onMouseDown={(e)=>mouseDownHandler(e)} 
+                  className="category_list overflow-hidden d-flex align-items-center  gap-15"
                   style={{ paddingLeft: "0px", marginBottom: "0px" }}
                 >
                   {pushIcon(miniNav).map((item, i) => {
                     const { title, nav, type } = item;
+
                     if (type == "icon") {
                       return (
                         <li
+                         
                           key={i}
-                          style={{ listStyle: "none" }}
-                          className="text-white d-flex align-items-center justify-content-center"
+                          style={{translate:`${translateX}px`, listStyle: "none" }}
+                          className=" text-white d-flex align-items-center justify-content-center"
                         >
                           <FaGripLinesVertical />
                         </li>
                       );
                     }
                     return (
-                      <li key={i} style={{ listStyle: "none" }}>
+                      <li    className="categoey_font" key={i} style={{ translate:`${translateX}px`,listStyle: "none" }}>
                         <NavLink
-                          className="text-white text-uppercase"
-                          to={`/${nav}`}
+                        onClick={()=>onRefresh()}
+                          className=" text-white text-uppercase"
+                          to={`/product?category=${title}`}
                         >
                           {title}
                         </NavLink>
@@ -173,4 +212,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header
