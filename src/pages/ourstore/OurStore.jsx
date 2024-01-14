@@ -6,10 +6,8 @@ import ProductCard from "../../components/productCard/ProductCard";
 // import Color from "../../components/Color";
 import Container from "../../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllProducts,
-  getProductsByCategory,
-} from "../../features/product/productSlice";
+import { getAllProducts } from "../../features/product/productSlice";
+import { getProductsByCategory } from "../../features/productsByCategory/productByCategorySlice";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { RiArrowUpSFill } from "react-icons/ri";
 import "./ourstore.css";
@@ -26,24 +24,26 @@ const OurStore = () => {
   const [tags, setTags] = useState(window.innerWidth > 1000);
 
   const productState = useSelector((state) => state.product.products);
-  const refresh = useSelector((state) => state.product.refresh);
-  const productStateByCategory = useSelector(
-    (state) => state.product.productsByCategory
+  const refresh = useSelector((state) => state.productBycategory.refresh);
+  const products = useSelector(
+    (state) => state.productBycategory.products[`${category}`]
   );
   // console.log(productState);
   const dispatch = useDispatch();
-
+  console.log(category);
   useEffect(() => {
     console.log(category);
     function getproducts() {
-      if (category) {
+      if (category && !products) {
         dispatch(getProductsByCategory(category.toLowerCase()));
       } else {
         dispatch(getAllProducts());
       }
     }
+    console.log(products);
     getproducts();
-  }, [dispatch, category,refresh]);
+  }, [dispatch, category, products, refresh]);
+  
   useEffect(() => {
     function resize() {
       // setCategory(window.innerWidth > 1000);
@@ -51,10 +51,10 @@ const OurStore = () => {
       setAvailiblity(window.innerWidth > 1000);
       setTags(window.innerWidth > 1000);
     }
-    addEventListener("resize",resize);
-    return ()=>{
-      removeEventListener("resize",resize);
-    }
+    addEventListener("resize", resize);
+    return () => {
+      removeEventListener("resize", resize);
+    };
   }, []);
 
   return (
@@ -338,9 +338,8 @@ const OurStore = () => {
                 {category ? (
                   <ProductCard
                     grid={grid}
-                    productdata={
-                      productStateByCategory ? productStateByCategory : []
-                    }
+                    productdata={products ? products : []}
+                    // productdata={ []}
                   />
                 ) : (
                   <ProductCard

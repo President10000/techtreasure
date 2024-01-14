@@ -4,16 +4,15 @@ import "./header.css";
 // import logo from "../../images/Rai_appliancs-removebg-preview.png";
 import { FaGripLinesVertical } from "react-icons/fa";
 import { Logo } from "../../utils/logo_import";
-import { useSelector,useDispatch } from "react-redux";
-import { useState } from "react";
-import { setRefresh } from "../../features/product/productSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { setRefresh } from "../../features/productsByCategory/productByCategorySlice";
 const Header = () => {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
 
-
-  function onRefresh(){
-    dispatch(setRefresh())
+  function onRefresh() {
+    dispatch(setRefresh());
   }
 
   const navBar = [
@@ -69,15 +68,31 @@ const Header = () => {
     setDrag(true);
   }
   function mouseMoveHandler(e) {
-    if (drag) {
-      console.log(e.movementX)
-      setTransX(pre=>pre+e.movementX)
+    if (!drag) return;
+    // const maxX = Math.abs(
+    //   (window.innerWidth - (window.innerWidth < 650 ? 510 : 735)) / 2
+    // );
+    const maxX = Math.abs((window.innerWidth - 1300) / 2);
+    if (e.movementX > 0 && translateX < maxX) {
+      setTransX((pre) => pre + e.movementX);
+    } else if (e.movementX < 0 && translateX > -maxX) {
+      setTransX((pre) => pre + e.movementX);
     }
   }
-  function upHandler(){
-    setDrag(false)
+  function upHandler() {
+    setDrag(false);
   }
-console.log(drag)
+  // console.log(drag);
+
+  useEffect(() => {
+    function onMouseUp() {
+      setDrag(false);
+    }
+
+    addEventListener("mouseup", onMouseUp);
+    return () => removeEventListener("mouseup", onMouseUp);
+  },[setDrag]);
+
   return (
     <>
       {/* first header */}
@@ -169,9 +184,11 @@ console.log(drag)
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
-              <div  className="menu-bottom d-flex align-items-center justify-content-center ">
+              <div className="menu-bottom d-flex align-items-center justify-content-center ">
                 <ul
-                onMouseMove={(e) => mouseMoveHandler(e)} onMouseUp={(e)=>upHandler(e)} onMouseDown={(e)=>mouseDownHandler(e)} 
+                  onMouseMove={(e) => mouseMoveHandler(e)}
+                  onMouseUp={(e) => upHandler(e)}
+                  onMouseDown={(e) => mouseDownHandler(e)}
                   className="category_list overflow-hidden d-flex align-items-center  gap-15"
                   style={{ paddingLeft: "0px", marginBottom: "0px" }}
                 >
@@ -181,9 +198,11 @@ console.log(drag)
                     if (type == "icon") {
                       return (
                         <li
-                         
                           key={i}
-                          style={{translate:`${translateX}px`, listStyle: "none" }}
+                          style={{
+                            translate: `${translateX}px`,
+                            listStyle: "none",
+                          }}
                           className=" text-white d-flex align-items-center justify-content-center"
                         >
                           <FaGripLinesVertical />
@@ -191,9 +210,16 @@ console.log(drag)
                       );
                     }
                     return (
-                      <li    className="categoey_font" key={i} style={{ translate:`${translateX}px`,listStyle: "none" }}>
+                      <li
+                        className="categoey_font"
+                        key={i}
+                        style={{
+                          translate: `${translateX}px`,
+                          listStyle: "none",
+                        }}
+                      >
                         <NavLink
-                        onClick={()=>onRefresh()}
+                          onClick={() => onRefresh()}
                           className=" text-white text-uppercase"
                           to={`/product?category=${title}`}
                         >
@@ -212,4 +238,4 @@ console.log(drag)
   );
 };
 
-export default Header
+export default Header;

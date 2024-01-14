@@ -17,7 +17,7 @@ import services, {
 import { Banner_primery } from "../../utils/images_import";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { popular, today_Special } from "../../features/product/productSlice";
+// import { popular, today_Special } from "../../features/product/productSlice";
 // import mainbanner from "../../images/main-banner-02.jpg";
 
 const Home = () => {
@@ -31,8 +31,8 @@ const Home = () => {
 
   useEffect(() => {
     function getProducs() {
-      if (!populerProducts.length) dispatch(popular());
-      if (!today_Special_products.length) dispatch(today_Special());
+      // if (!populerProducts.length) dispatch(popular());
+      // if (!today_Special_products.length) dispatch(today_Special());
     }
     getProducs();
 
@@ -43,7 +43,7 @@ const Home = () => {
     return () => {
       removeEventListener("resize", transition);
     };
-  }, [dispatch, populerProducts.length,today_Special_products.length]);
+  }, [dispatch]);
 
   return (
     <>
@@ -57,29 +57,8 @@ const Home = () => {
                 className="col-12 rounded-3"
                 alt="main banner"
               />
-              {/* <div className="main-banner-content position-absolute">
-                <h4>SUPERCHARGED FOR PROS.</h4>
-                <h5>iPad S13+ Pro.</h5>
-                <p>From $999.00 or $41.62/mo.</p>
-                <Link className="button"> Buy Now</Link>
-              </div> */}
             </div>
           </div>
-          {/* <div className="col-lg-6 col-md-12 col-sm-12">
-            <div className="main-banner position-relative  ">
-              <img
-                src={mainbanner}
-                className="col-12 rounded-3"
-                alt="main banner"
-              />
-              <div className="main-banner-content position-absolute">
-                <h4>SUPERCHARGED FOR PROS.</h4>
-                <h5>iPad S13+ Pro.</h5>
-                <p>From $999.00 or $41.62/mo.</p>
-                <Link className="button"> Buy Now</Link>
-              </div>
-            </div>
-          </div> */}
           <div className="  col-xxl-6 col-lg-6  co-md-12 col-sm-12 col-12 col-12 mt-3 mt-lg-0 ">
             <ul
               style={{
@@ -207,14 +186,14 @@ const Home = () => {
           <div className="col-12">
             <h3 className="section-heading">Most Polular</h3>
           </div>
-          {populerProducts.map((item, i) => {
+          {/* {populerProducts.map((item, i) => {
             return <ProductCard productdata={item} key={i} />;
-          })}
+          })} */}
         </div>
       </Container>
 
       {/* fifth section */}
-      <Container class1="famous-wrapper py-5  home-wrapper-2">
+      {/* <Container class1="famous-wrapper py-5  home-wrapper-2">
         <div className="row justify-content-evenly">
           {SCREEN_banners.map((item, i) => {
             const { img, title, subTitle, price } = item;
@@ -235,7 +214,7 @@ const Home = () => {
             );
           })}
         </div>
-      </Container>
+      </Container> */}
 
       {/* sixth seciton */}
       <Container class1=" special-wrapper py-5 home-wrapper-2">
@@ -245,9 +224,9 @@ const Home = () => {
           </div>
         </div>
         <div className="row ">
-          {today_Special_products.map((item, i) => {
+          {/* {today_Special_products.map((item, i) => {
             return <SpecialProduct productdata={item} key={i} />;
-          })}
+          })} */}
         </div>
       </Container>
 
@@ -259,14 +238,14 @@ const Home = () => {
           </div>
         </div>
         <div className="row">
-          {populerProducts.map((item, i) => {
+          {/* {populerProducts.map((item, i) => {
             return <ProductCard productdata={item} key={i} />;
-          })}
+          })} */}
         </div>
       </Container>
 
       {/* eight section */}
-      <Container class1="marque-wrapper py-5 ">
+      {/* <Container class1="marque-wrapper py-5 ">
         <div className="row">
           <div className="col-12">
             <div className="marquee-inner-wrapper card-wrapper">
@@ -283,7 +262,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </Container> */}
 
       {/* nine section */}
       {/* <Container class1="blog-wrapper py-5 home-wrapper-2 ">

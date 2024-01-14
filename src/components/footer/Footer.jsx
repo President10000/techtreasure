@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <>
       {/* first part */}
-      <footer className="py-4">
+      {/* <footer className="py-4">
         <div className="container-xxl">
           <div className="row  flex-wrap align-items-center justify-content-center ">
             <div className="col-12 col-lg-6 py-2 d-flex align-items-center justify-content-center">
@@ -33,10 +33,10 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </footer>
+      </footer> */}
       {/* responsive  */}
       {/* second part */}
-      <footer className="py-4">
+      {/* <footer className="py-4">
         <div className="container-xxl ">
           <div className="row flex-wrap">
             <div className="col-6 col-lg-3">
@@ -114,9 +114,9 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </footer>
+      </footer> */}
       {/* third part */}
-      <footer className="py-4">
+      <footer className="py-4  w-100">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
