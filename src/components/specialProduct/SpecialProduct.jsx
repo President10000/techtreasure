@@ -14,17 +14,17 @@ const SpecialProduct = ({productdata}) => {
           <div className="special-product-content">
             <h5 className="brand">{brand}</h5>
             <h5 className="title"> {title.length > 50 ? title.slice(0, 50) + "..." : title}</h5>
-            <ReactStars
+            {/* <ReactStars
               edit={false}
               value={3}
               count={5}
               size={24}
               activeColor="#ffd700"
-            />
+            /> */}
             <p className="price">
               <span className="red-p">${price}</span> &nbsp; <strike>${local_price}</strike>
             </p>
-            <div className="discount-till d-flex align-items-center gap-10  ">
+            {/* <div className="discount-till d-flex align-items-center gap-10  ">
               <p className="mb-0">
                 <b>5</b> days
               </p>
@@ -33,8 +33,8 @@ const SpecialProduct = ({productdata}) => {
                 <span className="badge rounded-circle p-3 bg-warning">1</span>:
                 <span className="badge rounded-circle p-3 bg-warning">1</span>
               </div>
-            </div>
-            <div className="prod-count my-3 ">
+            </div> */}
+            {/* <div className="prod-count my-3 ">
               <p>Products: 5</p>
               <div className="progress">
                 <div
@@ -46,7 +46,7 @@ const SpecialProduct = ({productdata}) => {
                   aria-valuemax="100"
                 ></div>
               </div>
-            </div>
+            </div> */}
             <Link className="button">Add to cart</Link>
           </div>
         </div>

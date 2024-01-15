@@ -9,6 +9,17 @@
   --color-777777: #777777;
   --color-1c1c1b: #1c1c1b;
 }
+.main-banner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-banner img{
+  object-fit:cover;
+  height: auto;
+  max-height: 300px;
+  width: 80vw;
+}
 
 .main-banner-content {
   top: 15%;
@@ -39,6 +50,9 @@
   letter-spacing: 0.4px;
 }
 @media screen and (max-width: 600px) {
+  .main-banner img{
+    width: 98vw;
+  }
   .main-banner-content h4 {
     font-size: 3vw;
     margin: 0;
