@@ -26,13 +26,13 @@ const OurStore = () => {
   const productState = useSelector((state) => state.product.products);
   const refresh = useSelector((state) => state.productBycategory.refresh);
   const products = useSelector(
-    (state) => state.productBycategory.products[`${category}`]
+    (state) => state.productBycategory.products[`${category.toLowerCase()}`]
   );
   // console.log(productState);
   const dispatch = useDispatch();
-  console.log(category);
+  // console.log(category);
   useEffect(() => {
-    console.log(category);
+    // console.log(category);
     function getproducts() {
       if (category && !products) {
         dispatch(getProductsByCategory(category.toLowerCase()));
@@ -40,7 +40,7 @@ const OurStore = () => {
         dispatch(getAllProducts());
       }
     }
-    console.log(products);
+    // console.log(products);
     getproducts();
   }, [dispatch, category, products, refresh]);
   

@@ -7,7 +7,7 @@ import { productcartimg } from "../../utils/Data.jsx";
 // import { useDispatch, useSelector } from "react-redux";
 // import { addToWishlist } from "../../features/product/productSlice.js";
 // import { useEffect } from "react";
-const IndividualProduct = ({productdata}) => {
+const IndividualProduct = ({grid, productdata}) => {
     const { prodcompare, view, addcart, wish, watch, watch2 } = productcartimg;
     // const { demoDescription, demoTitle, demoPrice, demoBrand } = demoData;
     const { brand, title, price, images, description }=productdata
