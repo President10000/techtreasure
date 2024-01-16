@@ -18,7 +18,6 @@ const grid=window.innerWidth>1000?4:window.innerWidth>600?6:12
     }
     getproducts();
   }, [dispatch, products]);
-  console.log(products);
   return (
     <div className="row">
       <div className="col-12">

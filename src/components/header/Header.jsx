@@ -41,22 +41,19 @@ const Header = () => {
   ];
   const miniNav = [
     // { nav: "", title: "Home" },
-    { nav: "product", title: "mobiles" },
-    { title: "Syringe", nav: "OurStore" },
-    { title: "Ortho", nav: "OurStore" },
-    { title: "Pathology machine", nav: "OurStore" },
-    { title: "Pratient monitor", nav: "OurStore" },
-    { title: "Cartical care", nav: "OurStore" },
-    { title: "Baby", nav: "OurStore" },
-    { title: "Dental care", nav: "OurStore" },
-    { title: "Gauze product", nav: "OurStore" },
+    { title: "mobiles" },
+    { title: "Syringe" },
+    { title: "Ortho" },
+    { title: "Pathology machine" },
+    { title: "Pratient monitor" },
+    { title: "Cartical care" },
+    { title: "Baby" },
+    { title: "Dental care" },
+    { title: "Gauze product" },
   ];
-
-
 
   return (
     <>
-
       {/* second header */}
       <header className="header-upper py-1   ">
         <div className="container-xxl">
@@ -86,11 +83,17 @@ const Header = () => {
                   className="w-100 d-flex align-items-center justify-content-evenly"
                   style={{ paddingLeft: "0px", marginBottom: "0px" }}
                 >
-                    <li style={{ listStyle: "none" }} className="d-flex badge-cart-head  align-items-center gap-10 text-white">
-                  <Link to="/" className="text-green icon ">
-                    <img src={Logo} alt="logo" />
-                  </Link>
-                  <p className="mb-0 d-none d-sm-block">{"HOME"}</p>
+                  <li
+                    style={{ listStyle: "none" }}
+                    className="d-flex badge-cart-head  align-items-center gap-10 text-white"
+                  >
+                    <Link
+                      to="/"
+                      className="d-flex badge-cart-head  align-items-center gap-10 text-white icon "
+                    >
+                      <img src={Logo} alt="logo" />
+                      <p className="mb-0 d-none d-sm-block">{"HOME"}</p>
+                    </Link>
                   </li>
                   {navBar.map((item, i) => {
                     const { path, img, title, badge, value } = item;
@@ -133,9 +136,8 @@ const Header = () => {
                   className="category_list overflow-hidden d-flex align-items-center  justify-content-center flex-wrap gap-10"
                   style={{ paddingLeft: "0px", marginBottom: "0px" }}
                 >
-                
                   {miniNav.map((item, i) => {
-                    const { title, nav} = item;
+                    const { title } = item;
                     return (
                       <li
                         className="categoey_font border border-2 border-black rounded-2 px-2 py-1"
