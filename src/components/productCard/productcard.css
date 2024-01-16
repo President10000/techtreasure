@@ -9,7 +9,10 @@
   --color-777777: #777777;
   --color-1c1c1b: #1c1c1b;
 }
-
+.individual-product{
+  max-height: 350px;
+  overflow: hidden;
+}
 .product-card {
   padding: 15px;
   background-color: white;
@@ -19,6 +22,16 @@
 }
 .product-card .product-image {
   height: 100%;
+  max-height: 200px;
+  min-width: 200px;
+  overflow: hidden;
+}
+.product-card .product-image >img{
+  width: 100%;
+  height: auto;
+  min-width: 200px;
+  min-height: 200px;
+  max-height: 200px;
 }
 .product-card .product-image > img {
   object-fit:cover;

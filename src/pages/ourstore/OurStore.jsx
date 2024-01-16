@@ -32,6 +32,7 @@ const OurStore = () => {
   const dispatch = useDispatch();
   // console.log(category);
   useEffect(() => {
+
     // console.log(category);
     function getproducts() {
       if (category && !products) {
@@ -64,34 +65,7 @@ const OurStore = () => {
       <Container class1="store-wrapper home-wrapper-2 py-3 ">
         <div className="row">
           <div className="mb-2 col-12 col-lg-3 d-flex flex-column align-item-center justify-content-start row-gap-2">
-            {/* first div */}
-            {/* <div className="filter-card align-item-center justify-content-start gap-1 ">
-              <button
-                className="d-flex  align-item-center justify-content-start gap-2 px-2 w-100"
-                onClick={() => setCategory(!category)}
-              >
-                <h3 className="filter-title fs-6 mb-0">Shop By Category</h3>
-                <span className="px-2 py-0">
-                  {category ? <RiArrowUpSFill /> : <IoMdArrowDropdown />}
-                </span>
-              </button>
-              {category ? (
-                <div>
-                  <ul
-                    style={{ paddingLeft: "0px" }}
-                    className="mb-0 d-flex flex-row flex-lg-colunm gap-2 "
-                  >
-                    <li>Price</li>
-                    <li>Brand</li>
-                    <li>Color</li>
-                    <li>Size</li>
-                  </ul>
-                </div>
-              ) : (
-                ""
-              )}
-            </div> */}
-            {/* second div */}
+            
             <div className="filter-card ">
               <button
                 className="d-flex  align-item-center justify-content-start gap-2 px-2 w-100"

@@ -10,6 +10,13 @@
   --color-1c1c1b: #1c1c1b;
 }
 
+.img-fluid{
+  max-height: 250px;
+  object-fit: cover;
+  height: 200px;
+  max-width: 250px;
+}
+
 .special-product-card {
   background-color: white;
   border-radius: 10px;

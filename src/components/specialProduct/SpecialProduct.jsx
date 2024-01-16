@@ -7,7 +7,7 @@ const SpecialProduct = ({productdata}) => {
   return (
     <div className="col-12 col-md-6 col-lg-6 col-xxl-6  mb-3">
       <div className="special-product-card">
-        <div className="d-flex justify-content-between ">
+        <div className="d-flex justify-content-between gap-2 ">
           <div>
             <img src={images.primary[0].url} className="img-fluid" alt="watch" />
           </div>
