@@ -1,42 +1,50 @@
 import ReactStars from "react-rating-stars-component";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./productcard.css";
-
+import { useDispatch } from "react-redux";
+import { addToWishlist, filter_wishlist, push_wishlist } from "../../features/user/userSlice.js";
+import { TbJewishStarFilled } from "react-icons/tb";
+import { toast } from "react-toastify";
 import { productcartimg } from "../../utils/Data.jsx";
-// import { demoData } from "../../utils/Data.jsx";
-// import { useDispatch, useSelector } from "react-redux";
-// import { addToWishlist } from "../../features/product/productSlice.js";
-// import { useEffect } from "react";
 const IndividualProduct = ({ grid, productdata }) => {
-  const { prodcompare, view, addcart, wish, watch, watch2 } = productcartimg;
-  // const { demoDescription, demoTitle, demoPrice, demoBrand } = demoData;
+  const { addcart } = productcartimg;
   const { brand, title, price, images, description } = productdata;
+
+
+  const dispatch = useDispatch();
+  const addtoWish = async(product) => {
+   try {
+    const {payload}=await dispatch(addToWishlist(product._id));
+   if(payload.status==="added"){
+    dispatch(push_wishlist([product]))
+     toast.info("added to wishlist");
+    }else if(payload.status==="removed"){
+      dispatch(filter_wishlist([product._id]))
+     toast.info("removed from wishlist");
+   }else{
+    throw new Error("something went wrong")
+   }
+   } catch (error) {
+    toast.error(error.message);
+   }
+  };
+
+
+
   return (
-    <div
-      className={`gr-${grid} individual-product`}
-    >
-      <Link
-        to={`/product/${productdata._id}`}
-        className="product-card position-relative "
-      >
-        <div className="wishlist-icon position-absolute ">
-          <button className="border-0 bg-transparent ">
-            {/* <img src={wish} alt="wishlist" /> */}w
-          </button>
-        </div>
+    <div className={`gr-${grid} individual-product  position-relative`}>
+      <Link to={`/product/${productdata._id}`} className="product-card ">
         <div className="product-image">
-          {/* <img src={watch} className="img-fluid" alt="product image" />
-            <img src={watch2} className="img-fluid" alt="product image" /> */}
-          <img
-            src={images.primary[0].url}
-            className="img-fluid"
-            alt="product image"
-          />
-          <img
-            src={images.primary[0].url}
-            className="img-fluid"
-            alt="product image"
-          />
+          {images?.primary?.map((img, i) => {
+            return (
+              <img
+                key={i}
+                src={img.url}
+                className="img-fluid"
+                alt="product image"
+              />
+            );
+          })}
         </div>
         <div className="product-details">
           <h6 className="brand">{brand}</h6>
@@ -56,20 +64,15 @@ const IndividualProduct = ({ grid, productdata }) => {
           </p>
           <p className="price">${price}.00</p>
         </div>
-        <div className="action-bar position-absolute ">
-          <div className="d-flex flex-column gap-15 ">
-            <button className="border-0 bg-transparent ">
-              <img src={prodcompare} alt="compare" />
-            </button>
-            <button className="border-0 bg-transparent ">
-              <img src={view} alt="view" />
-            </button>
-            <button className="border-0 bg-transparent ">
-              <img src={addcart} alt="cart" />
-            </button>
-          </div>
-        </div>
       </Link>
+      <div className="action-bar position-absolute ">
+        <button className="border-0 bg-transparent ">
+          <img src={addcart} alt="cart" />
+        </button>
+        <button onClick={()=>addtoWish(productdata)} className="border-0 bg-transparent ">
+          <TbJewishStarFilled className="text-primary" />
+        </button>
+      </div>
     </div>
   );
 };

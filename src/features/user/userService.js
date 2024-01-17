@@ -15,15 +15,32 @@ const login = async (userdata) => {
     return response.data;
   }
 };
+
+const addToWishlist = async (prodId) => {
+
+  try {
+    const response = await axios.put(
+      `${base_url}product/wishlist`,
+      { prodId },
+      config
+    );
+
+    if (response.data) {
+      return  response.data;
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 // const logout = async () => {
 //   localStorage.removeItem("customer");
 // };
 
 const getUserWishlist = async () => {
-  // console.log(config);
   const response = await axios.get(`${base_url}user/wishlist`, config);
   if (response.data) {
-    return response.data;
+    return response.data.wishlist;
   }
 };
 
@@ -31,4 +48,5 @@ export const authService = {
   register,
   login,
   getUserWishlist,
+  addToWishlist
 };

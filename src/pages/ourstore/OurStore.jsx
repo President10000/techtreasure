@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "../../components/productCard/ProductCard";
 import Container from "../../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../../features/product/productSlice";
+// import { getAllProducts } from "../../features/product/productSlice";
 import { getProductsByCategory } from "../../features/productsByCategory/productByCategorySlice";
 
 import "./ourstore.css";
@@ -27,9 +27,7 @@ const OurStore = () => {
     function getproducts() {
       if (category && !products) {
         dispatch(getProductsByCategory(category.toLowerCase()));
-      } else {
-        dispatch(getAllProducts());
-      }
+      } 
     }
     getproducts();
   }, [dispatch, category, products, refresh]);
