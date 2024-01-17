@@ -4,28 +4,37 @@ import Container from "../../components/Container";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./wishlist_compare.css";
-import { getUserProductWishlist } from "../../features/user/userSlice";
-import { addToWishlist } from "../../features/product/productSlice";
+import { toast } from "react-toastify";
+import { filter_wishlist, getWishlist } from "../../features/user/userSlice";
+import { addToWishlist } from "../../features/user/userSlice";
 const Wishlist = () => {
   const dispatch = useDispatch();
 
+  const { wishlist, isSuccess } = useSelector((state) => state.auth);
+  const removefromWishlist = async (id) => {
+    try {
+      const { payload } = await dispatch(addToWishlist(id));
+      if (payload.status === "removed") {
+        dispatch(filter_wishlist([id]));
+        toast.info("removed from wishlist");
+      } else {
+        throw new Error("something went wrong");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   useEffect(() => {
+    const getWishlistFormDb = () => {
+      if (!isSuccess.wishlist) {
+        dispatch(getWishlist());
+      }
+    };
+
     getWishlistFormDb();
-  }, []);
-
-  const getWishlistFormDb = () => {
-    dispatch(getUserProductWishlist());
-  };
-
-  const wishlistState = useSelector((state) => state.auth.wishlist?.wishlist);
-  const removefromWishlist = (id) => {
-    dispatch(addToWishlist(id));
-    setTimeout(() => {
-      dispatch(getUserProductWishlist());
-    }, 300);
-  };
-
-  // console.log("wishlistState", wishlistState);
+  }, [dispatch, isSuccess]);
+  console.log(wishlist);
 
   return (
     <>
@@ -34,14 +43,15 @@ const Wishlist = () => {
 
       <Container class1="wishlist-wrapper home-wrapper-2 py-5 ">
         <div className="row flex-wrap">
-          {wishlistState?.length === 0 && (
+          {wishlist?.length === 0 && (
             <div className="col-12 text-center py-5">
               <h4 className="text-danger">
                 No Item in Wishlist or loading.....
               </h4>
             </div>
           )}
-          {wishlistState?.map((item, index) => {
+          {wishlist?.map((item, index) => {
+            const { images } = item;
             return (
               <div key={index} className="col-6 col-md-4 col-lg-3">
                 <div className="wishlist-card position-relative ">
@@ -53,12 +63,7 @@ const Wishlist = () => {
                   />
                   <div className="wishlist-card-image overflow-hidden">
                     <img
-                      src={`${
-                        // item.images[0].url
-                        //   ? item.images[0].url
-                        //   :
-                        "images/watch.jpg"
-                      }`}
+                      src={`${images.primary[0].url}`}
                       alt="wishlist"
                       className="col-12"
                     />

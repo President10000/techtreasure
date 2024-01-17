@@ -12,9 +12,9 @@ import Container from "../../components/Container";
 import "./singleproduct.css";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { base_url } from "../../utils/axiosConfig";
 const SingleProduct = () => {
   let { id } = useParams();
-  // console.log(process.env.GET_PRODUCT_API_BY_ID);
 
   const [product, setProduct] = useState();
 
@@ -26,22 +26,11 @@ const SingleProduct = () => {
     img: null,
   });
 
-  async function getApi() {
-    try {
-      const api = await fetch(`http://localhost:5000/api/product/${id}`);
-      const jsonApi = await api.json();
-      setPri_img({ ...pri_img, img: jsonApi.images.primary[0].url });
-      setProduct(jsonApi);
-    } catch (error) {
-      throw new Error("internal server error");
-    }
-  }
+ 
 
-  useEffect(() => {
-    getApi();
-  }, [id]);
 
-  const [orderedProducts, setOrderedProducts] = useState(true);
+
+  // const [orderedProducts, setOrderedProducts] = useState(true);
   const copyToClipboard = (text) => {
     console.log("text", text);
     var textField = document.createElement("textarea");
@@ -70,7 +59,19 @@ const SingleProduct = () => {
     }
   }
 
-
+  useEffect(() => {
+    async function getApi() {
+      try {
+        const api = await fetch(`${base_url}product/${id}`);
+        const jsonApi = await api.json();
+        setPri_img({ ...pri_img, img: jsonApi.images.primary[0].url });
+        setProduct(jsonApi);
+      } catch (error) {
+        throw new Error("internal server error");
+      }
+    }
+    getApi();
+  }, [id,pri_img]);
 
   return (
     <>
@@ -285,39 +286,7 @@ const SingleProduct = () => {
                         </p>
                       </div>
                     </div>
-                    {/* <div>
-                  {orderedProducts && (
-                    <a className="text-dark text-decoration-underline" href="">
-                      Write a Review
-                    </a>
-                  )}
-                </div> */}
                   </div>
-                  {/* <div className="review-form py-4">
-                <h4>Write a review</h4>
-                <form action="" className="d-flex flex-column gap-15">
-                  <ReactStars
-                    edit={true}
-                    value={3}
-                    count={5}
-                    size={24}
-                    activeColor="#ffd700"
-                  />
-                  <div>
-                    <textarea
-                      name=""
-                      id=""
-                      cols="30"
-                      rows="4"
-                      className="w-100 form-control"
-                      placeholder="Comments"
-                    ></textarea>
-                  </div>
-                  <div className="d-flex justify-content-end ">
-                    <button className="button border-0 ">Submit Review</button>{" "}
-                  </div>
-                </form>
-              </div> */}
                   <div className="reviews mt-4 ">
                     {product?.feedback?.data.map((item, i) => {
                       const { images, comment, rating, postedby } = item;

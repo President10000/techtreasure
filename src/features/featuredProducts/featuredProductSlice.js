@@ -42,7 +42,7 @@ export const featuredProductSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         const {data,feature}=action.payload;
-        console.log(data,feature)
+        console.log(data,feature,"main")
         const newProducts={}
         newProducts[`${feature}`]=data
         state.products = {...state.products,...newProducts}
