@@ -37,8 +37,8 @@ const addToWishlist = async (prodId) => {
 //   localStorage.removeItem("customer");
 // };
 
-const getUserWishlist = async () => {
-  const response = await axios.get(`${base_url}user/wishlist`, config);
+const getUserWishlist = async (populate) => {
+  const response = await axios.get(`${base_url}user/wishlist?populate=${populate}`, config);
   if (response.data) {
     return response.data.wishlist;
   }

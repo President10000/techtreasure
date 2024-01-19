@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getFeature_wise } from "./featuredProductService";
-import { toast } from "react-toastify";
 
 
 export const getFeaturedProducts = createAsyncThunk(
@@ -42,7 +41,6 @@ export const featuredProductSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         const {data,feature}=action.payload;
-        console.log(data,feature,"main")
         const newProducts={}
         newProducts[`${feature}`]=data
         state.products = {...state.products,...newProducts}

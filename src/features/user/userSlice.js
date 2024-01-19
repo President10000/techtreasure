@@ -27,9 +27,9 @@ export const loginUser = createAsyncThunk(
 
 export const getWishlist = createAsyncThunk(
   "user/wishlist",
-  async (thunkAPI) => {
+  async (populate,thunkAPI) => {
     try {
-      return await authService.getUserWishlist();
+      return await authService.getUserWishlist(populate?populate:"");
     } catch (error) {
       return thunkAPI.rejectWithValue(error.Message);
     }
@@ -141,10 +141,6 @@ export const authSlice = createSlice({
         state.isError.getWishlist = false;
         state.isSuccess.getWishlist = true;
         state.wishlist = action.payload;
-
-        // if (state.isSuccess === true) {
-        //   toast.info("User Wishlist Fetched Successfully");
-        // }
       })
       .addCase(getWishlist.rejected, (state, action) => {
         state.isLoading.getWishlist = false;

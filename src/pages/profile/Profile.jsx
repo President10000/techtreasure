@@ -15,7 +15,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (!user) navigate("/login");
-  }, [user]);
+  }, [user,navigate]);
 
   return (
     <>
