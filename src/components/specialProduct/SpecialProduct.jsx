@@ -1,19 +1,46 @@
-import ReactStars from "react-rating-stars-component";
+// import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 import "./specialproduct.css";
+import { useDispatch } from "react-redux";
+import { postProductToCart, replaceCart } from "../../features/cart/cartSlice";
+import { toast } from "react-toastify";
 // import "../productCard/productcard.css";
-const SpecialProduct = ({productdata}) => {
-  const {local_price, brand, title, price, images, description }=productdata
+const SpecialProduct = ({ productdata }) => {
+  const dispatch = useDispatch();
+
+  const { local_price, brand, title, price, images, description, _id } =
+    productdata;
+
+  async function handleAddtoCartBtn() {
+    try {
+      const { payload } = await dispatch(
+        postProductToCart({ cart: [{ _id, count: 1 }] })
+      );
+      toast.success("added to cart")
+      dispatch(replaceCart(payload));
+      // console.log(payload)
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   return (
     <div className="col-12 col-md-6 col-lg-6 col-xxl-6  mb-3">
       <div className="special-product-card">
         <div className="d-flex justify-content-between gap-2 ">
           <div>
-            <img src={images.primary[0].url} className="img-fluid" alt="watch" />
+            <img
+              src={images?.primary[0].url}
+              className="img-fluid"
+              alt="watch"
+            />
           </div>
           <div className="special-product-content">
             <h5 className="brand">{brand}</h5>
-            <h5 className="title"> {title.length > 50 ? title.slice(0, 50) + "..." : title}</h5>
+            <h5 className="title">
+              {" "}
+              {title.length > 50 ? title.slice(0, 50) + "..." : title}
+            </h5>
             {/* <ReactStars
               edit={false}
               value={3}
@@ -22,7 +49,8 @@ const SpecialProduct = ({productdata}) => {
               activeColor="#ffd700"
             /> */}
             <p className="price">
-              <span className="red-p">${price}</span> &nbsp; <strike>${local_price}</strike>
+              <span className="red-p">${price}</span> &nbsp;{" "}
+              <strike>${local_price}</strike>
             </p>
             {/* <div className="discount-till d-flex align-items-center gap-10  ">
               <p className="mb-0">
@@ -47,7 +75,9 @@ const SpecialProduct = ({productdata}) => {
                 ></div>
               </div>
             </div> */}
-            <Link className="button">Add to cart</Link>
+            <Link className="button" onClick={() => handleAddtoCartBtn()}>
+              Add to cart
+            </Link>
           </div>
         </div>
       </div>

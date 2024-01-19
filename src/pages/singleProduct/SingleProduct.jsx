@@ -5,7 +5,6 @@ import ProductCard from "../../components/productCard/ProductCard";
 import ReactStars from "react-rating-stars-component";
 import ReactImageZoom from "react-image-zoom";
 import { useState } from "react";
-import Color from "../../components/Color";
 import { IoGitCompare } from "react-icons/io5";
 import { AiOutlineHeart } from "react-icons/ai";
 import Container from "../../components/Container";
