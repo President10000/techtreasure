@@ -61,7 +61,7 @@ const Profile = () => {
         <>
           <div className=" pb-4">
             {address_modal ? (
-              <Address_form setAddress_modal={setAddress_modal} />
+              <Address_form close={setAddress_modal} />
             ) : null}
             <div className="d-flex justify-content-between container py-2">
               <ul className="info pl-0">

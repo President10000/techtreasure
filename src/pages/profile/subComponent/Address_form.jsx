@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   editAddress,
   push_Addres,
+  replace_OneAddres,
   saveAddress,
 } from "../../../features/user/userSlice";
 import { toast } from "react-toastify";
@@ -18,7 +19,7 @@ const address_inputs = [
   { value: "", label: "country" },
   { value: "", label: "phone no" },
 ];
-const Address_form = ({ setAddress_modal, formToEdit }) => {
+const Address_form = ({ close, formToEdit }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [action, setAction] = useState("CREATE");
@@ -48,7 +49,7 @@ const Address_form = ({ setAddress_modal, formToEdit }) => {
         setAddress([...address_inputs]);
       } else if (action === "EDIT") {
         const edited = await dispatch(editAddress(address, formToEdit._id));
-        dispatch(push_Addres({ address: edited, _id: formToEdit._id }));
+        dispatch(replace_OneAddres({ address: edited, _id: formToEdit._id }));
         toast.success("address edited successfully");
       } else {
         toast.error("something went wrong");
@@ -108,7 +109,7 @@ const Address_form = ({ setAddress_modal, formToEdit }) => {
         <div className="d-flex justify-content-start gap-2 py-2">
           <button
             className="px-2 py-1 rounded-3"
-            onClick={() => setAddress_modal(false)}
+            onClick={() => close(false)}
           >
             Cancle
           </button>

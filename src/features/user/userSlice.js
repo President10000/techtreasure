@@ -246,5 +246,6 @@ export const {
   filter_wishlist,
   push_Addres,
   filter_Address,
+  replace_OneAddres
 } = authSlice.actions;
 export default authSlice.reducer;
