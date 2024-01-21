@@ -21,7 +21,7 @@ const address_inputs = [
 ];
 const Address_form = ({ close, formToEdit }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
   const [action, setAction] = useState("CREATE");
   const [address, setAddress] = useState([...address_inputs]);
   function formHandler(e) {
@@ -48,7 +48,7 @@ const Address_form = ({ close, formToEdit }) => {
         toast.success("address saved successfully");
         setAddress([...address_inputs]);
       } else if (action === "EDIT") {
-        const edited = await dispatch(editAddress(address, formToEdit._id));
+        const edited = await dispatch(editAddress({address, _id:formToEdit._id}));
         dispatch(replace_OneAddres({ address: edited, _id: formToEdit._id }));
         toast.success("address edited successfully");
       } else {
@@ -68,13 +68,13 @@ const Address_form = ({ close, formToEdit }) => {
     }
     isToEdit();
   }, [formToEdit]);
-
+// console.log(formToEdit)
   return (
     <div
       style={{
         width: "100vw",
         height: "100vh",
-        minHeight: "600px",
+        minHeight:"900px",
         zIndex: 10,
       }}
       className="bg-primary position-absolute top-0 left-0 d-flex justify-content-center  align-items-center"
@@ -89,7 +89,7 @@ const Address_form = ({ close, formToEdit }) => {
             return (
               <li
                 key={i}
-                className="list-group-item d-flex justify-content-between align-items-center"
+                className="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-center"
               >
                 <label className="px-2 py-1 mx-2" htmlFor={label}>
                   {label}
