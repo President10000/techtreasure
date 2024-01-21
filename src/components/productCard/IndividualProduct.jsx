@@ -2,34 +2,35 @@ import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 import "./productcard.css";
 import { useDispatch } from "react-redux";
-import { addToWishlist, filter_wishlist, push_wishlist } from "../../features/user/userSlice.js";
+import {
+  addToWishlist,
+  filter_wishlist,
+  push_wishlist,
+} from "../../features/user/userSlice.js";
 import { TbJewishStarFilled } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { productcartimg } from "../../utils/Data.jsx";
 const IndividualProduct = ({ grid, productdata }) => {
   const { addcart } = productcartimg;
-  const { brand, title, price, images, description } = productdata;
-
+  const { brand, title, price, images, description, quantity } = productdata;
 
   const dispatch = useDispatch();
-  const addtoWish = async(product) => {
-   try {
-    const {payload}=await dispatch(addToWishlist(product._id));
-   if(payload.status==="added"){
-    dispatch(push_wishlist([product]))
-     toast.info("added to wishlist");
-    }else if(payload.status==="removed"){
-      dispatch(filter_wishlist([product._id]))
-     toast.info("removed from wishlist");
-   }else{
-    throw new Error("something went wrong")
-   }
-   } catch (error) {
-    toast.error(error.message);
-   }
+  const addtoWish = async (product) => {
+    try {
+      const { payload } = await dispatch(addToWishlist(product._id));
+      if (payload.status === "added") {
+        dispatch(push_wishlist([product]));
+        toast.info("added to wishlist");
+      } else if (payload.status === "removed") {
+        dispatch(filter_wishlist([product._id]));
+        toast.info("removed from wishlist");
+      } else {
+        throw new Error("something went wrong");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
-
-
 
   return (
     <div className={`gr-${grid} individual-product  position-relative`}>
@@ -62,14 +63,26 @@ const IndividualProduct = ({ grid, productdata }) => {
           <p className={`description ${grid === 12 ? "d-block" : "d-none "}`}>
             {description.head_desc}
           </p>
-          <p className="price">${price}.00</p>
+          <span className="d-flex justify-content-between align-item-center">
+            <p className="price">${price}.00</p>
+            <p>
+              {quantity
+                ? quantity < 20
+                  ? `only ${quantity} available`
+                  : null
+                : "out of stock"}
+            </p>
+          </span>
         </div>
       </Link>
       <div className="action-bar position-absolute ">
         <button className="border-0 bg-transparent ">
           <img src={addcart} alt="cart" />
         </button>
-        <button onClick={()=>addtoWish(productdata)} className="border-0 bg-transparent ">
+        <button
+          onClick={() => addtoWish(productdata)}
+          className="border-0 bg-transparent "
+        >
           <TbJewishStarFilled className="text-primary" />
         </button>
       </div>

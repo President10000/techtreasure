@@ -27,9 +27,9 @@ export const loginUser = createAsyncThunk(
 
 export const getWishlist = createAsyncThunk(
   "user/wishlist",
-  async (populate,thunkAPI) => {
+  async (populate, thunkAPI) => {
     try {
-      return await authService.getUserWishlist(populate?populate:"");
+      return await authService.getUserWishlist(populate ? populate : "");
     } catch (error) {
       return thunkAPI.rejectWithValue(error.Message);
     }
@@ -47,6 +47,46 @@ export const addToWishlist = createAsyncThunk(
     }
   }
 );
+export const getAddress = createAsyncThunk(
+  "address/get",
+  async (user_id, thunkAPI) => {
+    try {
+      return await authService.getUserAddress(user_id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const saveAddress = createAsyncThunk(
+  "address/post",
+  async (address, thunkAPI) => {
+    try {
+      return await authService.postUserAddress(address);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const editAddress = createAsyncThunk(
+  "address/put",
+  async (address, _id, thunkAPI) => {
+    try {
+      return await authService.updateUserAddress(address, _id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const deleteAddress = createAsyncThunk(
+  "address/delete",
+  async (_id, thunkAPI) => {
+    try {
+      return await authService.deleteUserAddress(_id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 const getCustomerfromLocalStorage = localStorage.getItem("customer")
   ? JSON.parse(localStorage.getItem("customer"))
@@ -57,6 +97,7 @@ const getCustomerfromLocalStorage = localStorage.getItem("customer")
 const initialstate = {
   user: getCustomerfromLocalStorage,
   wishlist: [],
+  address: [],
   isError: {},
   isSuccess: {},
   isLoading: {},
@@ -82,6 +123,31 @@ export const authSlice = createSlice({
         (wish) => !action.payload.some((id) => id === wish._id)
       );
       state.wishlist = new_wish_list;
+    },
+    push_Addres: (state, action) => {
+      const address = [...state.address];
+      action.payload.forEach((item) => {
+        address.unshift(item);
+      });
+      state.address = address;
+    },
+    replace_OneAddres: (state, action) => {
+      const { address, _id } = action.payload;
+      const replaced = [...state.address].map((item) => {
+        if (_id === item._id) {
+          return address;
+        } else {
+          return item;
+        }
+      });
+
+      state.address = replaced;
+    },
+    filter_Address: (state, action) => {
+      const new_address = [...state.address].filter(
+        (address) => !action.payload.some((id) => id === address._id)
+      );
+      state.address = new_address;
     },
   },
   extraReducers: (builder) => {
@@ -151,9 +217,34 @@ export const authSlice = createSlice({
         if (state.isError.getWishlist === true) {
           toast.error(action.payload.toString());
         }
+      })
+      .addCase(getAddress.pending, (state) => {
+        state.isLoading.getAddress = true;
+      })
+      .addCase(getAddress.fulfilled, (state, action) => {
+        state.isLoading.getAddress = false;
+        state.isError.getAddress = false;
+        state.isSuccess.getAddress = true;
+        state.address = action.payload;
+      })
+      .addCase(getAddress.rejected, (state, action) => {
+        state.isLoading.getAddress = false;
+        state.isError.getAddress = true;
+        state.isSuccess.getAddress = false;
+        state.Message.getAddress = action.payload.toString();
+
+        if (state.isError.getWishlist === true) {
+          toast.error(action.payload.toString());
+        }
       });
   },
 });
 
-export const { logout,push_wishlist,filter_wishlist } = authSlice.actions;
+export const {
+  logout,
+  push_wishlist,
+  filter_wishlist,
+  push_Addres,
+  filter_Address,
+} = authSlice.actions;
 export default authSlice.reducer;

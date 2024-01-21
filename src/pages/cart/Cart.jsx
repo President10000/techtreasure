@@ -8,7 +8,11 @@ import Container from "../../components/Container";
 import "./cart.css";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserCart, replaceCart,postProductToCart } from "../../features/cart/cartSlice";
+import {
+  getUserCart,
+  replaceCart,
+  postProductToCart,
+} from "../../features/cart/cartSlice";
 // import { postProductToCart, replaceCart } from "../../features/cart/cartSlice";
 import axios from "axios";
 import { base_url, config } from "../../utils/axiosConfig";
@@ -39,19 +43,18 @@ const Cart = () => {
     }
   }
 
-  async function manageQty(_id,count) {
+  async function manageQty(_id, count) {
     try {
       const { payload } = await dispatch(
         postProductToCart({ cart: [{ _id, count }] })
       );
-      toast.success("added to cart")
+      toast.success("added to cart");
       dispatch(replaceCart(payload));
       // console.log(payload)
     } catch (error) {
       console.error(error.message);
     }
   }
-
 
   useEffect(() => {
     function getCart() {
@@ -116,7 +119,17 @@ const Cart = () => {
                             </div>
                           </div>
                           <div className="text-center  d-flex align-items-center justify-content-center gap-15 col-6 col-md-3">
-                            <button onClick={()=>manageQty(_id,-1)}>-</button> <p>{count}</p> <button onClick={()=>manageQty(_id,1)}>+</button>
+                            <button
+                              onClick={() =>
+                                count > 1
+                                  ? manageQty(_id, -1)
+                                  : handleDeleteBtn(_id)
+                              }
+                            >
+                              -
+                            </button>{" "}
+                            <p>{count}</p>{" "}
+                            <button onClick={() => manageQty(_id, 1)}>+</button>
                           </div>
                           <div className="col-6 col-md-2">
                             <h5 className="price text-center">
