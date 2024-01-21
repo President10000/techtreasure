@@ -17,7 +17,7 @@ const OurStore = () => {
     window.innerWidth > 1000 ? 4 : window.innerWidth < 600 ? 12 : 6
   );
 
-  const productState = useSelector((state) => state.product.products);
+  // const productState = useSelector((state) => state.product.products);
   const refresh = useSelector((state) => state.productBycategory.refresh);
   const products = useSelector(
     (state) => state.productBycategory.products[`${category.toLowerCase()}`]
@@ -27,7 +27,7 @@ const OurStore = () => {
     function getproducts() {
       if (category && !products) {
         dispatch(getProductsByCategory(category.toLowerCase()));
-      } 
+      }
     }
     getproducts();
   }, [dispatch, category, products, refresh]);
@@ -52,12 +52,7 @@ const OurStore = () => {
                     grid={grid}
                     productdata={products ? products : []}
                   />
-                ) : (
-                  <ProductCard
-                    grid={grid}
-                    productdata={productState ? productState : []}
-                  />
-                )}
+                ) : null}
               </div>
             </div>
           </div>

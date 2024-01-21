@@ -1,5 +1,6 @@
 import axios from "axios";
 import { base_url, config } from "../../utils/axiosConfig";
+
 const register = async (userdata) => {
   const response = await axios.post(`${base_url}user/register`, userdata);
   if (response.data) {
@@ -17,7 +18,6 @@ const login = async (userdata) => {
 };
 
 const addToWishlist = async (prodId) => {
-
   try {
     const response = await axios.put(
       `${base_url}product/wishlist`,
@@ -26,21 +26,79 @@ const addToWishlist = async (prodId) => {
     );
 
     if (response.data) {
-      return  response.data;
+      return response.data;
     }
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-// const logout = async () => {
-//   localStorage.removeItem("customer");
-// };
-
 const getUserWishlist = async (populate) => {
-  const response = await axios.get(`${base_url}user/wishlist?populate=${populate}`, config);
-  if (response.data) {
-    return response.data.wishlist;
+  try {
+    const response = await axios.get(
+      `${base_url}user/wishlist?populate=${populate}`,
+      config
+    );
+    if (response.data) {
+      return response.data.wishlist;
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const getUserAddress = async (user_id) => {
+  try {
+    const response = await axios.get(
+      `${base_url}user/address/address?user=${user_id}`,
+      config
+    );
+    if (response.data) {
+      return response.data;
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+const postUserAddress = async (address) => {
+  try {
+    const response = await axios.post(
+      `${base_url}user/address/address`,
+      {address},
+      config
+    );
+    if (response.data) {
+      return response.data;
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+const updateUserAddress = async (newAddress, _id) => {
+  try {
+    const response = await axios.put(
+      `${base_url}user/address/address`,
+      { address: newAddress, _id },
+      config
+    );
+    if (response.data) {
+      return response.data;
+    }
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+const deleteUserAddress = async ( _id) => {
+  try {
+    const response = await axios.delete(
+      `${base_url}user/address/address?id=${_id}`,
+      config
+    );
+    if (response.data) {
+      return response.data;
+    }
+  } catch (error) {
+    throw new Error(error.message);
   }
 };
 
@@ -48,5 +106,9 @@ export const authService = {
   register,
   login,
   getUserWishlist,
-  addToWishlist
+  addToWishlist,
+  getUserAddress,
+  postUserAddress,
+  updateUserAddress,
+  deleteUserAddress
 };

@@ -3,13 +3,32 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { RiArrowUpSFill } from "react-icons/ri";
 const Filter = () => {
   const [FilterBy, setFilterBy] = useState(window.innerWidth > 1000);
-  const [availiblity, setAvailiblity] = useState(window.innerWidth > 1000);
+  const [show_availiblity, setShow_availiblity] = useState(
+    window.innerWidth > 1000
+  );
   const [tags, setTags] = useState(window.innerWidth > 1000);
+
+  const [price_fromTo, setPrice_fromTo] = useState({ from: 0, to: Infinity });
+  const [availablity, setAvailiblity] = useState({
+    in_stock: true,
+    out_of_stock: false,
+  });
+  function price_fromToChangeHandler(e) {
+    const val = parseInt(e.target.value);
+    const name = e.target.name;
+    if (!isNaN(val) && typeof val === "number") {
+      if (name === "from") {
+        setPrice_fromTo((pre) => ({ ...pre, from: val }));
+      } else if (name === "to") {
+        setPrice_fromTo((pre) => ({ ...pre, to: val }));
+      }
+    }
+  }
 
   useEffect(() => {
     function resize() {
       setFilterBy(window.innerWidth > 1000);
-      setAvailiblity(window.innerWidth > 1000);
+      setShow_availiblity(window.innerWidth > 1000);
       setTags(window.innerWidth > 1000);
     }
     addEventListener("resize", resize);
@@ -27,7 +46,7 @@ const Filter = () => {
         >
           <h3 className="filter-title">Filter By </h3>
           <span className="px-2 py-0">
-            {FilterBy ? <RiArrowUpSFill /> : <IoMdArrowDropdown />}
+            {FilterBy ? <IoMdArrowDropdown /> : <RiArrowUpSFill />}
           </span>
         </button>
         {FilterBy ? (
@@ -40,14 +59,18 @@ const Filter = () => {
               <button
                 className="d-flex  align-item-center justify-content-start gap-2 px-2 mt-2 "
                 style={{ width: "fit-content" }}
-                onClick={() => setAvailiblity(!availiblity)}
+                onClick={() => setShow_availiblity(!show_availiblity)}
               >
                 <h3 className=" fs-6">Availablity</h3>
                 <span className="px-2 py-0">
-                  {availiblity ? <RiArrowUpSFill /> : <IoMdArrowDropdown />}
+                  {show_availiblity ? (
+                    <IoMdArrowDropdown />
+                  ) : (
+                    <RiArrowUpSFill />
+                  )}
                 </span>
               </button>
-              {availiblity && (
+              {show_availiblity && (
                 <div className="col-12 d-flex align-item-center justify-content-start gap-2">
                   <div className="form-check " style={{ paddingLeft: "0px" }}>
                     <label
@@ -57,7 +80,19 @@ const Filter = () => {
                     >
                       In Stock (1)
                     </label>
-                    <input className="m-1" type="checkbox" value="" id="" />
+                    <input
+                      onChange={() =>
+                        setAvailiblity((pre) => ({
+                          ...pre,
+                          in_stock: !pre.in_stock,
+                        }))
+                      }
+                      checked={availablity.in_stock}
+                      className="m-1"
+                      type="checkbox"
+                      value=""
+                      id=""
+                    />
                   </div>
                   <div className="form-check " style={{ paddingLeft: "0px" }}>
                     <label
@@ -67,7 +102,19 @@ const Filter = () => {
                     >
                       Out of Stock (0)
                     </label>
-                    <input className="m-1" type="checkbox" value="" id="" />
+                    <input
+                      onChange={() =>
+                        setAvailiblity((pre) => ({
+                          ...pre,
+                          out_of_stock: !pre.out_of_stock,
+                        }))
+                      }
+                      checked={availablity.out_of_stock}
+                      className="m-1"
+                      type="checkbox"
+                      value=""
+                      id=""
+                    />
                   </div>
                 </div>
               )}
@@ -80,7 +127,10 @@ const Filter = () => {
               <div className="d-flex gap-2">
                 <div className="form-floating ">
                   <input
-                    type="email"
+                    value={price_fromTo.from}
+                    onChange={(e) => price_fromToChangeHandler(e)}
+                    type="number"
+                    name="from"
                     className="form-control "
                     id="floatingInput"
                     placeholder="From"
@@ -89,8 +139,11 @@ const Filter = () => {
                 </div>
                 <div className="form-floating ">
                   <input
-                    type="email"
-                    className="form-control  "
+                    value={price_fromTo.to}
+                    onChange={(e) => price_fromToChangeHandler(e)}
+                    type="number"
+                    name="to"
+                    className="form-control"
                     id="floatingInput1"
                     placeholder="To"
                   />
@@ -99,12 +152,11 @@ const Filter = () => {
               </div>
             </div>
             {/* colors */}
-            <div className="col-12 d-flex ">
+            {/* <div className="col-12 d-flex ">
               <div>
                 <h5 className="sub-title fs-6">Colors</h5>
               </div>
               <div className="d-flex flex-wrap align-items-center ">
-                {/* <div> */}
                 <ul className="colors mb-0">
                   {["red", "blue", "green", "black"].map((color, i) => {
                     return (
@@ -115,11 +167,10 @@ const Filter = () => {
                     );
                   })}
                 </ul>
-                {/* </div> */}
               </div>
-            </div>
+            </div> */}
             {/* size */}
-            <div className="col-12 d-flex flex-wrap align-items-center justify-content-start gap-2">
+            {/* <div className="col-12 d-flex flex-wrap align-items-center justify-content-start gap-2">
               <div>
                 <h5 className="sub-title fs-6">Size</h5>
               </div>
@@ -147,21 +198,21 @@ const Filter = () => {
                   </label>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         ) : (
           ""
         )}
       </div>
 
-      <div className="filter-card ">
+      {/* <div className="filter-card ">
         <button
           className="d-flex  align-item-center justify-content-start gap-2 px-2 w-100"
           onClick={() => setTags(!tags)}
         >
           <h3 className="filter-title fs-6">Products Tags</h3>
           <span className="px-2 py-0">
-            {tags ? <RiArrowUpSFill /> : <IoMdArrowDropdown />}
+            {tags ?  <IoMdArrowDropdown />: <RiArrowUpSFill />}
           </span>
         </button>
         {tags && (
@@ -180,7 +231,7 @@ const Filter = () => {
             )}
           </div>
         )}
-      </div>
+      </div> */}
     </>
   );
 };
