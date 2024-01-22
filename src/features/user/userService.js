@@ -64,7 +64,7 @@ const postUserAddress = async (address) => {
   try {
     const response = await axios.post(
       `${base_url}user/address/address`,
-      {address},
+      address,
       config
     );
     if (response.data) {
@@ -75,7 +75,6 @@ const postUserAddress = async (address) => {
   }
 };
 const updateUserAddress = async (data) => {
-  console.log({data})
   try {
     const response = await axios.put(
       `${base_url}user/address/address`,
