@@ -2,42 +2,9 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./profile.css";
-import {  logout } from "../../features/user/userSlice";
+import { logout } from "../../features/user/userSlice";
 import Address_form from "./subComponent/Address_form";
 import Address from "./subComponent/Address";
-
-// const demoAddress = [
-//   {
-//     _id: "",
-//     address: [
-//       { lable: "first name", value: "name" },
-//       { lable: "middle name", value: "name" },
-//       { lable: "last name", value: "name" },
-//       { lable: "address line 1", value: "address line  1" },
-//       { lable: "address line 2", value: "address line 2" },
-//       { lable: "pin code", value: "code" },
-//       { lable: "city", value: "city" },
-//       { lable: "state", value: "state" },
-//       { lable: "country", value: "country" },
-//       { lable: "phone no", value: "phone no" },
-//     ],
-//   },
-//   {
-//     _id: "",
-//     address: [
-//       { lable: "first name", value: "name" },
-//       { lable: "middle name", value: "name" },
-//       { lable: "last name", value: "name" },
-//       { lable: "address line 1", value: "address line  1" },
-//       { lable: "address line 2", value: "address line 2" },
-//       { lable: "pin code", value: "code" },
-//       { lable: "city", value: "city" },
-//       { lable: "state", value: "state" },
-//       { lable: "country", value: "country" },
-//       { lable: "phone no", value: "phone no" },
-//     ],
-//   },
-// ];
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
@@ -50,7 +17,6 @@ const Profile = () => {
     dispatch(logout());
   }
 
-
   useEffect(() => {
     if (!user) navigate("/login");
   }, [user, navigate]);
@@ -60,11 +26,8 @@ const Profile = () => {
       {user ? (
         <>
           <div className=" pb-4">
-            {address_modal ? (
-              <Address_form close={setAddress_modal} />
-            ) : null}
             <div className="d-flex justify-content-between container py-2">
-              <ul className="info pl-0">
+              <ul className="info ps-0">
                 <li>
                   <h4>First name</h4> <p>{user.firstname}</p>
                 </li>
@@ -87,7 +50,12 @@ const Profile = () => {
                 </button>
               </div>
             </div>
-          <Address setAddress_modal={setAddress_modal}/>
+
+            {address_modal ? (
+              <Address_form close={setAddress_modal} />
+            ) : (
+              <Address setAddress_modal={setAddress_modal} />
+            )}
           </div>
         </>
       ) : null}

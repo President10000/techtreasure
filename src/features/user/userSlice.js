@@ -69,9 +69,9 @@ export const saveAddress = createAsyncThunk(
 );
 export const editAddress = createAsyncThunk(
   "address/put",
-  async (address, _id, thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
-      return await authService.updateUserAddress(address, _id);
+      return await authService.updateUserAddress(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

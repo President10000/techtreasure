@@ -74,11 +74,12 @@ const postUserAddress = async (address) => {
     throw new Error(error.message);
   }
 };
-const updateUserAddress = async (newAddress, _id) => {
+const updateUserAddress = async (data) => {
+  console.log({data})
   try {
     const response = await axios.put(
       `${base_url}user/address/address`,
-      { address: newAddress, _id },
+     data,
       config
     );
     if (response.data) {
