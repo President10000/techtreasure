@@ -14,6 +14,7 @@ const Address = ({ setAddress_modal }) => {
   const { user, address, isSuccess } = useSelector((state) => state.auth);
   const [showAddressFormToEdit, setShowAddressFormToEdit] = useState(false);
   const [formToEdit, setFormToEdit] = useState();
+
   async function handleDeleteBtn(item) {
     try {
       const { payload } = await dispatch(deleteAddress(item._id));
@@ -24,6 +25,7 @@ const Address = ({ setAddress_modal }) => {
       console.error(error.message);
     }
   }
+  
   function handleEditBtn(item) {
     setFormToEdit(item);
     setShowAddressFormToEdit(true);
@@ -57,7 +59,7 @@ const Address = ({ setAddress_modal }) => {
         {showAddressFormToEdit && formToEdit ? (
           <Address_form
             close={close}
-            form={[...JSON.parse(JSON.stringify(formToEdit.address))]}
+            form={{ ...JSON.parse(JSON.stringify(formToEdit)) }}
             action={"EDIT"}
             id={formToEdit._id}
           />
@@ -89,17 +91,19 @@ const Address = ({ setAddress_modal }) => {
                   >
                     <div className="accordion-body">
                       <ul className="list-group">
-                        {item?.address?.map((item, j) => {
-                          const { label, value } = item;
+                        {Object.keys(item)?.map((key, j) => {
+                          // const { label, value } = item;
                           return (
                             <li
                               className="list-group-item d-flex justify-content-between align-items-center"
                               key={j}
                             >
-                              <label className="px-2 py-1 mx-2" htmlFor={label}>
-                                {label}
+                              <label className="px-2 py-1 mx-2" htmlFor={key}>
+                                {key}
                               </label>
-                              <span className="px-2 py-1 mx-2">{value}</span>
+                              <span className="px-2 py-1 mx-2">
+                                {item[key]}
+                              </span>
                             </li>
                           );
                         })}

@@ -5,18 +5,18 @@ import "./profile.css";
 import { logout } from "../../features/user/userSlice";
 import Address_form from "./subComponent/Address_form";
 import Address from "./subComponent/Address";
-const address_inputs = [
-  { value: "", label: "first name" },
-  { value: "", label: "middle name" },
-  { value: "", label: "last name" },
-  { value: "", label: "address line 1" },
-  { value: "", label: "address line 2" },
-  { value: "", label: "pin code" },
-  { value: "", label: "city" },
-  { value: "", label: "state" },
-  { value: "", label: "country" },
-  { value: "", label: "phone no" },
-];
+// const address_inputs = [
+//   { value: "", label: "first name" },
+//   { value: "", label: "middle name" },
+//   { value: "", label: "last name" },
+//   { value: "", label: "address line 1" },
+//   { value: "", label: "address line 2" },
+//   { value: "", label: "pin code" },
+//   { value: "", label: "city" },
+//   { value: "", label: "state" },
+//   { value: "", label: "country" },
+//   { value: "", label: "phone no" },
+// ];
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -37,8 +37,8 @@ const Profile = () => {
     <>
       {user ? (
         <>
-          <div className=" pb-4">
-            <div className="d-flex justify-content-between container py-2">
+          <div className="container pb-4">
+            <div className="d-flex justify-content-between  py-2">
               <ul className="info ps-0">
                 <li>
                   <h4>First name</h4> <p>{user.firstname}</p>
@@ -64,7 +64,7 @@ const Profile = () => {
             </div>
 
             {address_modal ? (
-              <Address_form close={setAddress_modal} form={[...address_inputs]} action={"CREATE"} />
+              <Address_form close={setAddress_modal}  action={"CREATE"} />
             ) : (
               <Address setAddress_modal={setAddress_modal} />
             )}

@@ -161,7 +161,7 @@ const Cart = () => {
                 </div>
               </>
             ) : (
-              <p>no cart found </p>
+              <p>{isSuccess?"no cart found":"Loading"} </p>
             )}
           </Container>
         </>

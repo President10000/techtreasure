@@ -7,20 +7,23 @@ import {
   saveAddress,
 } from "../../../features/user/userSlice";
 import { toast } from "react-toastify";
-
-const Address_form = ({ close, form, action, id }) => {
+const default_data = {
+  phone_no: "",
+  country: "DEFAULT",
+  first_name: "",
+  last_name: "",
+  address: "",
+  apartment: "",
+  city: "",
+  state: "DEFAULT",
+  zipcode: "",
+};
+const Address_form = ({ close, form = default_data, action, id }) => {
   const dispatch = useDispatch();
-  const [address, setAddress] = useState([...form]);
+  const [data, setData] = useState({ ...form });
 
-  function formHandler(e) {
-    setAddress((pre) => {
-      return pre.map((item) => {
-        if (item.label === e.target.name) {
-          item.value = e.target.value;
-        }
-        return item;
-      });
-    });
+  function formOnChangeHandler(e) {
+    setData((pre) => ({ ...pre, [e.target.name]: e.target.value }));
   }
 
   async function saveHandler(e) {
@@ -28,13 +31,15 @@ const Address_form = ({ close, form, action, id }) => {
 
     try {
       if (action === "CREATE") {
-        const { payload } = await dispatch(saveAddress(address));
+        const { payload } = await dispatch(saveAddress(data));
         dispatch(push_Addres([payload]));
         toast.success("address saved successfully");
-        setAddress([...form]);
+        setData({ ...form });
         close(false);
       } else if (action === "EDIT" && id) {
-        const { payload } = await dispatch(editAddress({ address, _id: id }));
+        const { payload } = await dispatch(
+          editAddress({ address: data, _id: id })
+        );
         dispatch(replace_OneAddres({ address: payload, _id: id }));
         toast.success("address edited successfully");
       } else if (!id) {
@@ -48,68 +53,133 @@ const Address_form = ({ close, form, action, id }) => {
   }
 
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        minHeight: "900px",
-        zIndex: 10,
-      }}
-      className="bg-primary position-absolute top-0 left-0 d-flex justify-content-center  align-items-center"
-    >
-      <form
-        onSubmit={(e) => saveHandler(e)}
-        className="d-flex justify-content-center flex-column align-items-center"
-      >
-        <div className="d-flex justify-content-start gap-2 py-2">
-          <button
-            type="button"
-            className="px-2 py-1 rounded-3"
-            onClick={() => close(false)}
+    <div className="row w-100 justify-content-center">
+      <div className="col-12 col-lg-6">
+        <div className="checkout-left-data">
+          <form
+            onSubmit={(e) => saveHandler(e)}
+            className="d-flex gap-15 flex-wrap  justify-content-between "
           >
-            Back
-          </button>
-        </div>
-        <ul className="list-group">
-          {address.map((item, i) => {
-            const { label, value } = item;
-            return (
-              <li
-                key={i}
-                className="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-center"
+            <div className="w-100">
+              <select
+                name="country"
+                value={data.country}
+                onChange={(e) => formOnChangeHandler(e)}
+                className="form-control form-select"
+                id="country"
               >
-                <label className="px-2 py-1 mx-2" htmlFor={label}>
-                  {label}
-                </label>
-                <input
-                  required={
-                    ["middle name", "address line 2"].includes(label)
-                      ? false
-                      : true
-                  }
-                  value={value}
-                  onChange={(e) => formHandler(e)}
-                  className="px-2 py-1 mx-2"
-                  name={label}
-                  id={label}
-                />
-              </li>
-            );
-          })}
-        </ul>
-        <div className="d-flex justify-content-start gap-2 py-2">
-          <button
-            type="button"
-            className="px-2 py-1 rounded-3"
-            onClick={() => close(false)}
-          >
-            Cancle
-          </button>
-          <button type="submit" className="px-2 py-1 rounded-3">
-            Save
-          </button>
+                <option value="DEFAULT" disabled>
+                  Select Country
+                </option>
+                <option value="india">India</option>
+              </select>
+            </div>
+            <div className="flex-grow-1">
+              <input
+                required
+                value={data.first_name}
+                onChange={(e) => formOnChangeHandler(e)}
+                name="first_name"
+                type="text"
+                placeholder="First Name"
+                className="form-control"
+              />
+            </div>
+            <div className="flex-grow-1">
+              <input
+                required
+                value={data.last_name}
+                onChange={(e) => formOnChangeHandler(e)}
+                name="last_name"
+                type="text"
+                placeholder="Last Name"
+                className="form-control"
+              />
+            </div>
+            <div className="w-100">
+              <input
+                required
+                value={data.address}
+                onChange={(e) => formOnChangeHandler(e)}
+                name="address"
+                type="text"
+                placeholder="Address"
+                className="form-control"
+              />
+            </div>
+            <div className="w-100">
+              <input
+                value={data.apartment}
+                onChange={(e) => formOnChangeHandler(e)}
+                name="apartment"
+                type="text"
+                placeholder="Apartment, Suite ,etc"
+                className="form-control"
+              />
+            </div>
+            <div className="flex-grow-1">
+              <input
+                required
+                value={data.city}
+                onChange={(e) => formOnChangeHandler(e)}
+                name="city"
+                type="text"
+                placeholder="City"
+                className="form-control"
+              />
+            </div>
+            <div className="flex-grow-1">
+              <select
+                value={data.state}
+                onChange={(e) => formOnChangeHandler(e)}
+                name="state"
+                className="form-control form-select"
+                id=""
+              >
+                <option value="DEFAULT" disabled>
+                  Select State
+                </option>
+                <option value="madhaya pradesh">Madhaya pradesh</option>
+              </select>
+            </div>
+            <div className="flex-grow-1">
+              <input
+                required
+                value={data.zipcode}
+                onChange={(e) => formOnChangeHandler(e)}
+                name="zipcode"
+                type="text"
+                placeholder="Zipcode"
+                className="form-control"
+              />
+            </div>
+
+            <div className="flex-grow-1">
+              <input
+                required
+                value={data.phone_no}
+                onChange={(e) => formOnChangeHandler(e)}
+                name="phone_no"
+                type="text"
+                placeholder="Phone no."
+                className="form-control"
+              />
+            </div>
+            <div className="d-flex justify-content-between w-100 gap-2 py-2">
+              <button
+                type="button"
+                className="px-2 py-1 rounded-3"
+                onClick={() => close(false)}
+              >
+                Close
+              </button>
+              <button type="submit" className="px-2 py-1 rounded-3">
+                Save
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   );
 };
