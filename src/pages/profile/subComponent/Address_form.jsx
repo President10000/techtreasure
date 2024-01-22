@@ -7,23 +7,11 @@ import {
   saveAddress,
 } from "../../../features/user/userSlice";
 import { toast } from "react-toastify";
-const address_inputs = [
-  { value: "", label: "first name" },
-  { value: "", label: "middle name" },
-  { value: "", label: "last name" },
-  { value: "", label: "address line 1" },
-  { value: "", label: "address line 2" },
-  { value: "", label: "pin code" },
-  { value: "", label: "city" },
-  { value: "", label: "state" },
-  { value: "", label: "country" },
-  { value: "", label: "phone no" },
-];
-const Address_form = ({ close, formToEdit }) => {
+
+const Address_form = ({ close, form, action, id }) => {
   const dispatch = useDispatch();
-  // const { user } = useSelector((state) => state.auth);
-  const [action, setAction] = useState("CREATE");
-  const [address, setAddress] = useState([...address_inputs]);
+  const [address, setAddress] = useState([...form]);
+
   function formHandler(e) {
     setAddress((pre) => {
       return pre.map((item) => {
@@ -35,46 +23,36 @@ const Address_form = ({ close, formToEdit }) => {
     });
   }
 
-  // function validateForm() {
-
-  // }
-
   async function saveHandler(e) {
     e.preventDefault();
+
     try {
       if (action === "CREATE") {
-        const saved = await dispatch(saveAddress(address));
-        dispatch(push_Addres([saved]));
+        const { payload } = await dispatch(saveAddress(address));
+        dispatch(push_Addres([payload]));
         toast.success("address saved successfully");
-        setAddress([...address_inputs]);
-      } else if (action === "EDIT") {
-        const edited = await dispatch(editAddress({address, _id:formToEdit._id}));
-        dispatch(replace_OneAddres({ address: edited, _id: formToEdit._id }));
+        setAddress([...form]);
+        close(false);
+      } else if (action === "EDIT" && id) {
+        const { payload } = await dispatch(editAddress({ address, _id: id }));
+        dispatch(replace_OneAddres({ address: payload, _id: id }));
         toast.success("address edited successfully");
+      } else if (!id) {
+        toast.error(`can not get id ${id}`);
       } else {
-        toast.error("something went wrong");
+        toast.error(`${action} type not recognized`);
       }
     } catch (error) {
       toast.error(error.message);
     }
   }
 
-  useEffect(() => {
-    function isToEdit() {
-      if (formToEdit?.address?.length) {
-        setAddress(formToEdit.address);
-        setAction("EDIT");
-      }
-    }
-    isToEdit();
-  }, [formToEdit]);
-// console.log(formToEdit)
   return (
     <div
       style={{
         width: "100vw",
         height: "100vh",
-        minHeight:"900px",
+        minHeight: "900px",
         zIndex: 10,
       }}
       className="bg-primary position-absolute top-0 left-0 d-flex justify-content-center  align-items-center"
@@ -83,6 +61,15 @@ const Address_form = ({ close, formToEdit }) => {
         onSubmit={(e) => saveHandler(e)}
         className="d-flex justify-content-center flex-column align-items-center"
       >
+        <div className="d-flex justify-content-start gap-2 py-2">
+          <button
+            type="button"
+            className="px-2 py-1 rounded-3"
+            onClick={() => close(false)}
+          >
+            Back
+          </button>
+        </div>
         <ul className="list-group">
           {address.map((item, i) => {
             const { label, value } = item;
@@ -95,7 +82,11 @@ const Address_form = ({ close, formToEdit }) => {
                   {label}
                 </label>
                 <input
-                  required
+                  required={
+                    ["middle name", "address line 2"].includes(label)
+                      ? false
+                      : true
+                  }
                   value={value}
                   onChange={(e) => formHandler(e)}
                   className="px-2 py-1 mx-2"
@@ -108,6 +99,7 @@ const Address_form = ({ close, formToEdit }) => {
         </ul>
         <div className="d-flex justify-content-start gap-2 py-2">
           <button
+            type="button"
             className="px-2 py-1 rounded-3"
             onClick={() => close(false)}
           >

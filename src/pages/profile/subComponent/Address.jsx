@@ -42,7 +42,6 @@ const Address = ({ setAddress_modal }) => {
     }
     fetchAddress();
   }, [dispatch, isSuccess.getAddress, user]);
-
   return (
     <>
       <div className="container">
@@ -56,7 +55,12 @@ const Address = ({ setAddress_modal }) => {
           </button>
         </div>
         {showAddressFormToEdit && formToEdit ? (
-          <Address_form close={close} formToEdit={formToEdit} />
+          <Address_form
+            close={close}
+            form={[...JSON.parse(JSON.stringify(formToEdit.address))]}
+            action={"EDIT"}
+            id={formToEdit._id}
+          />
         ) : (
           <div className="accordion " id="accordionExample">
             {address?.map((item, i) => {
@@ -85,15 +89,15 @@ const Address = ({ setAddress_modal }) => {
                   >
                     <div className="accordion-body">
                       <ul className="list-group">
-                        {item.address.map((item, j) => {
-                          const { lable, value } = item;
+                        {item?.address?.map((item, j) => {
+                          const { label, value } = item;
                           return (
                             <li
                               className="list-group-item d-flex justify-content-between align-items-center"
                               key={j}
                             >
-                              <label className="px-2 py-1 mx-2" htmlFor={lable}>
-                                {lable}
+                              <label className="px-2 py-1 mx-2" htmlFor={label}>
+                                {label}
                               </label>
                               <span className="px-2 py-1 mx-2">{value}</span>
                             </li>
