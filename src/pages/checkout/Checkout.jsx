@@ -21,6 +21,11 @@ const Checkout = () => {
 
   async function proceedToPayment() {
     try {
+      const res = await axios.post(
+        `http://localhost:5000/api/razorpay/create-order`,
+        { notes: {}, receipt: "recipt_#1" },
+        config
+      );
       const {
         id,
         entity,
@@ -34,22 +39,31 @@ const Checkout = () => {
         attempts,
         notes,
         created_at,
-      } = await axios.post(
-        `${base_url}razorpay/create-order`,
-        { notes: {}, receipt: "recipt_#1" },
-        config
-      );
-
+      } = res.paymentIntent;
       const options = {
         key: "rzp_test_0VIkjqfMFMpUYa",
         amount,
         currency,
         name: "Rai Appliances",
-        description: "",
-        image: "",
+        description: "test",
+        image: "https://www.kasandbox.org/programming-images/avatars/spunky-sam.png",
         order_id: id,
-        handler: (res) => {
-          console.log({res})
+        handler: async (success) => {
+          const body = {
+            paymentIntent: {
+              ...res.paymentIntent,
+              amount_paid: amount,
+              amount_due: 0,
+              status: "paid",
+              ...success,
+            },
+          };
+          const update = await axios.put(
+            `http://localhost:5000/api/user/order/update-order/${res._id}`,
+            body,
+            config
+          );
+          console.log("success", update);
         },
         prefill: {
           name: "Gaurav Kumar", //your customer's name
@@ -65,7 +79,7 @@ const Checkout = () => {
       razor.on("payment.failed", function (response) {
         console.log(response);
       });
-      razor.open()
+      razor.open();
     } catch (error) {
       toast.error(error.message);
     }
