@@ -54,7 +54,7 @@ const Address_form = ({ close, form = default_data, action, id }) => {
 
   return (
     <div className="row w-100 justify-content-center">
-      <div className="col-12 col-lg-6">
+      {/* <div > */}
         <div className="checkout-left-data">
           <form
             onSubmit={(e) => saveHandler(e)}
@@ -179,7 +179,7 @@ const Address_form = ({ close, form = default_data, action, id }) => {
             </div>
           </form>
         </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 };

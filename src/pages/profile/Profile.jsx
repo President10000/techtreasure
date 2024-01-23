@@ -5,18 +5,7 @@ import "./profile.css";
 import { logout } from "../../features/user/userSlice";
 import Address_form from "./subComponent/Address_form";
 import Address from "./subComponent/Address";
-// const address_inputs = [
-//   { value: "", label: "first name" },
-//   { value: "", label: "middle name" },
-//   { value: "", label: "last name" },
-//   { value: "", label: "address line 1" },
-//   { value: "", label: "address line 2" },
-//   { value: "", label: "pin code" },
-//   { value: "", label: "city" },
-//   { value: "", label: "state" },
-//   { value: "", label: "country" },
-//   { value: "", label: "phone no" },
-// ];
+
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -27,7 +16,6 @@ const Profile = () => {
   function logOut() {
     dispatch(logout());
   }
-  // console.log(document.cookie)
 
   useEffect(() => {
     if (!user) navigate("/login");
@@ -62,12 +50,24 @@ const Profile = () => {
                 </button>
               </div>
             </div>
-
-            {address_modal ? (
-              <Address_form close={setAddress_modal}  action={"CREATE"} />
-            ) : (
-              <Address setAddress_modal={setAddress_modal} />
-            )}
+            <div className="w-100">
+              <div className="d-flex justify-content-start gap-2 py-2">
+                <h3>Address</h3>
+                <button
+                  className="px-2 py-1 rounded-3"
+                  onClick={() => setAddress_modal(true)}
+                >
+                  new address
+                </button>
+              </div>
+              <div className="col-12 col-lg-6">
+                {!address_modal ? (
+                  <Address setAddress_modal={setAddress_modal} />
+                ) : (
+                  <Address_form close={setAddress_modal} action={"CREATE"} />
+                )}
+              </div>
+            </div>
           </div>
         </>
       ) : null}
