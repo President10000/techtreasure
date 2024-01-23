@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { base_url, config } from "../../utils/axiosConfig";
 import { toast } from "react-toastify";
-import Razorpay from "razorpay";
 const Checkout = () => {
   const [address_modal, setAddress_modal] = useState(false);
   const { cart, isSuccess } = useSelector((state) => state.cartSlice);
@@ -22,10 +21,12 @@ const Checkout = () => {
   async function proceedToPayment() {
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/razorpay/create-order`,
+        `${base_url}razorpay/create-order`,
         { notes: {}, receipt: "recipt_#1" },
         config
       );
+      const { paymentIntent, _id } = res.data;
+      console.log(res);
       const {
         id,
         entity,
@@ -39,19 +40,20 @@ const Checkout = () => {
         attempts,
         notes,
         created_at,
-      } = res.paymentIntent;
+      } = paymentIntent;
       const options = {
         key: "rzp_test_0VIkjqfMFMpUYa",
         amount,
         currency,
         name: "Rai Appliances",
         description: "test",
-        image: "https://www.kasandbox.org/programming-images/avatars/spunky-sam.png",
+        image:
+          "https://www.kasandbox.org/programming-images/avatars/spunky-sam.png",
         order_id: id,
         handler: async (success) => {
           const body = {
             paymentIntent: {
-              ...res.paymentIntent,
+              ...paymentIntent,
               amount_paid: amount,
               amount_due: 0,
               status: "paid",
@@ -59,7 +61,7 @@ const Checkout = () => {
             },
           };
           const update = await axios.put(
-            `http://localhost:5000/api/user/order/update-order/${res._id}`,
+            `${base_url}user/order/update-order/${_id}`,
             body,
             config
           );
@@ -75,7 +77,7 @@ const Checkout = () => {
           color: "#3399cc",
         },
       };
-      const razor = new Razorpay(options);
+      const razor = new window.Razorpay(options);
       razor.on("payment.failed", function (response) {
         console.log(response);
       });
@@ -84,7 +86,23 @@ const Checkout = () => {
       toast.error(error.message);
     }
   }
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
 
+  useEffect(() => {
+    loadScript("https://checkout.razorpay.com/v1/checkout.js");
+  }, []);
   return (
     <>
       <Meta title="Checkout" />
