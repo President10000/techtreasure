@@ -1,185 +1,186 @@
 import Meta from "../../components/Meta";
 import BreadCrumb from "../../components/BreadCrumb";
-
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import watch from "../../images/watch.jpg";
 import Container from "../../components/Container";
 import "./checkout.css";
-
+import Address from "../profile/subComponent/Address";
+import Address_form from "../profile/subComponent/Address_form";
+import CartItems from "../../components/cartItem/CartItems";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { base_url, config } from "../../utils/axiosConfig";
+import { toast } from "react-toastify";
+import Razorpay from "razorpay";
 const Checkout = () => {
+  const [address_modal, setAddress_modal] = useState(false);
+  const { cart, isSuccess } = useSelector((state) => state.cartSlice);
+  const [shipping_address, setShipping_address] = useState();
+
+  async function proceedToPayment() {
+    try {
+      const {
+        id,
+        entity,
+        amount,
+        amount_paid,
+        amount_due,
+        currency,
+        receipt,
+        offer_id,
+        status,
+        attempts,
+        notes,
+        created_at,
+      } = await axios.post(
+        `${base_url}razorpay/create-order`,
+        { notes: {}, receipt: "recipt_#1" },
+        config
+      );
+
+      const options = {
+        key: "rzp_test_0VIkjqfMFMpUYa",
+        amount,
+        currency,
+        name: "Rai Appliances",
+        description: "",
+        image: "",
+        order_id: id,
+        handler: (res) => {
+          console.log({res})
+        },
+        prefill: {
+          name: "Gaurav Kumar", //your customer's name
+          email: "gaurav.kumar@example.com",
+          contact: "9000090000",
+        },
+        notes,
+        theme: {
+          color: "#3399cc",
+        },
+      };
+      const razor = new Razorpay(options);
+      razor.on("payment.failed", function (response) {
+        console.log(response);
+      });
+      razor.open()
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+
   return (
     <>
       <Meta title="Checkout" />
       <BreadCrumb title="Checkout" />
       <Container class1="checkout-wrapper home-wrapper-2 py-5">
-        <div className="row flex-wrap-reverse">
-          <div className="col-12 col-lg-6">
-            <div className="checkout-left-data">
-              {/* <h3 className="website-name">TechTreasure</h3> */}
-              {/* <nav
-                style={{ "--bs-breadcrumb-divider": ">" }}
-                aria-label="breadcrumb"
-              >
-                <ol className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link className="text-dark total-price" to="/cart">
-                      Cart
-                    </Link>
-                  </li>
-                  &nbsp; / &nbsp;
-                  <li
-                    className="breadcrumb-item total-price active"
-                    aria-current="page"
-                  >
-                    Information
-                  </li>
-                  &nbsp; /
-                  <li className="breadcrumb-item total-price active ">
-                    Shipping
-                  </li>
-                  &nbsp; /
-                  <li
-                    className="breadcrumb-item total-price active"
-                    aria-current="page"
-                  >
-                    Payment
-                  </li>
-                </ol>
-              </nav> */}
-              {/* <h4 className="title total">Contact Informaiton</h4>
-              <p className="user-details total">
-                Vishal Patel (vishalpatel@gmail.com)
-              </p> */}
-              <h4 className="mb-3">Shipping Address</h4>
-              <form
-                action=""
-                className="d-flex gap-15 flex-wrap  justify-content-between "
-              >
-                <div className="w-100">
-                  <select
-                    name=""
-                    defaultValue={"DEFAULT"}
-                    className="form-control form-select"
-                    id=""
-                  >
-                    <option value="DEFAULT" disabled>
-                      Select Country
-                    </option>
-                    <option value="india">India</option>
-                  </select>
-                </div>
-                <div className="flex-grow-1">
-                  <input
-                    type="text"
-                    placeholder="First Name"
-                    className="form-control"
-                  />
-                </div>
-                <div className="flex-grow-1">
-                  <input
-                    type="text"
-                    placeholder="Last Name"
-                    className="form-control"
-                  />
-                </div>
-                <div className="w-100">
-                  <input
-                    type="text"
-                    placeholder="Address"
-                    className="form-control"
-                  />
-                </div>
-                <div className="w-100">
-                  <input
-                    type="text"
-                    placeholder="Apartment, Suite ,etc"
-                    className="form-control"
-                  />
-                </div>
-                <div className="flex-grow-1">
-                  <input
-                    type="text"
-                    placeholder="City"
-                    className="form-control"
-                  />
-                </div>
-                <div className="flex-grow-1">
-                  <select name="" className="form-control form-select" id="">
-                    <option value="" selected disabled>
-                      Select State
-                    </option>
-                  </select>
-                </div>
-                <div className="flex-grow-1">
-                  <input
-                    type="text"
-                    placeholder="Zipcode"
-                    className="form-control"
-                  />
-                </div>
-                <div className="flex-grow-1">
-                  <input
-                    type="text"
-                    placeholder="Phone no."
-                    className="form-control"
-                  />
-                </div>
-
-                <div className="w-100">
-                  <div className="d-flex justify-content-between align-items-center  ">
-                    <Link to="/cart" className="text-dark  ">
-                      <BiArrowBack className="me-2 " />
-                      Return to Cart
-                    </Link>
-
-                    <Link to="/cart" className="button">
-                      Continue to Shipping
-                    </Link>
-                  </div>
-                </div>
-              </form>
-            </div>
+        <div className="row">
+          <div className="w-100">
+            <CartItems />
           </div>
-          <div className="col-12 col-lg-6">
-            <div className="border-bottom py-4 ">
-              <div className="d-flex gap-10 mb-2 align-items-center  ">
-                <div className="d-flex w-75  gap-10">
-                  <div className="w-25 position-relative  ">
-                    <span
-                      style={{ top: "-10px", right: "2px" }}
-                      className="badge bg-secondary text-white rounded-circle p-2 position-absolute "
+          {cart?.products?.length ? (
+            <>
+              <div className="col-12 col-lg-6">
+                <div className="checkout-left-data">
+                  <div className="d-flex justify-content-start gap-2 py-2">
+                    <h4>Shipping Address</h4>
+                    <button
+                      className="px-2 py-1 rounded-3"
+                      onClick={() => setAddress_modal(true)}
                     >
-                      1
-                    </span>
-                    <img src={watch} alt="product img" className="img-fluid" />
+                      new address
+                    </button>
                   </div>
-                  <div>
-                    <h5 className="total-price">dsafa</h5>
-                    <p className="total-price">s / 3jsdlfjasklf</p>
+                  <div className="d-flex gap-15 flex-wrap  justify-content-between ">
+                    <div className="w-100">
+                      <div className="w-100">
+                        <h6>Selected Address</h6>
+                        <ul className="list-group">
+                          {shipping_address ? (
+                            Object.keys(shipping_address)?.map((key, j) => {
+                              return (
+                                <li
+                                  className="list-group-item d-flex justify-content-between align-items-center"
+                                  key={j}
+                                >
+                                  <label
+                                    className="px-2 py-1 mx-2"
+                                    htmlFor={key}
+                                  >
+                                    {key}
+                                  </label>
+                                  <span className="px-2 py-1 mx-2">
+                                    {shipping_address[key]}
+                                  </span>
+                                </li>
+                              );
+                            })
+                          ) : (
+                            <p>not selected</p>
+                          )}
+                        </ul>
+                      </div>
+                      {!address_modal ? (
+                        <>
+                          <h6>Choose Address </h6>
+                          <Address
+                            setAddress_modal={setAddress_modal}
+                            onClick={(address) => setShipping_address(address)}
+                          />
+                        </>
+                      ) : (
+                        <Address_form
+                          close={setAddress_modal}
+                          action={"CREATE"}
+                        />
+                      )}
+                    </div>
+                    <div className="w-100">
+                      <div className="d-flex justify-content-between align-items-center  ">
+                        <Link to="/cart" className="text-dark  ">
+                          <BiArrowBack className="me-2 " />
+                          Return to Cart
+                        </Link>
+
+                        {/* <Link to="/" className="button">
+                      Continue to Shipping
+                    </Link> */}
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="flex-grow-1">
-                  <h5 className="total">$ 100</h5>
+              </div>
+              <div className="col-12 col-lg-6 d-flex flex-column justify-content-end align-items-center ">
+                <div className="border-bottom py-4  w-100 ">
+                  <div className="d-flex justify-content-between  align-items-center">
+                    <p className="total">SubTotal</p>
+                    <p className="total-price">{cart.cartTotal}</p>
+                  </div>
+                  <div className="d-flex justify-content-between  align-items-center">
+                    <p className="mb-0 total">Shipping</p>
+                    <p className="mb-0 total-price">0</p>
+                  </div>
+                </div>
+                <div className=" w-100 d-flex justify-content-between  border-bottom py-4  align-items-center">
+                  <h4 className="total">Total</h4>
+                  <h5 className="total-price">{cart.cartTotal}</h5>
+                </div>
+                <div className=" w-100 d-flex justify-content-end pt-2">
+                  <button
+                    onClick={() => proceedToPayment()}
+                    type="button"
+                    className="button"
+                  >
+                    Proceed To Payment
+                  </button>
                 </div>
               </div>
-            </div>
-            <div className="border-bottom py-4 ">
-              {" "}
-              <div className="d-flex justify-content-between  align-items-center">
-                <p className="total">SubTotal</p>
-                <p className="total-price">$ 1000</p>
-              </div>
-              <div className="d-flex justify-content-between  align-items-center">
-                <p className="mb-0 total">Shipping</p>
-                <p className="mb-0 total-price">$ 1000</p>
-              </div>
-            </div>
-            <div className="d-flex justify-content-between  border-bottom py-4  align-items-center">
-              <h4 className="total">Total</h4>
-              <h5 className="total-price">$ 1000</h5>
-            </div>
-          </div>
+            </>
+          ) : (
+            <p>Cart is empty</p>
+          )}
         </div>
       </Container>
     </>
