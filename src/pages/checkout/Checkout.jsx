@@ -3,7 +3,6 @@ import BreadCrumb from "../../components/BreadCrumb";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
-import watch from "../../images/watch.jpg";
 import Container from "../../components/Container";
 import "./checkout.css";
 import Address from "../profile/subComponent/Address";
@@ -13,12 +12,19 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { base_url, config } from "../../utils/axiosConfig";
 import { toast } from "react-toastify";
+import { replaceCart } from "../../features/cart/cartSlice";
+
 const Checkout = () => {
+  const dispatch = useDispatch();
   const [address_modal, setAddress_modal] = useState(false);
   const { cart, isSuccess } = useSelector((state) => state.cartSlice);
   const [shipping_address, setShipping_address] = useState();
 
   async function proceedToPayment() {
+    if (!shipping_address) {
+      alert("address not selected");
+      return;
+    }
     try {
       const res = await axios.post(
         `${base_url}razorpay/create-order`,
@@ -60,12 +66,31 @@ const Checkout = () => {
               ...success,
             },
           };
-          const update = await axios.put(
-            `${base_url}user/order/update-order/${_id}`,
-            body,
-            config
-          );
-          console.log("success", update);
+          try {
+            const update = await axios.put(
+              `${base_url}user/order/update-order/${_id}`,
+              body,
+              config
+            );
+
+            const toRemove = update.data.products?.map((item) => item.product);
+            const res = await fetch(`${base_url}user/cart`, {
+              method: "DELETE",
+              body: JSON.stringify({ toRemove }),
+              headers: {
+                ...config.headers,
+                "Content-Type": "application/json",
+              },
+            });
+            if (res.ok) {
+              dispatch(replaceCart(await res.json()));
+            } else {
+              // toast.error(res.message);
+            }
+            console.log("success", update);
+          } catch (error) {
+            toast.error(error.message);
+          }
         },
         prefill: {
           name: "Gaurav Kumar", //your customer's name
@@ -86,6 +111,37 @@ const Checkout = () => {
       toast.error(error.message);
     }
   }
+
+  async function create_COD_Order() {
+    if (!shipping_address) {
+      alert("address not selected");
+      return;
+    }
+    const body = { receipt: "recipt_#1" ,notes:{},address:shipping_address};
+    try {
+      const cod =await axios.post(`${base_url}user/cart/cash-order`, body, config);
+
+      const toRemove = cod.data.products?.map((item) => item.product);
+      const res = await fetch(`${base_url}user/cart`, {
+        method: "DELETE",
+        body: JSON.stringify({ toRemove }),
+        headers: {
+          ...config.headers,
+          "Content-Type": "application/json",
+        },
+      });
+      
+      if (res.ok) {
+        dispatch(replaceCart(await res.json()));
+      } else {
+        // toast.error(res.message);
+      }
+      console.log("success", cod);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+
   const loadScript = (src) => {
     return new Promise((resolve) => {
       const script = document.createElement("script");
@@ -199,13 +255,24 @@ const Checkout = () => {
                   <h4 className="total">Total</h4>
                   <h5 className="total-price">{cart.cartTotal}</h5>
                 </div>
-                <div className=" w-100 d-flex justify-content-end pt-2">
+                <div className=" w-100 d-flex justify-content-end pt-2 gap-2">
                   <button
-                    onClick={() => proceedToPayment()}
+                    onClick={() =>
+                      shipping_address ? proceedToPayment() : null
+                    }
                     type="button"
                     className="button"
                   >
-                    Proceed To Payment
+                    Pay now
+                  </button>
+                  <button
+                    onClick={() =>
+                      shipping_address ? create_COD_Order() : null
+                    }
+                    type="button"
+                    className="button"
+                  >
+                    Pay on delivery
                   </button>
                 </div>
               </div>

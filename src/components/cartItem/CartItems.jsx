@@ -1,5 +1,4 @@
 
-// import watch from "../../images/watch.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { AiFillDelete } from "react-icons/ai";
 
@@ -18,7 +17,6 @@ const CartItems = () => {
 
   async function handleDeleteBtn(id) {
     const toRemove = [id];
-    console.log(JSON.stringify({ toRemove }));
     try {
       const res = await fetch(`${base_url}user/cart`, {
         method: "DELETE",

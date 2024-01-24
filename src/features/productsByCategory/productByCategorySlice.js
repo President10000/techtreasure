@@ -42,7 +42,6 @@ export const productByCategorySlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         const {data,category}=action.payload;
-        console.log(data,category)
         const newProducts={}
         newProducts[`${category}`]=data
         state.products = {...state.products,...newProducts}

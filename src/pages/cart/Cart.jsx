@@ -1,44 +1,24 @@
 import Meta from "../../components/Meta";
 import BreadCrumb from "../../components/BreadCrumb";
-// import watch from "../../images/watch.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { AiFillDelete } from "react-icons/ai";
+// import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Container from "../../components/Container";
 import "./cart.css";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  getUserCart,
-  replaceCart,
-  postProductToCart,
-} from "../../features/cart/cartSlice";
-import axios from "axios";
-import { base_url, config } from "../../utils/axiosConfig";
-import { toast } from "react-toastify";
 import CartItems from "../../components/cartItem/CartItems";
 
 const Cart = () => {
-  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const { cart, isSuccess } = useSelector((state) => state.cartSlice);
   const user = useSelector((state) => state.auth.user);
 
 
-  // useEffect(() => {
-  //   function getCart() {
-  //     if (!isSuccess) {
-  //       dispatch(getUserCart());
-  //     }
-  //   }
-  //   getCart();
-  // }, [dispatch, isSuccess]);
-
   useEffect(() => {
     if (!user) navigate("/login");
   }, [user, navigate]);
 
-  // console.log(cart, isSuccess);
   return (
     <>
       {user ? (
