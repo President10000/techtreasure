@@ -19,7 +19,6 @@ const DealOfTheDay = () => {
 
     getproducts();
   }, [dispatch, products]);
-  console.log(products);
   return (
     <>
       <div className="row">
