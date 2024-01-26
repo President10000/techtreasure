@@ -29,18 +29,18 @@ const Wishlist = () => {
   };
 
   useEffect(() => {
+    if (!user) navigate("/login");
+  }, [user, navigate]);
+
+  useEffect(() => {
     const getWishlistFormDb = () => {
-      if (!isSuccess.wishlist) {
+      if (!isSuccess.wishlist && user) {
         dispatch(getWishlist("wishlist"));
       }
     };
 
     getWishlistFormDb();
-  }, [dispatch, isSuccess]);
-
-  useEffect(() => {
-    if (!user) navigate("/login");
-  }, [user, navigate]);
+  }, [dispatch, isSuccess,user]);
 
   return (
     <>

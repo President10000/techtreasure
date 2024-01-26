@@ -20,6 +20,31 @@ const Checkout = () => {
   const { cart, isSuccess } = useSelector((state) => state.cartSlice);
   const [shipping_address, setShipping_address] = useState();
 
+  async function redirectToOrders(products) {
+    try {
+      const toRemove = products?.map((item) => item.product);
+      const res = await fetch(`${base_url}user/cart`, {
+        method: "DELETE",
+        body: JSON.stringify({ toRemove }),
+        headers: {
+          ...config.headers,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.ok) {
+        dispatch(replaceCart(await res.json()));
+      } else {
+        toast.error("reload page to see updates");
+      }
+
+      
+
+    } catch (error) {
+      toast.error("reload page to see updates");
+    }
+  }
+
   async function proceedToPayment() {
     if (!shipping_address) {
       alert("address not selected");
@@ -72,22 +97,22 @@ const Checkout = () => {
               body,
               config
             );
-
-            const toRemove = update.data.products?.map((item) => item.product);
-            const res = await fetch(`${base_url}user/cart`, {
-              method: "DELETE",
-              body: JSON.stringify({ toRemove }),
-              headers: {
-                ...config.headers,
-                "Content-Type": "application/json",
-              },
-            });
-            if (res.ok) {
-              dispatch(replaceCart(await res.json()));
-            } else {
-              // toast.error(res.message);
-            }
-            console.log("success", update);
+            redirectToOrders(update.data.products);
+            // const toRemove = update.data.products?.map((item) => item.product);
+            // const res = await fetch(`${base_url}user/cart`, {
+            //   method: "DELETE",
+            //   body: JSON.stringify({ toRemove }),
+            //   headers: {
+            //     ...config.headers,
+            //     "Content-Type": "application/json",
+            //   },
+            // });
+            // if (res.ok) {
+            //   dispatch(replaceCart(await res.json()));
+            // } else {
+            //   // toast.error(res.message);
+            // }
+            // console.log("success", update);
           } catch (error) {
             toast.error(error.message);
           }
@@ -117,26 +142,29 @@ const Checkout = () => {
       alert("address not selected");
       return;
     }
-    const body = { receipt: "recipt_#1" ,notes:{},address:shipping_address};
+    const body = { receipt: "recipt_#1", notes: {}, address: shipping_address };
     try {
-      const cod =await axios.post(`${base_url}user/cart/cash-order`, body, config);
+      const cod = await axios.post(
+        `${base_url}user/cart/cash-order`,
+        body,
+        config
+      );
+      redirectToOrders(cod.data.products);
+      // const toRemove = cod.data.products?.map((item) => item.product);
+      // const res = await fetch(`${base_url}user/cart`, {
+      //   method: "DELETE",
+      //   body: JSON.stringify({ toRemove }),
+      //   headers: {
+      //     ...config.headers,
+      //     "Content-Type": "application/json",
+      //   },
+      // });
 
-      const toRemove = cod.data.products?.map((item) => item.product);
-      const res = await fetch(`${base_url}user/cart`, {
-        method: "DELETE",
-        body: JSON.stringify({ toRemove }),
-        headers: {
-          ...config.headers,
-          "Content-Type": "application/json",
-        },
-      });
-      
-      if (res.ok) {
-        dispatch(replaceCart(await res.json()));
-      } else {
-        // toast.error(res.message);
-      }
-      console.log("success", cod);
+      // if (res.ok) {
+      //   dispatch(replaceCart(await res.json()));
+      // } else {
+      //   // toast.error(res.message);
+      // }
     } catch (error) {
       toast.error(error.message);
     }
