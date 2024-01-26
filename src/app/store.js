@@ -4,6 +4,7 @@ import productReducer from "../features/product/productSlice";
 import productBycategory from "../features/productsByCategory/productByCategorySlice";
 import featuredProductSlice from "../features/featuredProducts/featuredProductSlice";
 import cartSlice from "../features/cart/cartSlice";
+import orders from "../features/orders/orderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     product: productReducer,
     productBycategory,
     featuredProductSlice,
-    cartSlice
+    cartSlice,
+    orders
   },
 });

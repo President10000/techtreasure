@@ -22,6 +22,8 @@ import SingleProduct from "./pages/singleProduct/SingleProduct";
 import Cart from "./pages/cart/Cart";
 import Checkout from "./pages/checkout/Checkout";
 import Profile from "./pages/profile/Profile";
+import { Orders } from "./pages/orders/Orders";
+import Search from "./pages/search/Search";
 
 const App = () => {
   return (
@@ -33,6 +35,7 @@ const App = () => {
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="product" element={<OurStore />} />
+            <Route path="search" element={<Search />} />
             <Route path="product/:id" element={<SingleProduct />} />
             <Route path="blogs" element={<Blog />} />
             <Route path="blog/:id" element={<SingleBlog />} />
@@ -41,6 +44,7 @@ const App = () => {
             <Route path="compare-product" element={<CompareProduct />} />
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="profile/orders" element={<Orders />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="forgot-password" element={<Forgotpassword />} />

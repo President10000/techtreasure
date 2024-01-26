@@ -11,6 +11,12 @@ const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
 
+  const [searchInput,setSearchInput]=useState("")
+
+  function handleInputChange(e) {
+    setSearchInput(e.target.value)
+  }
+
   function onRefresh() {
     dispatch(setRefresh());
   }
@@ -66,15 +72,17 @@ const Header = () => {
               </div> */}
               <div className="input-group ">
                 <input
+                value={searchInput}
+                onChange={(e)=>handleInputChange(e)}
                   type="text"
                   className="form-control py-2"
                   placeholder="Search product here..."
                   aria-label="Search product here..."
                   aria-describedby="basic-addon2"
                 />
-                <span className="input-group-text p-3 " id="basic-addon2">
+                <Link onClick={()=>onRefresh()} to={`search/?title=${searchInput}`} className="input-group-text p-3 " id="basic-addon2">
                   <BsSearch className="fs-6" />
-                </span>
+                </Link>
               </div>
             </div>
             <div className="col-12  col-lg-6 py-2 py-md-2 ">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./profile.css";
 import { logout } from "../../features/user/userSlice";
 import Address_form from "./subComponent/Address_form";
@@ -49,6 +49,9 @@ const Profile = () => {
                   LOGOUT
                 </button>
               </div>
+            </div>
+            <div>
+             <h3> <Link to={'orders'}>Orders</Link></h3>
             </div>
             <div className="w-100">
               <div className="d-flex justify-content-start gap-2 py-2">
