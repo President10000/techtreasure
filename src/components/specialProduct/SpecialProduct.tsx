@@ -13,7 +13,7 @@ import { product } from "../../utils/types";
 // import "../productCard/productcard.css";
 const SpecialProduct: React.FC<{ product: product }> = ({ product }) => {
   const dispatch = useAppDispatch();
-
+if(!product)return null
   const { local_price, brand, title, price, images, description, _id } =
     product;
 
@@ -29,6 +29,8 @@ const SpecialProduct: React.FC<{ product: product }> = ({ product }) => {
       console.error(error.message);
     }
   }
+
+
 
   return (
     <div className="col-12 col-md-6 col-lg-6 col-xxl-6  mb-3">

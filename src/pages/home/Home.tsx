@@ -16,7 +16,7 @@ const Home = () => {
 
   return (
     <>
-      <Container class1="home-wrapper-1 py-3 ">
+      <Container className="home-wrapper-1 py-3 ">
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12 row-6 overflow-hidden" style={{maxHeight:"300px"}}>
             <div className="main-banner position-relative  ">
@@ -30,16 +30,16 @@ const Home = () => {
         </div>
       </Container>
 
-      <Container class1="home-wrapper-2 py-5">
+      <Container className="home-wrapper-2 py-5">
        <ServiceCarosal/>
       </Container>
 
-      <Container class1="featured-wrapper py-5 home-wrapper-2 ">
+      <Container className="featured-wrapper py-5 home-wrapper-2 ">
         <FiftyPercentOFF section={sections[0]}/>
       </Container>
 
 
-      <Container class1=" special-wrapper py-5 home-wrapper-2">
+      <Container className=" special-wrapper py-5 home-wrapper-2">
        <DealOfTheDay section={sections[1]}/>
       </Container>
 

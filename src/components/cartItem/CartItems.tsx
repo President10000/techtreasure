@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import {
   getUserCart,
   postProductToCart,
-  replace_OneItemFromCart,
+  replaceOrAdd_OneItemInCart,
   filter_cart,
   deleteCartItem,
 } from "../../features/cart/cartSlice";
@@ -35,7 +35,7 @@ const CartItems = () => {
         postProductToCart({ product_id: _id, quantity })
       ).unwrap();
       toast.success("added to cart");
-      dispatch(replace_OneItemFromCart(data));
+      dispatch(replaceOrAdd_OneItemInCart(data));
     } catch (error: any) {
       toast.error("internal server error");
       console.error(error.message);

@@ -6,20 +6,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./wishlist_compare.css";
 import { toast } from "react-toastify";
-import { filter_wishlist, getWishlist } from "../../features/auth/userSlice";
-import { addToWishlist } from "../../features/auth/userSlice";
+import { filter_wishlist, getWishlist } from "../../features/wishlist/wishlistSlice";
+import { addOrRemoveWish } from "../../features/wishlist/wishlistSlice";
 import React from "react";
 import { string } from "yup";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const Wishlist = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { wishlist, isSuccess, isError } = useSelector((state) => state.auth);
-  const user = useSelector((state) => state.auth.user);
-  const removefromWishlist = async (id) => {
+  const { wishlist, isSuccess, isError } = useAppSelector((state) => state.wishlist);
+  const user = useAppSelector((state) => state.auth.user);
+  const removefromWishlist = async (id:string) => {
     try {
-      const { payload } = await dispatch(addToWishlist(id));
+      const payload  = await dispatch(addOrRemoveWish(id)).unwrap();
       if (payload.status === "removed") {
         dispatch(filter_wishlist([id]));
         toast.info("removed from wishlist");
@@ -37,7 +38,7 @@ const Wishlist = () => {
 
   useEffect(() => {
     const getWishlistFormDb = () => {
-      if (!isSuccess.wishlist && user) {
+      if (!isSuccess && user) {
         dispatch(getWishlist("wishlist"));
       }
     };
@@ -51,19 +52,20 @@ const Wishlist = () => {
         <>
           <Meta title={"Wishlist "} />
           <BreadCrumb title="Wishlist" />
-          <Container class1="wishlist-wrapper home-wrapper-2 py-5 ">
+          <Container className="wishlist-wrapper home-wrapper-2 py-5 ">
             <div className="row flex-wrap">
-              {!isSuccess?.getWishlist && (
+              {!isSuccess && (
                 <div className="col-12 text-center py-5">
                   <h4 className="text-danger">
-                    {isError?.getWishlist
+                    {isError
                       ? "something went wrong"
                       : "loading....."}
                   </h4>
                 </div>
               )}
               {wishlist?.map((item, index) => {
-                const { images } = item;
+                if(typeof item.product!=="object")return null
+                const { images,title,price } = item.product;
                 return (
                   <div key={index} className="col-6 col-md-4 col-lg-3">
                     <div className="wishlist-card position-relative ">
@@ -82,8 +84,8 @@ const Wishlist = () => {
                       </div>
                     </div>
                     <div className="wishlist-details py-3 px-3">
-                      <h5 className="title">{item?.title}</h5>
-                      <h6 className="price">$ {item?.price}.00</h6>
+                      <h5 className="title">{title}</h5>
+                      <h6 className="price">$ {price}.00</h6>
                     </div>
                   </div>
                 );

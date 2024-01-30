@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { features, getFeaturedProducts } from "../../../features/featuredProducts/featuredProductSlice";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import SpecialProduct from "../../../components/specialProduct/SpecialProduct";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 
@@ -34,7 +34,7 @@ const DealOfTheDay:React.FC<props> = ({section}) => {
       </div>
       <div className="row ">
         {products?.map((item, i) => {
-          return <SpecialProduct productdata={item} key={i} />;
+          return <SpecialProduct product={item} key={i} />;
         })}
       </div>
     </>
