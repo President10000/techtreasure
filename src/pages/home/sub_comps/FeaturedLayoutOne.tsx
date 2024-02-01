@@ -3,14 +3,13 @@ import {
   features,
   getFeaturedProducts,
 } from "../../../features/featuredProducts/featuredProductSlice";
-// import { useDispatch, useSelector } from "react-redux";
-import IndividualProduct from "../../../components/productCard/IndividualProduct";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-// import IndividualProduct from "../../../components/productCard/ProductCard";
+import ProductCard from "../../../components/productCard/ProductCard";
+import Container from "../../../components/Container";
 interface props {
   section: features;
 }
-const FiftyPercentOFF: React.FC<props> = ({ section }) => {
+const FeaturedLayoutOne: React.FC<props> = ({ section }) => {
   // const section = "50%off";
   const grid = window.innerWidth > 1000 ? 4 : window.innerWidth > 600 ? 6 : 12;
   const products = useAppSelector(
@@ -28,17 +27,17 @@ const FiftyPercentOFF: React.FC<props> = ({ section }) => {
   return (
     <>
       {!!products?.length && (
-        <div className="row">
-          <div className="col-12">
-            <h3 className="section-heading">{section.toUpperCase()}</h3>
+        <Container className="featured-wrapper py-5 home-wrapper-2 ">
+          <div className="row">
+            <div className="col-12">
+              <h3 className="section-heading">{section.toUpperCase()}</h3>
+            </div>
+            <ProductCard productdata={products} />
           </div>
-          {products?.map((item, i) => {
-            return <IndividualProduct grid={grid} product={item} key={i} />;
-          })}
-        </div>
+        </Container>
       )}
     </>
   );
 };
 
-export default FiftyPercentOFF;
+export default FeaturedLayoutOne;

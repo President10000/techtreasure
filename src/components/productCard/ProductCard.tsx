@@ -8,7 +8,7 @@ import IndividualProduct from "./IndividualProduct.jsx";
 import React from "react";
 import { product } from "../../utils/types";
 
-const ProductCard:React.FC<{grid:number,productdata:product[]}> = ({ grid, productdata }) => {
+const ProductCard:React.FC<{grid?:number,productdata:product[]}> = ({ grid=3, productdata }) => {
 
   return (
     <>

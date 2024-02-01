@@ -5,7 +5,7 @@ import { product } from "../../utils/types";
 
 export const getProductsByCategory = createAsyncThunk(
   "productByCategory/get",
-  async (category: categoryies, thunkAPI) => {
+  async (category: categoryiesType, thunkAPI) => {
     try {
       const data = await getCategory_wise.productByCategory(category);
       return { data, category };
@@ -17,7 +17,6 @@ export const getProductsByCategory = createAsyncThunk(
 );
 
 export const categoryies = [
-  "mobiles",
   "Syringe",
   "Ortho",
   "Pathology machine",
@@ -28,7 +27,6 @@ export const categoryies = [
   "Gauze product"
 ];
 export type categoryiesType =
-  | "mobiles"
   | "Syringe"
   | "Ortho"
   | "Pathology machine"
@@ -39,7 +37,6 @@ export type categoryiesType =
   | "Gauze product";
 interface productState {
   products: {
-    mobiles?: product[];
     Syringe?: product[];
     Ortho?: product[];
     "Pathology machine"?: product[];

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { api, base_url, config } from "../../utils/axiosConfig";
-import { categoryies } from "./productByCategorySlice";
+import {  categoryiesType } from "./productByCategorySlice";
 import { product } from "../../utils/types";
 
-const productByCategory = async (category: categoryies): Promise<product[]> => {
+const productByCategory = async (category: categoryiesType): Promise<product[]> => {
   try {
     const response = await axios.get(
       `${base_url}${api.product.getAll}?category.primary=${category}&as_draft=false`

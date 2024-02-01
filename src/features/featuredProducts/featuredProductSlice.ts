@@ -15,13 +15,29 @@ export const getFeaturedProducts = createAsyncThunk(
   }
 );
 
-export type features = "trending" | "deal of the day";
-export type sectionsType = ["trending", "deal of the day"];
-export const sections: sectionsType = ["trending", "deal of the day"];
+export type features =
+  | "Manage Your Health Today"
+  | "Solutions for Everyday Ailments"
+  | "Limited-Time Treasures"
+  | "Fuel Your Fitness Journey";
+export type sectionsType = [
+  "Manage Your Health Today",
+  "Solutions for Everyday Ailments",
+  "Limited-Time Treasures",
+  "Fuel Your Fitness Journey"
+];
+export const sections: sectionsType = [
+  "Manage Your Health Today",
+  "Solutions for Everyday Ailments",
+  "Limited-Time Treasures",
+  "Fuel Your Fitness Journey",
+];
 interface productState {
   products: {
-    trending?: product[];
-    "deal of the day"?: product[];
+    "Manage Your Health Today"?: product[];
+    "Solutions for Everyday Ailments"?: product[];
+    "Limited-Time Treasures"?: product[];
+    "Fuel Your Fitness Journey"?: product[];
   };
   isError: boolean;
   isSuccess: boolean;

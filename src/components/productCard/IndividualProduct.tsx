@@ -53,7 +53,6 @@ const IndividualProduct:React.FC<{grid:number,product:product}> = ({ grid, produ
         <div className="product-details">
           <h6 className="brand">{brand}</h6>
           <h5 className="product-title">
-            {" "}
             {title.length > 50 ? title.slice(0, 50) + "..." : title}
           </h5>
           {/* <ReactStars
