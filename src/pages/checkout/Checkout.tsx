@@ -1,5 +1,5 @@
-//<reference path="../../utils/razorpay.d.ts" />
-import "../../utils/razorpay.d.ts";
+///<reference path="../../utils/razorpay.d.ts" />
+// import "../../utils/razorpay.d.ts";
 
 import Meta from "../../components/Meta";
 import BreadCrumb from "../../components/BreadCrumb";
@@ -15,6 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { base_url, config } from "../../utils/axiosConfig";
 import { toast } from "react-toastify";
+
+import { useCallback } from "react";
+import useRazorpay from "react-razorpay";
+
 import {
   deleteCartItem,
   filter_cart,
@@ -34,6 +38,7 @@ import React from "react";
 import { address } from "../../utils/types";
 
 const Checkout = () => {
+  const [Razorpay, isLoaded] = useRazorpay();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [address_modal, setAddress_modal] = useState(false);
@@ -48,22 +53,10 @@ const Checkout = () => {
       const toRemove = data.products?.map((item) =>
         typeof item.product === "string" ? item.product : item.product._id
       );
-      // const res = await fetch(`${base_url}user/cart`, {
-      //   method: "DELETE",
-      //   body: JSON.stringify({ toRemove }),
-      //   headers: {
-      //     ...config.headers,
-      //     "Content-Type": "application/json",
-      //   },
-      // });
       await dispatch(deleteCartItem(toRemove)).unwrap();
-      // if (res.ok) {
       dispatch(filter_cart(toRemove));
       dispatch(pushToOrders(data));
-      navigate("profile/orders")
-      // } else {
-      //   toast.error("reload page to see updates");
-      // }
+      navigate("/profile/orders");
     } catch (error) {
       console.error(error);
       toast.error("reload page to see updates");
@@ -72,23 +65,25 @@ const Checkout = () => {
 
   async function proceedToPayment() {
     if (!shipping_address) {
-      alert("address not selected");
+      toast.error("address not selected");
       return;
     }
 
     const body = {
-      notes: {},
+      notes: {
+        address: shipping_address._id,
+      },
       receipt: "recipt_#1",
       address: shipping_address._id,
     };
     try {
-      const script = await loadScript(
-        "https://checkout.razorpay.com/v1/checkout.js"
-      );
-      if (!script) {
-        alert("some thing went wrong ");
-        return;
-      }
+      // const script = await loadScript(
+      //   "https://checkout.razorpay.com/v1/checkout.js"
+      // );
+      // if (!script) {
+      //   alert("some thing went wrong ");
+      //   return;
+      // }
 
       const res = await dispatch(createPayNowOrder(body)).unwrap();
       const { paymentIntent, _id } = res;
@@ -109,14 +104,14 @@ const Checkout = () => {
       } = paymentIntent;
       const options = {
         key: "rzp_test_0VIkjqfMFMpUYa",
-        amount,
+        amount: `${amount}`,
         currency,
         name: "Rai Appliances",
         description: "test",
         image:
           "https://www.kasandbox.org/programming-images/avatars/spunky-sam.png",
         order_id: id,
-        handler: async (success) => {
+        handler: async (success: onPaymentSuccess) => {
           const body = {
             paymentIntent: {
               ...paymentIntent,
@@ -128,7 +123,10 @@ const Checkout = () => {
           };
           try {
             const update = await dispatch(
-              updatePaymentIntent(body.paymentIntent)
+              updatePaymentIntent({
+                paymentIntent: body.paymentIntent,
+                id: _id,
+              })
             ).unwrap();
             redirectToOrders(update);
           } catch (error: any) {
@@ -145,9 +143,9 @@ const Checkout = () => {
           color: "#3399cc",
         },
       };
-      const razor = new window.Razorpay(options);
-      razor.on("payment.failed", function (response) {
-        console.log(response);
+      const razor = new Razorpay(options);
+      razor.on("payment.failed", function (response: any) {
+        console.log("failed", " ", response);
       });
       razor.open();
     } catch (error: any) {
@@ -158,12 +156,14 @@ const Checkout = () => {
 
   async function cod_Order() {
     if (!shipping_address) {
-      alert("address not selected");
+      toast.error("address not selected");
       return;
     }
     const body = {
       receipt: "recipt_#1",
-      notes: {},
+      notes: {
+        address:shipping_address._id
+      },
       address: shipping_address._id,
     };
     try {
@@ -175,27 +175,20 @@ const Checkout = () => {
     }
   }
 
-  const loadScript = (src: string) => {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => {
-        resolve(true);
-      };
-      script.onerror = () => {
-        resolve(false);
-      };
-      document.body.appendChild(script);
-    });
-  };
+  // const loadScript = (src: string) => {
+  //   return new Promise((resolve) => {
+  //     const script = document.createElement("script");
+  //     script.src = src;
+  //     script.onload = () => {
+  //       resolve(true);
+  //     };
+  //     script.onerror = () => {
+  //       resolve(false);
+  //     };
+  //     document.body.appendChild(script);
+  //   });
+  // };
 
-  // useEffect(() => {
-  //   try {
-  //     loadScript("https://checkout.razorpay.com/v1/checkout.js");
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }, []);
   useEffect(() => {
     function cartTotal() {
       let amount = 0;
@@ -203,7 +196,9 @@ const Checkout = () => {
         if (typeof item.product === "object" && item.product.price) {
           amount = amount + item.product.price;
         } else {
-          throw new Error("did not get product price ");
+          // throw new Error("did not get product price ");
+          toast.error("try again later");
+          navigate("cart");
         }
       }
       setTotalAmount(amount);
@@ -308,16 +303,14 @@ const Checkout = () => {
                 </div>
                 <div className=" w-100 d-flex justify-content-end pt-2 gap-2">
                   <button
-                    onClick={() =>
-                      shipping_address ? proceedToPayment() : null
-                    }
+                    onClick={() => proceedToPayment()}
                     type="button"
                     className="button"
                   >
                     Pay now
                   </button>
                   <button
-                    onClick={() => (shipping_address ? cod_Order() : null)}
+                    onClick={() => cod_Order()}
                     type="button"
                     className="button"
                   >
@@ -336,3 +329,9 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+export interface onPaymentSuccess {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+}

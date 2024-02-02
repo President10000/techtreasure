@@ -57,7 +57,7 @@ const Address_form: React.FC<props> = ({
         close(false);
       } else if (action === "EDIT" && id) {
         const edited = await dispatch(
-          editAddress({ address: data, _id: id })
+          editAddress({ ...data ,_id: id })
         ).unwrap();
         dispatch(replace_OneAddres(edited));
         toast.success("address edited successfully");

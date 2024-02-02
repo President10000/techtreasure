@@ -89,8 +89,7 @@ export const cartSlice = createSlice({
       } else {
         copy.unshift(action.payload);
       }
-
-      state.cart = copy;
+      state.cart =copy;
     },
     replaceCart: function (state, action: PayloadAction<cart[]>) {
       state.cart = action.payload;

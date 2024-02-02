@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/userSlice";
-// import productReducer from "../features/product/productSlice";
-import productBycategory from "../features/productsByCategory/productByCategorySlice";
-import featuredProductSlice from "../features/featuredProducts/featuredProductSlice";
+import productReducer from "../features/product/productSlice";
+// import productBycategory from "../features/productsByCategory/productByCategorySlice";
+// import featuredProductSlice from "../features/featuredProducts/featuredProductSlice";
 import cartSlice from "../features/cart/cartSlice";
 import orders from "../features/orders/orderSlice";
 import wishlist from "../features/wishlist/wishlistSlice";
@@ -11,9 +11,9 @@ import address from "../features/address/addressSlice";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    // product: productReducer,
-    productBycategory,
-    featuredProductSlice,
+    product: productReducer,
+    // productBycategory,
+    // featuredProductSlice,
     cartSlice,
     orders,
     wishlist,

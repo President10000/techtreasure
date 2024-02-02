@@ -1,4 +1,3 @@
-// import { useDispatch, useSelector } from "react-redux";
 import { AiFillDelete } from "react-icons/ai";
 
 import { useEffect } from "react";
@@ -13,6 +12,7 @@ import { base_url, config } from "../../utils/axiosConfig";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import React from "react";
+import { product } from "../../utils/types";
 const CartItems = () => {
   const dispatch = useAppDispatch();
   const { cart, isSuccess, isError, isLoading } = useAppSelector(
@@ -22,20 +22,21 @@ const CartItems = () => {
   async function handleDeleteBtn(id: string) {
     const toRemove = [id];
     try {
-      await deleteCartItem(toRemove);
+      await dispatch(deleteCartItem(toRemove));
       dispatch(filter_cart(id));
     } catch (error) {
       toast.error("internal server error");
     }
   }
 
-  async function manageQty(_id: string, quantity: number) {
+  async function manageQty(product: product, quantity: number) {
+    const { _id } = product;
     try {
       const data = await dispatch(
         postProductToCart({ product_id: _id, quantity })
       ).unwrap();
       toast.success("added to cart");
-      dispatch(replaceOrAdd_OneItemInCart(data));
+      dispatch(replaceOrAdd_OneItemInCart({ ...data, product, }));
     } catch (error: any) {
       toast.error("internal server error");
       console.error(error.message);
@@ -56,10 +57,9 @@ const CartItems = () => {
         <>
           <div className="w-100">
             {cart?.map((item, i) => {
-              if (typeof item.product !== "object")
-                throw new Error("did not found product details");
-              const { quantity } = item;
-              const { title, price, images, _id } = item.product;
+              if (typeof item.product !== "object") return null;
+              const { quantity, product } = item;
+              const { title, price, images, _id } = product;
               return (
                 <div
                   key={i}
@@ -95,13 +95,15 @@ const CartItems = () => {
                   <div className="text-center  d-flex align-items-center justify-content-center gap-15 col-6 col-md-3">
                     <button
                       onClick={() =>
-                        quantity > 1 ? manageQty(_id, -1) : handleDeleteBtn(_id)
+                        quantity > 1
+                          ? manageQty(product, -1)
+                          : handleDeleteBtn(_id)
                       }
                     >
                       -
                     </button>
                     <p>{quantity}</p>
-                    <button onClick={() => manageQty(_id, 1)}>+</button>
+                    <button onClick={() => manageQty(product, 1)}>+</button>
                   </div>
                   <div className="col-6 col-md-2">
                     <h5 className="price text-center">{quantity * price}</h5>

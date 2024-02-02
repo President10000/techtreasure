@@ -6,7 +6,7 @@ import FeaturedLayoutOne from "./sub_comps/FeaturedLayoutOne";
 import FeaturedLayoutTwo from "./sub_comps/FeaturedLayoutTwo";
 import ServiceCarosal from "./sub_comps/ServiceCarosal";
 import React from "react";
-import { sections } from "../../features/featuredProducts/featuredProductSlice";
+import { sections } from "../../features/product/productSlice";
 
 const Home = () => {
   return (

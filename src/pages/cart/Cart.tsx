@@ -1,7 +1,5 @@
 import Meta from "../../components/Meta";
 import BreadCrumb from "../../components/BreadCrumb";
-// import { useDispatch, useSelector } from "react-redux";
-// import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Container from "../../components/Container";
 import "./cart.css";
@@ -26,9 +24,9 @@ const Cart = () => {
       let amount = 0;
       for (const item of cart) {
         if (typeof item.product === "object" && item.product.price) {
-          amount = amount + item.product.price;
+          amount = amount + item.product.price*item.quantity;
         } else {
-          throw new Error("did not get product price ");
+          // throw new Error("did not get product price ");
         }
       }
       setTotalAmount(amount)
@@ -46,13 +44,6 @@ const Cart = () => {
             <div className="row">
               <div className="col-12">
                 <CartItems />
-                {/* <p>
-                  {isSuccess ? (
-                    <>{!cart?.length ? "cart is empty" : null}</>
-                  ) : (
-                    "Loading"
-                  )}
-                </p> */}
               </div>
               <div className="col-12 py-2 mt-4  ">
                 <div className="d-flex flex-column flex-md-row justify-content-evenly align-items-baseline  ">

@@ -1,13 +1,16 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { addOrRemoveToWishlist, getUserWishlist } from "./wishlistService";
+import { addOrRemoveToWishlist, getUserWishlist, getWishlistArg } from "./wishlistService";
 import { toast } from "react-toastify";
 import { user, wishlist } from "../../utils/types";
 
+
+
 export const getWishlist = createAsyncThunk(
   "get/wishlist",
-  async (populate: string, thunkAPI) => {
+  async (data:getWishlistArg, thunkAPI) => {
+   
     try {
-      return await getUserWishlist(populate);
+      return await getUserWishlist(data);
     } catch (error: any) {
       //   return thunkAPI.rejectWithValue(error.Message);
       throw new Error(error.message);
@@ -78,6 +81,7 @@ export const wishlistSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
+        console.log(action.payload)
         state.wishlist = action.payload;
       })
       .addCase(getWishlist.rejected, (state, action) => {

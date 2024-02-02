@@ -1,13 +1,15 @@
 // export const base_url = "http://localhost:5000/api/"; // Replace with your API's base URL
 
+import { loginAndRegisterRes } from "../features/auth/userService";
+
 export const base_url = "https://ecommerce-backend-seven-pi.vercel.app/api/";
 const customer = localStorage.getItem("customer");
-export const getTokenFromLocalStorage = customer ? JSON.parse(customer) : null;
+export const local_user:loginAndRegisterRes = customer ? JSON.parse(customer) : null;
 
 export const config = {
   headers: {
     Authorization: `Bearer ${
-      getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+      local_user !== null ? local_user.token : ""
     }`,
     Accept: "application/json",
   },
@@ -33,13 +35,13 @@ export const api = {
     order: {
       payOnDelivery: "user/order/pay-on-delivery",
       payNow: "user/order/pay-now",
-      getByUserId: (id:string)=>`user/order/by-user/${id}`,
+      getByUserId: (id?:string)=>`user/order/by-user/${id}`,
       getById: (id:string)=>`user/order/by-id/${id}`,
       // getAll: "user/order/all",
       update: (id:string)=>`user/order/update/${id}`,
     },
     wishlist: {
-      getByUserId: (id:string)=>`user/wishlist/by-user/${id}`,
+      getByUserId: (id?:string)=>`user/wishlist/by-user/${id}`,
       getById: (id:string)=>`user/wishlist/by-id/${id}`,
       addOrRemove: (id:string)=>`user/wishlist/${id}`,
     },

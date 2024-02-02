@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import {
   features,
   getFeaturedProducts,
-} from "../../../features/featuredProducts/featuredProductSlice";
+} from "../../../features/product/productSlice";
 import './F_LayoutTwo.css'
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import Container from "../../../components/Container";
-import { product } from "../../../utils/types";
 import { postProductToCart, replaceOrAdd_OneItemInCart } from "../../../features/cart/cartSlice";
 import { toast } from "react-toastify";
 
@@ -15,10 +14,9 @@ interface props {
 }
 
 const FeaturedLayoutTwo: React.FC<props> = ({ section }) => {
-  // const section = "deal of the day";
 
   const products = useAppSelector(
-    (state) => state.featuredProductSlice.products[`${section}`]
+    (state) => state.product.featured.products[`${section}`]
   );
   
   const dispatch = useAppDispatch();

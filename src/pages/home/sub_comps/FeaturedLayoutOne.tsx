@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import {
   features,
   getFeaturedProducts,
-} from "../../../features/featuredProducts/featuredProductSlice";
+} from "../../../features/product/productSlice";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import ProductCard from "../../../components/productCard/ProductCard";
 import Container from "../../../components/Container";
@@ -13,7 +13,7 @@ const FeaturedLayoutOne: React.FC<props> = ({ section }) => {
   // const section = "50%off";
   const grid = window.innerWidth > 1000 ? 4 : window.innerWidth > 600 ? 6 : 12;
   const products = useAppSelector(
-    (state) => state.featuredProductSlice.products[`${section}`]
+    (state) => state.product.featured.products[`${section}`]
   );
   const dispatch = useAppDispatch();
   useEffect(() => {

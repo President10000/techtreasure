@@ -3,13 +3,11 @@ import BreadCrumb from "../../components/BreadCrumb";
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/productCard/ProductCard";
 import Container from "../../components/Container";
-import { useDispatch, useSelector } from "react-redux";
-// import { getAllProducts } from "../../features/product/productSlice";
 import {
   categoryies,
   categoryiesType,
   getProductsByCategory,
-} from "../../features/productsByCategory/productByCategorySlice";
+} from "../../features/product/productSlice";
 
 import "./ourstore.css";
 import Filter from "./Filter";
@@ -23,10 +21,9 @@ const OurStore = () => {
     window.innerWidth > 1000 ? 4 : window.innerWidth < 600 ? 12 : 6
   );
 
-  // const productState = useSelector((state) => state.product.products);
-  const refresh = useAppSelector((state) => state.productBycategory.refresh);
+  const refresh = useAppSelector((state) => state.product.byCategory.refresh);
   const products = useAppSelector(
-    (state) => state.productBycategory.products[`${category}`]
+    (state) => state.product.byCategory.products[`${category}`]
   );
   const dispatch = useAppDispatch();
   useEffect(() => {
