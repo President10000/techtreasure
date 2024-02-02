@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { authService, loginAndRegisterRes } from "./userService";
 import { toast } from "react-toastify";
-import { getTokenFromLocalStorage } from "../../utils/axiosConfig";
+import { local_user } from "../../utils/axiosConfig";
 import { user } from "../../utils/types";
 
 
@@ -55,7 +55,7 @@ interface initialState{
 }
 
 const initialstate:initialState = {
-  user: null,
+  user: local_user,
   isError: false,
   isSuccess: false,
   isLoading: false,

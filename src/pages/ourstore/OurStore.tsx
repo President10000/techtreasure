@@ -3,13 +3,11 @@ import BreadCrumb from "../../components/BreadCrumb";
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/productCard/ProductCard";
 import Container from "../../components/Container";
-import { useDispatch, useSelector } from "react-redux";
-// import { getAllProducts } from "../../features/product/productSlice";
 import {
   categoryies,
   categoryiesType,
   getProductsByCategory,
-} from "../../features/productsByCategory/productByCategorySlice";
+} from "../../features/product/productSlice";
 
 import "./ourstore.css";
 import Filter from "./Filter";
@@ -23,10 +21,9 @@ const OurStore = () => {
     window.innerWidth > 1000 ? 4 : window.innerWidth < 600 ? 12 : 6
   );
 
-  // const productState = useSelector((state) => state.product.products);
-  const refresh = useAppSelector((state) => state.productBycategory.refresh);
+  const refresh = useAppSelector((state) => state.product.byCategory.refresh);
   const products = useAppSelector(
-    (state) => state.productBycategory.products[`${category}`]
+    (state) => state.product.byCategory.products[`${category}`]
   );
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -42,7 +39,7 @@ const OurStore = () => {
     <>
       <Meta title="Our Store" />
       <BreadCrumb title="Our Store" />
-      <Container class1="store-wrapper home-wrapper-2 py-3 ">
+      <Container className="store-wrapper home-wrapper-2 py-3 ">
         <div className="row">
           <div className="mb-2 col-12 col-lg-3 d-flex flex-column align-item-center justify-content-start row-gap-2">
             <Filter />

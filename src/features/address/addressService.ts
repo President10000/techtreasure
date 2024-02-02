@@ -5,12 +5,10 @@ import { address } from "../../utils/types";
 const getUserAddress = async (user_id: string): Promise<address[]> => {
   try {
     const response = await axios.get(
-      `${base_url}${api.user.address.getByUserId}?user=${user_id}`,
+      `${base_url}${api.user.address.getByUserId(user_id)}`,
       config
     );
-    // if (response.data) {
     return response.data as address[];
-    // }
   } catch (error: any) {
     throw new Error(error.message);
   }
@@ -27,8 +25,7 @@ export interface addressToPost {
   state: string;
   zipcode: string;
 }
-export interface toUpdate {
-  address: addressToPost;
+export interface toUpdate extends addressToPost {
   _id: string;
 }
 const postUserAddress = async (address: addressToPost): Promise<address> => {
@@ -38,9 +35,7 @@ const postUserAddress = async (address: addressToPost): Promise<address> => {
       address,
       config
     );
-    // if (response.data) {
     return response.data as address;
-    // }
   } catch (error: any) {
     throw new Error(error.message);
   }
@@ -48,13 +43,11 @@ const postUserAddress = async (address: addressToPost): Promise<address> => {
 const updateUserAddress = async (data: toUpdate) => {
   try {
     const response = await axios.put(
-      `${base_url}${api.user.address.update}`,
-      { address: data },
+      `${base_url}${api.user.address.update(data._id)}`,
+      {address:data} ,
       config
     );
-    // if (response.data) {
     return response.data as address;
-    // }
   } catch (error: any) {
     throw new Error(error.message);
   }
@@ -62,12 +55,10 @@ const updateUserAddress = async (data: toUpdate) => {
 const deleteUserAddress = async (_id: string) => {
   try {
     const response = await axios.delete(
-      `${base_url}${api.user.address.delete}?id=${_id}`,
+      `${base_url}${api.user.address.delete(_id)}`,
       config
     );
-    // if (response.data) {
     return response.data as address;
-    // }
   } catch (error: any) {
     throw new Error(error.message);
   }

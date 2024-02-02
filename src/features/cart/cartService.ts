@@ -17,9 +17,7 @@ export type cartArg = { product_id: string; quantity: number };
 const postProduct = async (cart: cartArg): Promise<cart> => {
   try {
     const response = await axios.post(`${base_url}${api.user.cart.post}`, cart, config);
-    //  if (response.data) {
     return response.data;
-    //  }
   } catch (error: any) {
     throw new Error(error.message);
   }

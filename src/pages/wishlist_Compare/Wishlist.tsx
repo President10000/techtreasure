@@ -39,13 +39,13 @@ const Wishlist = () => {
   useEffect(() => {
     const getWishlistFormDb = () => {
       if (!isSuccess && user) {
-        dispatch(getWishlist("wishlist"));
+        dispatch(getWishlist({user_id:user._id,populate:"product"}));
       }
     };
 
     getWishlistFormDb();
   }, [dispatch, isSuccess, user]);
-
+console.log(wishlist)
   return (
     <>
       {user ? (

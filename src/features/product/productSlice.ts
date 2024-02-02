@@ -1,67 +1,173 @@
-// import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import { productService } from "./productService";
-// import { product } from "../../utils/types";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { productByCategory,productByFeature } from "./productService";
+import { toast } from "react-toastify";
+import { product } from "../../utils/types";
 
-// // Create a thunk to handle the async request to the API
+export const getProductsByCategory = createAsyncThunk(
+  "productByCategory/get",
+  async (category: categoryiesType, thunkAPI) => {
+    try {
+      const data = await productByCategory(category);
+      return { data, category };
+    } catch (error: any) {
+      // return thunkAPI.rejectWithValue(error.message);
+      throw new Error(error.message);
+    }
+  }
+);
+export const getFeaturedProducts = createAsyncThunk(
+  "getFeature_wise/get",
+  async (feature: features, thunkAPI) => {
+    try {
+      const data = await productByFeature(feature);
+      return { data, feature };
+    } catch (error: any) {
+      // return thunkAPI.rejectWithValue(error.data);
+      throw new Error(error.message);
+    }
+  }
+);
 
-// export const getAllProducts = createAsyncThunk(
-//   "product/get",
-//   async (thunkAPI) => {
-//     try {
-//       return await productService.getproducts();
-//     } catch (error: any) {
-//       // return thunkAPI.rejectWithValue(error.Message);
-//       throw new Error(error.message);
-//     }
-//   }
-// );
+export const sections: sectionsType = [
+  "Manage Your Health Today",
+  "Solutions for Everyday Ailments",
+  "Limited-Time Treasures",
+  "Fuel Your Fitness Journey",
+];
 
-// // initial state
-// interface productState {
-//   products: product[];
-//   isError: boolean;
-//   isSuccess: boolean;
-//   isLoading: boolean;
-//   Message: string;
-// }
-// const productState: productState = {
-//   products: [],
-//   isError: false,
-//   isSuccess: false,
-//   isLoading: false,
-//   Message: "",
-// };
+export const categoryies: categoryiesType[] = [
+  "Syringe",
+  "Ortho",
+  "Pathology machine",
+  "Pratient monitor",
+  "Cartical care",
+  "Baby",
+  "Dental care",
+  "Gauze product",
+];
 
-// export const productSlice = createSlice({
-//   name: "product",
-//   initialState: productState,
-//   reducers: {
-//   },
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(getAllProducts.pending, (state) => {
-//         state.isLoading = true;
-//       })
-//       .addCase(getAllProducts.fulfilled, (state, action) => {
-//         if (!action.payload)
-//           throw new Error(
-//             "something went wrong in <getAllProducts>, data not found "
-//           );
-//         state.isLoading = false;
-//         state.isError = false;
-//         state.isSuccess = true;
-//         state.products = action.payload;
-//       })
-//       .addCase(getAllProducts.rejected, (state, action) => {
-//         const errMsg = action.error.message;
-//         state.isLoading = false;
-//         state.isError = true;
-//         state.isSuccess = false;
-//         state.Message = errMsg
-//           ? errMsg
-//           : "something went wrong <getFeaturedProducts>";
-//       });
-//   },
-// });
-// // export const { setRefresh } = productSlice.actions;
-// export default productSlice.reducer;
+const productState: productState = {
+  byCategory: {
+    products: {},
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
+    Message: "",
+    refresh: false,
+  },
+  featured: {
+    products: {},
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
+    Message: "",
+    // refresh: false,
+  },
+};
+
+export const productByCategorySlice = createSlice({
+  name: "productByCategory",
+  initialState: productState,
+  reducers: {
+    refreshCategory: function (state) {
+      state.byCategory.refresh = !state.byCategory.refresh;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getProductsByCategory.pending, (state) => {
+        state.byCategory.isLoading = true;
+      })
+      .addCase(getProductsByCategory.fulfilled, (state, action) => {
+        state.byCategory.isLoading = false;
+        state.byCategory.isError = false;
+        state.byCategory.isSuccess = true;
+        const { data, category } = action.payload;
+        state.byCategory.products = { ...state.byCategory.products, [`${category}`]: data };
+      })
+      .addCase(getProductsByCategory.rejected, (state, action) => {
+        state.byCategory.isLoading = false;
+        state.byCategory.isError = true;
+        state.byCategory.isSuccess = false;
+        const errMsg = action.error.message;
+        state.byCategory.Message = errMsg
+          ? errMsg
+          : "something went wrong <getProductsByCategory>";
+      })
+      .addCase(getFeaturedProducts.pending, (state) => {
+        state.featured.isLoading = true;
+      })
+      .addCase(getFeaturedProducts.fulfilled, (state, action) => {
+        state.featured.isLoading = false;
+        state.featured.isError = false;
+        state.featured.isSuccess = true;
+        const { data, feature } = action.payload;
+        state.featured.products = { ...state.featured.products, [`${feature}`]: data };
+      })
+      .addCase(getFeaturedProducts.rejected, (state, action) => {
+        state.featured.isLoading = false;
+        state.featured.isError = true;
+        state.featured.isSuccess = false;
+        const errMsg = action.error.message;
+        state.featured.Message = errMsg
+          ? errMsg
+          : "something went wrong <getFeaturedProducts>";
+      });
+  },
+});
+export const { refreshCategory } = productByCategorySlice.actions;
+export default productByCategorySlice.reducer;
+
+export type features =
+  | "Manage Your Health Today"
+  | "Solutions for Everyday Ailments"
+  | "Limited-Time Treasures"
+  | "Fuel Your Fitness Journey";
+export type sectionsType = [
+  "Manage Your Health Today",
+  "Solutions for Everyday Ailments",
+  "Limited-Time Treasures",
+  "Fuel Your Fitness Journey"
+];
+export type categoryiesType =
+  | "Syringe"
+  | "Ortho"
+  | "Pathology machine"
+  | "Pratient monitor"
+  | "Cartical care"
+  | "Baby"
+  | "Dental care"
+  | "Gauze product";
+
+interface productState {
+  byCategory: {
+    products: {
+      Syringe?: product[];
+      Ortho?: product[];
+      "Pathology machine"?: product[];
+      "Pratient monitor"?: product[];
+      "Cartical care"?: product[];
+      Baby?: product[];
+      "Dental care"?: product[];
+      "Gauze product"?: product[];
+    };
+    isError: boolean;
+    isSuccess: boolean;
+    isLoading: boolean;
+    Message: string;
+    refresh: boolean;
+  };
+  featured: {
+    products: {
+      "Manage Your Health Today"?: product[];
+      "Solutions for Everyday Ailments"?: product[];
+      "Limited-Time Treasures"?: product[];
+      "Fuel Your Fitness Journey"?: product[];
+    };
+    isError: boolean;
+    isSuccess: boolean;
+    isLoading: boolean;
+    Message: string;
+    // refresh: boolean;
+  };
+}

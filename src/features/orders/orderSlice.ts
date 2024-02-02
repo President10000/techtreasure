@@ -4,6 +4,7 @@ import orderService from "./orderService";
 import { address, order, product, user } from "../../utils/types";
 import axios from "axios";
 import { api, base_url, config } from "../../utils/axiosConfig";
+import { onPaymentSuccess } from "../../pages/checkout/Checkout";
 interface paymentIntent {
   id: string;
   method: string;
@@ -13,12 +14,13 @@ interface paymentIntent {
   status: string;
   created_at: number;
   currency: string;
-  notes?: any;
+  notes?: Object;
   receipt: string;
   entity?: any;
-  offer_id?: any;
-  attempts?: any;
+  offer_id?: string;
+  attempts?: number;
 }
+
 export interface orderRes {
   _id: string;
   products: {
@@ -40,7 +42,7 @@ export interface orderRes {
 
 interface createCOD {
   receipt: string;
-  notes: {};
+  notes: Object;
   address: string;
 }
 
@@ -74,13 +76,19 @@ export const createPayNowOrder = createAsyncThunk(
     }
   }
 );
+
+interface updateorder {
+  id: string;
+  paymentIntent: paymentIntent & onPaymentSuccess;
+}
 export const updatePaymentIntent = createAsyncThunk(
   "updateOrder/paymentIntent",
-  async (paymentIntent: paymentIntent, thunkAPI): Promise<orderRes> => {
+  async (data: updateorder, thunkAPI): Promise<orderRes> => {
+    // const {}
     try {
       const cod = await axios.post(
-        `${base_url}${api.user.order.update}`,
-        {paymentIntent},
+        `${base_url}${api.user.order.update(data.id)}`,
+        { paymentIntent: data.paymentIntent },
         config
       );
       return cod.data;

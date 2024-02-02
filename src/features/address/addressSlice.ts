@@ -138,15 +138,4 @@ export const { push_Addres, filter_Address, replace_OneAddres } =
   addressSlice.actions;
 export default addressSlice.reducer;
 
-// export interface push_addresstAction {
-//   payload: address | address[];
-//   type: string;
-// }
-// export interface replace_OneAddresstAction {
-//   payload: address;
-//   type: string;
-// }
-// export interface filter_addressAction {
-//   payload: string | string[];
-//   type: string;
-// }
+

@@ -8,8 +8,8 @@ import { Logo } from "../../utils/logo_import";
 import { useEffect, useState } from "react";
 import {
   categoryies,
-  setRefresh,
-} from "../../features/productsByCategory/productByCategorySlice";
+  refreshCategory,
+} from "../../features/product/productSlice";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 const Header = () => {
@@ -23,15 +23,11 @@ const Header = () => {
   }
 
   function onRefresh() {
-    dispatch(setRefresh());
+    dispatch(refreshCategory());
   }
 
   const navBar = [
-    // {
-    //   path: "compare-product",
-    //   img: "/images/compare.svg",
-    //   title: "Compare Products",
-    // },
+
     {
       path: "wishlist",
       img: "/images/wishlist.svg",
@@ -50,17 +46,6 @@ const Header = () => {
       value: "0",
     },
   ];
-  // const miniNav:miniNav = [
-  //   "mobiles",
-  //   "Syringe",
-  //   "Ortho",
-  //   "Pathology machine",
-  //   "Pratient monitor",
-  //   "Cartical care",
-  //   "Baby",
-  //   "Dental care",
-  //   "Gauze product",
-  // ];
 
   return (
     <>
@@ -69,11 +54,6 @@ const Header = () => {
         <div className="container-xxl">
           <div className="row align-items-center d-flex flex-grow-1">
             <div className="col-lg-6  col-md-12 col-12  align-items-center d-flex justify-content-center">
-              {/* <div className="name-div col-md-2 col-2 d-none d-md-block align-items-center d-flex justify-content-center">
-                <h2 className="align-items-center d-flex justify-content-center mb-0">
-                  
-                </h2>
-              </div> */}
               <div className="input-group ">
                 <input
                   value={searchInput}

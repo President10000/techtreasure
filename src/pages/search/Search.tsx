@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../../components/productCard/ProductCard";
 import Container from "../../components/Container";
-import { useDispatch, useSelector } from "react-redux";
 import "../ourstore/ourstore.css";
 import Filter from "../ourstore/Filter";
 import Sort_Products from "../ourstore/Sort_Products";
@@ -17,12 +16,12 @@ const Search = () => {
   const [grid, setGrid] = useState(
     window.innerWidth > 1000 ? 4 : window.innerWidth < 600 ? 12 : 6
   );
-  const refresh = useAppSelector((state) => state.productBycategory.refresh); // when only query changes react components does not rerender automatically, so to rerender this components refresh is required
+  const refresh = useAppSelector((state) => state.product.byCategory.refresh); // when only query changes react components does not rerender automatically, so to rerender this components refresh is required
   useEffect(() => {
     async function fetch() {
       try {
         const data = await axios.get(
-          `${base_url}search/search-product?title=${title}`
+          `${base_url}search/product?title=${title}`
         );
         setProducts(data.data);
       } catch (error: any) {
@@ -32,7 +31,7 @@ const Search = () => {
     fetch();
   }, [title, refresh]);
   return (
-    <Container class1="store-wrapper home-wrapper-2 py-3 ">
+    <Container className="store-wrapper home-wrapper-2 py-3 ">
       <div className="row">
         <div className="mb-2 col-12 col-lg-3 d-flex flex-column align-item-center justify-content-start row-gap-2">
           <Filter />

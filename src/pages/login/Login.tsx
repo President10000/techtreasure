@@ -12,6 +12,7 @@ import "./login.css";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { local_user } from "../../utils/axiosConfig";
 const loginSchema = yup.object({
   email: yup
     .string()
@@ -38,7 +39,8 @@ const Login = () => {
     },
   });
   useEffect(() => {
-    if (user) navigate("/profile");
+    if (user||local_user) {
+      navigate("/profile")};
   }, [user]);
   return (
     <>
@@ -46,7 +48,7 @@ const Login = () => {
         <>
           <Meta title={"Login"} />
           <BreadCrumb title="Login" />
-          <Container class1="login-wraper home-wrapper-2 py-5">
+          <Container className="login-wraper home-wrapper-2 py-5">
             <div className="row">
               <div className="col-12 d-flex  justify-content-center align-item-center">
                 <div className="auth-card col-10 col-md-8 col-lg-6 ">
@@ -57,10 +59,11 @@ const Login = () => {
                     className="d-flex flex-column gap-15"
                   >
                     <Custominput
+                      classname=""
                       type="email"
                       name="email"
                       placeholder="Email"
-                      values={formik.values.email}
+                      value={formik.values.email}
                       onChange={formik.handleChange("email")}
                       onBlur={formik.handleBlur("email")}
                     />
@@ -68,10 +71,11 @@ const Login = () => {
                       {formik.touched.email && formik.errors.email}
                     </div>
                     <Custominput
+                      classname=""
                       type="password"
                       name="password"
                       placeholder="Password"
-                      values={formik.values.password}
+                      value={formik.values.password}
                       onChange={formik.handleChange("password")}
                       onBlur={formik.handleBlur("password")}
                     />
