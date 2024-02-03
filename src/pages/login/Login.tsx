@@ -25,7 +25,6 @@ const Login = () => {
   const user = useAppSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  if (user) navigate("/");
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -39,8 +38,9 @@ const Login = () => {
     },
   });
   useEffect(() => {
-    if (user||local_user) {
-      navigate("/profile")};
+    if (user ) {
+      navigate("/profile");
+    }
   }, [user]);
   return (
     <>

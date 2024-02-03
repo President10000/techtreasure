@@ -24,6 +24,7 @@ const CartItems = () => {
     try {
       await dispatch(deleteCartItem(toRemove));
       dispatch(filter_cart(id));
+      toast.error("removed successfully")
     } catch (error) {
       toast.error("internal server error");
     }
@@ -35,7 +36,7 @@ const CartItems = () => {
       const data = await dispatch(
         postProductToCart({ product_id: _id, quantity })
       ).unwrap();
-      toast.success("added to cart");
+      // toast.success("added to cart");
       dispatch(replaceOrAdd_OneItemInCart({ ...data, product, }));
     } catch (error: any) {
       toast.error("internal server error");
@@ -74,7 +75,7 @@ const CartItems = () => {
                           className="img-fluid"
                         />
                         <button
-                          onClick={() => handleDeleteBtn(_id)}
+                          onClick={() => handleDeleteBtn(item._id)}
                           className="position-absolute top-0 start-0 rounded-2 "
                         >
                           <AiFillDelete className="text-danger" />
@@ -97,7 +98,7 @@ const CartItems = () => {
                       onClick={() =>
                         quantity > 1
                           ? manageQty(product, -1)
-                          : handleDeleteBtn(_id)
+                          : handleDeleteBtn(item._id)
                       }
                     >
                       -

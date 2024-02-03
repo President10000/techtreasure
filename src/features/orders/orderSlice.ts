@@ -86,7 +86,7 @@ export const updatePaymentIntent = createAsyncThunk(
   async (data: updateorder, thunkAPI): Promise<orderRes> => {
     // const {}
     try {
-      const cod = await axios.post(
+      const cod = await axios.put(
         `${base_url}${api.user.order.update(data.id)}`,
         { paymentIntent: data.paymentIntent },
         config

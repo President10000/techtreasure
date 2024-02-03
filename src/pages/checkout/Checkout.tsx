@@ -1,5 +1,3 @@
-///<reference path="../../utils/razorpay.d.ts" />
-// import "../../utils/razorpay.d.ts";
 
 import Meta from "../../components/Meta";
 import BreadCrumb from "../../components/BreadCrumb";
@@ -50,12 +48,12 @@ const Checkout = () => {
 
   async function redirectToOrders(data: orderRes) {
     try {
+      dispatch(pushToOrders(data));
       const toRemove = data.products?.map((item) =>
         typeof item.product === "string" ? item.product : item.product._id
       );
       await dispatch(deleteCartItem(toRemove)).unwrap();
       dispatch(filter_cart(toRemove));
-      dispatch(pushToOrders(data));
       navigate("/profile/orders");
     } catch (error) {
       console.error(error);
@@ -77,13 +75,6 @@ const Checkout = () => {
       address: shipping_address._id,
     };
     try {
-      // const script = await loadScript(
-      //   "https://checkout.razorpay.com/v1/checkout.js"
-      // );
-      // if (!script) {
-      //   alert("some thing went wrong ");
-      //   return;
-      // }
 
       const res = await dispatch(createPayNowOrder(body)).unwrap();
       const { paymentIntent, _id } = res;
@@ -175,20 +166,7 @@ const Checkout = () => {
     }
   }
 
-  // const loadScript = (src: string) => {
-  //   return new Promise((resolve) => {
-  //     const script = document.createElement("script");
-  //     script.src = src;
-  //     script.onload = () => {
-  //       resolve(true);
-  //     };
-  //     script.onerror = () => {
-  //       resolve(false);
-  //     };
-  //     document.body.appendChild(script);
-  //   });
-  // };
-
+  
   useEffect(() => {
     function cartTotal() {
       let amount = 0;
