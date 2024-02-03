@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import Container from "../../../components/Container";
 import { postProductToCart, replaceOrAdd_OneItemInCart } from "../../../features/cart/cartSlice";
 import { toast } from "react-toastify";
+import { product } from "../../../utils/types";
 
 interface props {
   section: features;
@@ -21,13 +22,14 @@ const FeaturedLayoutTwo: React.FC<props> = ({ section }) => {
   
   const dispatch = useAppDispatch();
 
-  async function handleAddtoCartBtn(_id:string) {
+  async function handleAddtoCartBtn(product:product) {
+    const {_id}=product
     try {
       const res = await dispatch(
         postProductToCart({ product_id: _id, quantity: 1 })
       ).unwrap();
       toast.success("added to cart");
-      dispatch(replaceOrAdd_OneItemInCart(res));
+      dispatch(replaceOrAdd_OneItemInCart({...res,product}));
     } catch (error: any) {
       console.error(error.message);
     }
@@ -75,7 +77,7 @@ const FeaturedLayoutTwo: React.FC<props> = ({ section }) => {
                       <span>${local_price}</span>
                     </p>
                     
-                    <button className="button" onClick={() => handleAddtoCartBtn(_id)}>
+                    <button className="button" onClick={() => handleAddtoCartBtn(item)}>
                       Add to cart
                     </button>
                   </div>

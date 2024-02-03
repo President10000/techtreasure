@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { getOrders } from "../../features/orders/orderSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
@@ -17,7 +16,7 @@ export const Orders = () => {
   // console.log(orders);
   return (
     <div className="w-100">
-      {orders?.map((item, i) => {
+      {[...orders].reverse()?.map((item, i) => {
         const {
           products,
           address,
