@@ -12,7 +12,15 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { address } from "../../../utils/types";
 const accordian = ["One", "Two", "Three", "Four", "Five"];
-
+export const addressKeys = [
+  "phone_no",
+  "first_name",
+  "last_name",
+  "apartment",
+  "city",
+  "state",
+  "zipcode",
+];
 interface props {
   setAddress_modal: React.Dispatch<React.SetStateAction<boolean>>;
   onClick?: (address: address) => void;
@@ -100,7 +108,7 @@ const Address: React.FC<props> = ({ setAddress_modal, onClick = () => {} }) => {
                     <div className="accordion-body">
                       <ul className="list-group">
                         {Object.keys(item)?.map((key, j) => {
-                          // key = key as keyof address;
+                          if (!addressKeys.includes(key)) return null;
                           return (
                             <li
                               className="list-group-item d-flex justify-content-between align-items-center"

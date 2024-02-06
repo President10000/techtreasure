@@ -19,10 +19,8 @@ const addOrRemoveToWishlist = async (id: string): Promise<mutateWishRes> => {
 export type getWishlistArg = { user_id?: string; populate?: "product" | "" };
 
 const getUserWishlist = async (data: getWishlistArg): Promise<wishlist[]> => {
-  let { user_id, populate } = data;
-  if (!populate) {
-    populate = "";
-  }
+  let { user_id, populate="" } = data;
+ console.log({config})
   try {
     const response = await axios.get(
       `${base_url}${api.user.wishlist.getByUserId(

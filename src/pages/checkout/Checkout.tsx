@@ -1,4 +1,3 @@
-
 import Meta from "../../components/Meta";
 import BreadCrumb from "../../components/BreadCrumb";
 import { useEffect, useState } from "react";
@@ -6,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import Container from "../../components/Container";
 import "./checkout.css";
-import Address from "../profile/subComponent/Address";
+import Address, { addressKeys } from "../profile/subComponent/Address";
 import Address_form from "../profile/subComponent/Address_form";
 import CartItems from "../../components/cartItem/CartItems";
 import { useDispatch, useSelector } from "react-redux";
@@ -75,7 +74,6 @@ const Checkout = () => {
       address: shipping_address._id,
     };
     try {
-
       const res = await dispatch(createPayNowOrder(body)).unwrap();
       const { paymentIntent, _id } = res;
       console.log(res);
@@ -153,7 +151,7 @@ const Checkout = () => {
     const body = {
       receipt: "recipt_#1",
       notes: {
-        address:shipping_address._id
+        address: shipping_address._id,
       },
       address: shipping_address._id,
     };
@@ -166,7 +164,6 @@ const Checkout = () => {
     }
   }
 
-  
   useEffect(() => {
     function cartTotal() {
       let amount = 0;
@@ -212,6 +209,7 @@ const Checkout = () => {
                         <ul className="list-group">
                           {shipping_address ? (
                             Object.keys(shipping_address)?.map((key, j) => {
+                              if (!addressKeys.includes(key)) return null;
                               return (
                                 <li
                                   className="list-group-item d-flex justify-content-between align-items-center"

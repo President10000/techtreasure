@@ -10,8 +10,6 @@ interface props {
   section: features;
 }
 const FeaturedLayoutOne: React.FC<props> = ({ section }) => {
-  // const section = "50%off";
-  const grid = window.innerWidth > 1000 ? 4 : window.innerWidth > 600 ? 6 : 12;
   const products = useAppSelector(
     (state) => state.product.featured.products[`${section}`]
   );
@@ -32,7 +30,12 @@ const FeaturedLayoutOne: React.FC<props> = ({ section }) => {
             <div className="col-12">
               <h3 className="section-heading">{section.toUpperCase()}</h3>
             </div>
-            <ProductCard productdata={products} />
+            <ProductCard
+              grid={
+                window.innerWidth > 1000 ? 3 : window.innerWidth < 600 ? 12 : 6
+              }
+              productdata={products}
+            />
           </div>
         </Container>
       )}
