@@ -2,25 +2,28 @@ import Meta from "../../components/Meta";
 import BreadCrumb from "../../components/BreadCrumb";
 import Container from "../../components/Container";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./wishlist_compare.css";
 import { toast } from "react-toastify";
-import { filter_wishlist, getWishlist } from "../../features/wishlist/wishlistSlice";
+import {
+  filter_wishlist,
+  getWishlist,
+} from "../../features/wishlist/wishlistSlice";
 import { addOrRemoveWish } from "../../features/wishlist/wishlistSlice";
 import React from "react";
-import { string } from "yup";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 const Wishlist = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { wishlist, isSuccess, isError } = useAppSelector((state) => state.wishlist);
+  const { wishlist, isSuccess, isError } = useAppSelector(
+    (state) => state.wishlist
+  );
   const user = useAppSelector((state) => state.auth.user);
-  const removefromWishlist = async (id:string) => {
+  const removefromWishlist = async (id: string) => {
     try {
-      const payload  = await dispatch(addOrRemoveWish(id)).unwrap();
+      const payload = await dispatch(addOrRemoveWish(id)).unwrap();
       if (payload.status === "removed") {
         dispatch(filter_wishlist([id]));
         toast.info("removed from wishlist");
@@ -39,13 +42,13 @@ const Wishlist = () => {
   useEffect(() => {
     const getWishlistFormDb = () => {
       if (!isSuccess && user) {
-        dispatch(getWishlist({user_id:user._id,populate:"product"}));
+        dispatch(getWishlist({ user_id: user._id, populate: "product" }));
       }
     };
 
     getWishlistFormDb();
   }, [dispatch, isSuccess, user]);
-console.log(wishlist)
+
   return (
     <>
       {user ? (
@@ -57,15 +60,13 @@ console.log(wishlist)
               {!isSuccess && (
                 <div className="col-12 text-center py-5">
                   <h4 className="text-danger">
-                    {isError
-                      ? "something went wrong"
-                      : "loading....."}
+                    {isError ? "something went wrong" : "loading....."}
                   </h4>
                 </div>
               )}
               {wishlist?.map((item, index) => {
-                if(typeof item.product!=="object")return null
-                const { images,title,price } = item.product;
+                if (typeof item.product !== "object") return null;
+                const { images, title, price } = item.product;
                 return (
                   <div key={index} className="col-6 col-md-4 col-lg-3">
                     <div className="wishlist-card position-relative ">
@@ -84,7 +85,9 @@ console.log(wishlist)
                       </div>
                     </div>
                     <div className="wishlist-details py-3 px-3">
-                      <h5 className="title">{title}</h5>
+                      <h5 className="title">
+                        {title.length > 100 ? title.slice(0, 100) + "..." : title}
+                      </h5>
                       <h6 className="price">$ {price}.00</h6>
                     </div>
                   </div>

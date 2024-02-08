@@ -5,7 +5,10 @@ import { login, register } from "./userSlice";
 
 const register = async (userdata: register): Promise<loginAndRegisterRes> => {
   try {
-    const response = await axios.post(`${base_url}${api.user.register}`, userdata);
+    const response = await axios.post(
+      `${base_url}${api.user.register}`,
+      userdata
+    );
     return response.data as loginAndRegisterRes;
   } catch (error: any) {
     throw new Error(error.message);
@@ -19,6 +22,7 @@ export type loginAndRegisterRes = {
   email: string;
   mobile: string;
   token: string;
+  [key: string]: string;
 };
 
 const login = async (userdata: login): Promise<loginAndRegisterRes> => {

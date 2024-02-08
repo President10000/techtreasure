@@ -35,6 +35,16 @@ const OurStore = () => {
     getproducts();
   }, [dispatch, category, products, refresh]);
   if (!category) return "category not found";
+
+  useEffect(() => {
+    function onResize() {
+      setGrid(window.innerWidth > 1000 ? 4 : window.innerWidth < 600 ? 12 : 6);
+    }
+    addEventListener("resize", onResize);
+    return ()=>{
+      removeEventListener("resize",onResize)
+    }
+  }, []);
   return (
     <>
       <Meta title="Our Store" />
