@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import "../profile.css";
 import {
   deleteAddress,
@@ -96,7 +95,7 @@ const Address: React.FC<props> = ({ setAddress_modal, onClick = () => {} }) => {
                       aria-expanded="true"
                       aria-controls={`collapse${accordian[i]}`}
                     >
-                      Address {i + 1}
+                     {item.apartment+" "+item.zipcode+" "+item.city}
                     </button>
                   </h2>
                   <div

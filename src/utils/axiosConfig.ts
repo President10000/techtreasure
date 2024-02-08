@@ -28,6 +28,7 @@ function decodeTokenPayload() {
     if (isTokenExpired(JSON.parse(customer).token)) {
       // Token is expired, remove it from local storage
       localStorage.removeItem("token");
+      localStorage.removeItem("customer")
       return null;
     } else {
       // if token is not expired then send it
@@ -49,6 +50,7 @@ export const config = {
 export const api = {
   user: {
     register: "user/register",
+    verify:{email:"user/verify/email"},
     refresh: "user/refresh",
     login: "user/login",
     loginAdmin: "user/admin-login",
