@@ -37,7 +37,7 @@ const Resetpassword = () => {
       } else {
         // here user is logged in and want to update his password
         const res = await axios.put(
-          `${base_url}${api.user.password.forgotPassword}`,
+          `${base_url}${api.user.password.update}`,
           { password: newPass.password },
           config
         );

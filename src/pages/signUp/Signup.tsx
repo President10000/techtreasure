@@ -28,7 +28,7 @@ const signUpSchema = yup.object({
     .string()
     .email("Email should be valid")
     .required("Email is required"),
-  mobile: yup.string().min(10, "Not valid!").max(10, "Not valid!"),
+  mobile: yup.string().required().min(10, "Not valid!").max(10, "Not valid!"),
   password: yup
     .string()
     .required("Password is required")
@@ -51,13 +51,16 @@ const Signup = () => {
     validationSchema: signUpSchema,
 
     onSubmit: async (values) => {
-     try {
-      await dispatch(registerUser(values));
-      navigate("/profile");
-     } catch (error) {
-      console.error(error)
-      toast.error("try again later")
-     }
+      try {
+        const res = await dispatch(registerUser(values)).unwrap();
+        if (res) {
+          alert("Check your Email inbox to verify email");
+          navigate("/profile");
+        }
+      } catch (error:any) {
+        console.error(error);
+        // toast.error(error.);
+      }
     },
   });
 

@@ -19,9 +19,7 @@ const Profile = () => {
 
   const [address_modal, setAddress_modal] = useState(false);
 
-  function handleEditBtn(user: loginAndRegisterRes) {
-    
-  }
+  function handleEditBtn(user: loginAndRegisterRes) {}
 
   async function handleVerifyEmail() {
     try {
@@ -40,6 +38,10 @@ const Profile = () => {
     }
   }
 
+  function handleResetPassword() {
+    navigate("/reset-password")
+  }
+
   function logOut() {
     dispatch(logout());
   }
@@ -55,9 +57,9 @@ const Profile = () => {
           <div className="container d-flex flex-column gap-2 pb-4">
             <div className="d-flex justify-content-between flex-wrap  py-2">
               <div className="accordion col-12 col-lg-6 " id="user">
-              <div>
-                <h4>User</h4>
-              </div>
+                <div>
+                  <h4>User</h4>
+                </div>
                 <div className="accordion-item w-100 ">
                   <h2 className="accordion-header" id={`headingUser`}>
                     <button
@@ -68,7 +70,9 @@ const Profile = () => {
                       aria-expanded="true"
                       aria-controls={`collapseUser`}
                     >
-                      {user.firstname + " " + user.lastname}
+                      {user.firstname && user.lastname
+                        ? user.firstname + " " + user.lastname
+                        : user.email}
                     </button>
                   </h2>
                   <div
@@ -143,7 +147,7 @@ const Profile = () => {
               <div className="col-12 d-flex align-items-center justify-content-evenly flex-wrap  gap-2 py-2 border border-secondary rounded-3">
                 {[
                   { nav: "orders", title: "Orders", onClick: () => {} },
-                  { nav: "#", title: "Reset Password", onClick: () => {} },
+                  { nav: "#", title: "Reset Password", onClick: () => handleResetPassword() },
                   {
                     nav: "#",
                     title: "Verify Email",
