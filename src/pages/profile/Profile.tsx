@@ -54,10 +54,10 @@ const Profile = () => {
         <>
           <div className="container d-flex flex-column gap-2 pb-4">
             <div className="d-flex justify-content-between flex-wrap  py-2">
+              <div className="accordion col-12 col-lg-6 " id="user">
               <div>
                 <h4>User</h4>
               </div>
-              <div className="accordion col-12 col-lg-6 " id="user">
                 <div className="accordion-item w-100 ">
                   <h2 className="accordion-header" id={`headingUser`}>
                     <button

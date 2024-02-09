@@ -6,16 +6,16 @@ import { user } from "../../utils/types";
 
 
 export interface register{
-  firstname: string;
-  lastname: string;
+  firstname?: string;
+  lastname?: string;
   email: string;
-  mobile: string;
+  mobile?: string;
   password: string;
 }
 
 export interface login{
   email: string;
-  mobile?: string;
+  // mobile?: string;
   password: string;
 }
 // Create a thunk to handle the async request to the API
@@ -81,7 +81,7 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess= true;
         state.user = action.payload;
-        localStorage.setItem("token", action.payload.token);
+        // localStorage.setItem("token", action.payload.token);
         // if (state.isSuccess === true) {
           toast.info("SignUp Successfull");
         // }
@@ -107,7 +107,7 @@ export const authSlice = createSlice({
         state.user = action.payload;
 
         // if (state.isSuccess === true) {
-          localStorage.setItem("token", action.payload.token);
+          // localStorage.setItem("token", action.payload.token);
           toast.info("LogIn Successfull");
         // }
       })

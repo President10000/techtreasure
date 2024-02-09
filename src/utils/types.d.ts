@@ -62,10 +62,10 @@ export type product = {
 };
 export interface user {
   _id: string;
-  firstname: string;
-  lastname: string;
+  firstname?: string;
+  lastname?: string;
   email: string;
-  mobile: string;
+  mobile?: string;
   password: string;
   role: "user" | "admin";
   isBlocked: boolean;

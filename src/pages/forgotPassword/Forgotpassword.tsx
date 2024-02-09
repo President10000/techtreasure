@@ -4,13 +4,27 @@ import { Link } from "react-router-dom";
 import Container from "../../components/Container";
 import Custominput from "../../components/Custominput";
 import "./forgotpassword.css";
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { api, base_url } from "../../utils/axiosConfig";
 const Forgotpassword = () => {
+  const [email, setEmail] = useState("");
+async  function handleForgetPassword(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    try {
+      await axios.post(`${base_url}${api.user.password.forgotPassword}`)
+      alert("Check you registerd mail's inbox to reset your password")
+    } catch (error) {
+      console.error(error)
+      toast.error("try again later")
+    }
+  }
   return (
     <>
       <Meta title={"ForgotPassword"} />
       <BreadCrumb title="ForgotPassword" />
-      <Container class1="login-wraper home-wrapper-2 py-5">
+      <Container className="login-wraper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12 d-flex  justify-content-center align-item-center">
             <div className="auth-card col-10 col-md-8 col-lg-6">
@@ -18,8 +32,17 @@ const Forgotpassword = () => {
               <p className="text-center my-2 mb-3 ">
                 we will send you a link to reset your password.
               </p>
-              <form action="" className="d-flex flex-column gap-15">
-                <Custominput type="email" name="email" placeholder="Email" />
+              <form
+                onSubmit={(e) => handleForgetPassword(e)}
+                className="d-flex flex-column gap-15"
+              >
+                <Custominput
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                />
 
                 <div>
                   <div className=" mt-3 d-flex justify-content-center flex-column  gap-15 align-items-center   ">

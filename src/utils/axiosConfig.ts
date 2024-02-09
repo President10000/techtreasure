@@ -56,8 +56,8 @@ export const api = {
     loginAdmin: "user/admin-login",
     logout: "user/logout",
     password: {
-      forgotPassToken: "user/password/logout/forgot-token",
-      reset: (token: string) => `user/password/logout/reset/${token}`,
+      forgotPassword: "user/password/generate-reset-token",
+      reset: (token: string) => `user/password/reset/${token}`,
       update: "user/password/update",
     },
     cart: {
