@@ -9,6 +9,8 @@ const register = async (userdata: register): Promise<loginAndRegisterRes> => {
       `${base_url}${api.user.register}`,
       userdata
     );
+    localStorage.setItem("customer", JSON.stringify(response.data));
+    localStorage.setItem("token", JSON.stringify(response.data.token));
     return response.data as loginAndRegisterRes;
   } catch (error: any) {
     throw new Error(error.message);
@@ -17,18 +19,19 @@ const register = async (userdata: register): Promise<loginAndRegisterRes> => {
 
 export type loginAndRegisterRes = {
   _id: string;
-  firstname: string;
-  lastname: string;
+  firstname?: string;
+  lastname?: string;
   email: string;
-  mobile: string;
+  mobile?: string;
   token: string;
-  [key: string]: string;
+  [key: string]: string | undefined;
 };
 
 const login = async (userdata: login): Promise<loginAndRegisterRes> => {
   try {
     const response = await axios.post(`${base_url}${api.user.login}`, userdata);
     localStorage.setItem("customer", JSON.stringify(response.data));
+    localStorage.setItem("token", JSON.stringify(response.data.token));
     return response.data as loginAndRegisterRes;
   } catch (error: any) {
     throw new Error(error.message);
