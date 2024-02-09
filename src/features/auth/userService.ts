@@ -2,6 +2,7 @@ import axios from "axios";
 import { api, base_url, config } from "../../utils/axiosConfig";
 import { user } from "../../utils/types";
 import { login, register } from "./userSlice";
+import { toast } from "react-toastify";
 
 const register = async (userdata: register): Promise<loginAndRegisterRes> => {
   try {
@@ -11,8 +12,15 @@ const register = async (userdata: register): Promise<loginAndRegisterRes> => {
     );
     localStorage.setItem("customer", JSON.stringify(response.data));
     localStorage.setItem("token", JSON.stringify(response.data.token));
+    toast.info("SignUp Successfull");
     return response.data as loginAndRegisterRes;
   } catch (error: any) {
+    toast.error(
+      error.response.data.message
+        ? error.response.data.message
+        : "unable to register try again later"
+    );
+    console.log(error);
     throw new Error(error.message);
   }
 };
@@ -32,8 +40,15 @@ const login = async (userdata: login): Promise<loginAndRegisterRes> => {
     const response = await axios.post(`${base_url}${api.user.login}`, userdata);
     localStorage.setItem("customer", JSON.stringify(response.data));
     localStorage.setItem("token", JSON.stringify(response.data.token));
+    toast.info("LogIn Successfull");
     return response.data as loginAndRegisterRes;
   } catch (error: any) {
+    toast.error(
+      error.response.data.message
+        ? error.response.data.message
+        : "internal server error"
+    );
+    console.log(error);
     throw new Error(error.message);
   }
 };

@@ -4,8 +4,7 @@ import { toast } from "react-toastify";
 import { local_user } from "../../utils/axiosConfig";
 import { user } from "../../utils/types";
 
-
-export interface register{
+export interface register {
   firstname?: string;
   lastname?: string;
   email: string;
@@ -13,7 +12,7 @@ export interface register{
   password: string;
 }
 
-export interface login{
+export interface login {
   email: string;
   // mobile?: string;
   password: string;
@@ -21,10 +20,10 @@ export interface login{
 // Create a thunk to handle the async request to the API
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async (userdata:register, thunkAPI) => {
+  async (userdata: register, thunkAPI) => {
     try {
       return await authService.register(userdata);
-    } catch (error:any) {
+    } catch (error: any) {
       // return thunkAPI.rejectWithValue(error);
       throw new Error(error.message);
     }
@@ -33,28 +32,27 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   "auth/login",
-  async (userdata:login, thunkAPI) => {
+  async (userdata: login, thunkAPI) => {
     try {
       return await authService.login(userdata);
-    } catch (error:any) {
+    } catch (error: any) {
       // return thunkAPI.rejectWithValue(error);
       throw new Error(error.message);
     }
   }
 );
 
-
 // initial state
 
-interface initialState{
-  user: loginAndRegisterRes|null;
+interface initialState {
+  user: loginAndRegisterRes | null;
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
   Message: string;
 }
 
-const initialstate:initialState = {
+const initialstate: initialState = {
   user: local_user,
   isError: false,
   isSuccess: false,
@@ -79,21 +77,20 @@ export const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
-        state.isSuccess= true;
+        state.isSuccess = true;
         state.user = action.payload;
         // localStorage.setItem("token", action.payload.token);
         // if (state.isSuccess === true) {
-          toast.info("SignUp Successfull");
+        // toast.info("SignUp Successfull");
         // }
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        const errMsg=action.error.message
-        state.Message =  errMsg?errMsg:"something went wrong <registerUser>" ;
-
-        toast.error("unable to register try again later");
+        const errMsg = action.error.message;
+        state.Message = errMsg ? errMsg : "something went wrong <registerUser>";
+        // toast.error("unable to register try again later");
         // if (state.isError === true) {
         // }
       })
@@ -107,25 +104,23 @@ export const authSlice = createSlice({
         state.user = action.payload;
 
         // if (state.isSuccess === true) {
-          // localStorage.setItem("token", action.payload.token);
-          toast.info("LogIn Successfull");
+        // localStorage.setItem("token", action.payload.token);
+        // toast.info("LogIn Successfull");
         // }
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        const errMsg=action.error.message
-        state.Message =  errMsg?errMsg:"something went wrong <loginUser>" ;
+        const errMsg = action.error.message;
+        state.Message = errMsg ? errMsg : "something went wrong <loginUser>";
 
         // if (state.isError === true) {
-          toast.error("unable to login try again later");
+        // toast.error("unable to login try again later");
         // }
-      })
+      });
   },
 });
 
-export const {
-  logout,
-} = authSlice.actions;
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;
