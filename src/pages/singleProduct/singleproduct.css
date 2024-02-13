@@ -71,7 +71,7 @@
 
 .main-product-image img {
   width: 100% !important;
-  height: 600px !important;
+  height: 400px !important;
   object-fit: cover;
 }
 .other-product-images {
