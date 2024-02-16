@@ -1,9 +1,10 @@
 import Meta from "../../components/Meta";
 import BreadCrumb from "../../components/BreadCrumb";
 
-import ProductCard from "../../components/productCard/ProductCard";
+// import ProductCard from "../../components/productCard/ProductCard";
 // import ReactStars from "react-rating-stars-component";
-// import ReactImageZoom from "react-image-zoom";
+// @ts-ignore
+import ReactImageZoom from "react-image-zoom";
 import { useState } from "react";
 import { IoGitCompare } from "react-icons/io5";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -14,20 +15,13 @@ import { useEffect } from "react";
 import { base_url } from "../../utils/axiosConfig";
 import React from "react";
 import { product } from "../../utils/types";
+import { toast } from "react-toastify";
 const SingleProduct = () => {
   let { id } = useParams();
 
   const [product, setProduct] = useState<product>();
 
   const [img_index, setImg_index] = useState(0);
-  const [pri_img, setPri_img] = useState({
-    width: 600,
-    height: 600,
-    zoomWidth: 600,
-    img: "",
-  });
-
-  // const [orderedProducts, setOrderedProducts] = useState(true);
   const copyToClipboard = (text: string) => {
     console.log("text", text);
     var textField = document.createElement("textarea");
@@ -38,63 +32,57 @@ const SingleProduct = () => {
     textField.remove();
   };
 
-  function nextImg() {
-    if (product && img_index < product.images.primary.length - 1) {
-      setPri_img((pre) => {
-        return { ...pre, img: product.images.primary[img_index + 1].url };
-      });
-      setImg_index((pre) => pre + 1);
-    }
-  }
-
-  function preImg() {
-    if (product && img_index > 0) {
-      setPri_img((pre) => {
-        return { ...pre, img: product.images.primary[img_index - 1].url };
-      });
-      setImg_index((pre) => pre - 1);
-    }
-  }
 
   useEffect(() => {
     async function getApi() {
       try {
         const api = await fetch(`${base_url}product/${id}`);
         const jsonApi = await api.json();
-        setPri_img({ ...pri_img, img: jsonApi.images.primary[0].url });
         setProduct(jsonApi);
       } catch (error) {
-        throw new Error("internal server error");
+        toast.error("internal server error");
       }
     }
     getApi();
-  }, [id, pri_img]);
+  }, [id]);
 
   return (
     <>
       <Meta title={"Product Name"} />
       <BreadCrumb title="Product Name" />
-      {product && pri_img.img ? (
+      {product ? (
         <>
-          <Container class1="main-product-wrapper py-5 home-wrapper-2">
+          <Container className="main-product-wrapper py-1 home-wrapper-2">
             <div className="row">
               {/* left side of the main product section  */}
-              <div className="col-12 col-lg-6 ">
+              <div
+                className="col-12 col-lg-6 d-flex justify-content-center align-items-center"
+                style={{ maxHeight: "540px", overflow: "hidden" }}
+              >
                 <div className="main-product-image">
                   <div className="position-relative">
-                    {/* <ReactImageZoom {...pri_img} /> */}
-                    <button
-                      className="position-absolute start-0 top-50"
-                      onClick={() => preImg()}
-                    >
-                      pre
-                    </button>
-                    <button
-                      className="position-absolute end-0 top-50"
-                      onClick={() => nextImg()}
-                    >
-                      next
-                    </button>
+                    <img
+                      style={{ maxHeight: "400px" }}
+                      src={product.images.primary[img_index].url}
+                      alt=""
+                    />
+                    <span className="position-absolute bottom-0 w-100 d-flex justify-content-center align-items-center gap-2">
+                      {product.images.primary.map((data, i) => {
+                        return (
+                          <button
+                            onClick={() => setImg_index(i)}
+                            key={i}
+                            type="button"
+                            style={{
+                              padding: "10px",
+                              backgroundColor:
+                                i == img_index ? "lightblue" : "",
+                            }}
+                            className={`rounded-2 border-2 border-secondry`}
+                          ></button>
+                        );
+                      })}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -133,53 +121,42 @@ const SingleProduct = () => {
                       );
                     })}
 
-                    <div className="d-flex gap-10 mt-2 mb-3 ">
-                      <h3 className="product-heading">Size :</h3>
-                      <div className="d-flex flex-wrap gap-15">
-                        {product.sizes.map((size, i) => {
+                    {!!product.sizes?.length && (
+                      <div className="d-flex gap-10 mt-2 mb-3 ">
+                        <h3 className="product-heading">Size :</h3>
+                        <div className="d-flex flex-wrap gap-15">
+                          {product.sizes.map((size, i) => {
+                            return (
+                              <span
+                                key={i}
+                                className="badge border border-1 bg-white text-dark border-secondary"
+                              >
+                                {size.size}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                    {!!product.colors?.length && (
+                      <div className="d-flex gap-10  mt-2 mb-3 ">
+                        <h3 className="product-heading">Color :</h3>
+                        {product.colors.map((color, i) => {
                           return (
                             <span
                               key={i}
-                              className="badge border border-1 bg-white text-dark border-secondary"
-                            >
-                              {size.size}
-                            </span>
+                              className="rounded-5"
+                              style={{
+                                backgroundColor: `${color.color}`,
+                                height: "20px",
+                                width: "20px",
+                              }}
+                            ></span>
                           );
                         })}
                       </div>
-                    </div>
-                    <div className="d-flex gap-10  mt-2 mb-3 ">
-                      <h3 className="product-heading">Color :</h3>
-                      {product.colors.map((color, i) => {
-                        return (
-                          <span
-                            key={i}
-                            className="rounded-5"
-                            style={{
-                              backgroundColor: `${color.color}`,
-                              height: "20px",
-                              width: "20px",
-                            }}
-                          >
-                            {" "}
-                          </span>
-                        );
-                      })}
-                    </div>
+                    )}
                     <div className="d-flex align-items-center  gap-15 flex-row  mt-2 mb-3">
-                      <div className="d-flex align-items-center justify-content-center flex-column flex-md-row py-5 gap-2">
-                        <h3 className="product-heading">Quantity :</h3>
-                        <div className="">
-                          <input
-                            className="form-control"
-                            type="number"
-                            min={1}
-                            max={10}
-                            style={{ width: "70px" }}
-                            id=""
-                          />
-                        </div>
-                      </div>
                       <div className=" cart-button d-flex align-items-center gap-10  ">
                         {["Add to Cart", "Buy Now"].map((item, i) => {
                           return (
@@ -197,7 +174,6 @@ const SingleProduct = () => {
                       ].map((item, i) => {
                         return (
                           <div key={i}>
-                            {" "}
                             <a
                               href="#"
                               className="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2"
@@ -238,20 +214,21 @@ const SingleProduct = () => {
             </div>
           </Container>
           {/* description section */}
-          <Container class1="description-wrapper py-5 home-wrapper-2">
+          <Container className="description-wrapper py-5 home-wrapper-2">
             <div className="row">
               <div className="col-12">
                 <h4>Description</h4>
                 <div className="bg-white p-3">
-                  <p>{product.description.head_desc}</p>{" "}
+                  <p>{product.description.head_desc}</p>
                 </div>
                 <div>
-                  <ul>
+                  <ul className="list-group">
                     {product.description.sub_desc?.map((desc, i) => {
                       return (
-                        <li key={i} style={{ listStyle: "none" }}>
-                          {" "}
-                          {desc.key}:{desc.value}{" "}
+                        <li className="list-group-item " key={i}>
+                          <p>
+                            {desc.key} : {desc.value}
+                          </p>
                         </li>
                       );
                     })}
@@ -261,7 +238,7 @@ const SingleProduct = () => {
             </div>
           </Container>
           {/* review section */}
-          <Container id="review" class1="review-wrapper pb-5 home-wrapper-2">
+          <Container className="review-wrapper pb-5 home-wrapper-2">
             <div className="row">
               <div className="col-12">
                 <h3>Reviews</h3>
@@ -334,14 +311,14 @@ const SingleProduct = () => {
           </Container>
         </>
       ) : (
-        <h3 style={{ color: "red" }}> Internal server error </h3>
+        <h3 style={{ color: "red" }}> Loading... </h3>
       )}
 
       {/* popular section */}
-      <Container class1="popular-wrapper py-5 home-wrapper-2 ">
+      <Container className="popular-wrapper py-5 home-wrapper-2 ">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">Our Popular Products</h3>
+            <h3 className="section-heading">Recomended</h3>
           </div>
         </div>
         <div className="row">
