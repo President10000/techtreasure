@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 const register = async (userdata: register): Promise<loginAndRegisterRes> => {
   try {
     const response = await axios.post(
-      `${base_url}${api.user.register}`,
+      `${api.user.register()}`,
       userdata
     );
     localStorage.setItem("customer", JSON.stringify(response.data));
@@ -37,7 +37,7 @@ export type loginAndRegisterRes = {
 
 const login = async (userdata: login): Promise<loginAndRegisterRes> => {
   try {
-    const response = await axios.post(`${base_url}${api.user.login}`, userdata);
+    const response = await axios.post(`${api.user.login()}`, userdata);
     localStorage.setItem("customer", JSON.stringify(response.data));
     localStorage.setItem("token", JSON.stringify(response.data.token));
     toast.info("LogIn Successfull");

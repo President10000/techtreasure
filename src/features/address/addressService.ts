@@ -5,7 +5,7 @@ import { address } from "../../utils/types";
 const getUserAddress = async (user_id: string): Promise<address[]> => {
   try {
     const response = await axios.get(
-      `${base_url}${api.user.address.getByUserId(user_id)}`,
+      `${api.user.address.getById(user_id)}`,
       config
     );
     return response.data as address[];
@@ -25,13 +25,14 @@ export interface addressToPost {
   state: string;
   zipcode: string;
 }
+
 export interface toUpdate extends addressToPost {
   _id: string;
 }
 const postUserAddress = async (address: addressToPost): Promise<address> => {
   try {
     const response = await axios.post(
-      `${base_url}${api.user.address.post}`,
+      `${api.user.address.post()}`,
       address,
       config
     );
@@ -43,8 +44,8 @@ const postUserAddress = async (address: addressToPost): Promise<address> => {
 const updateUserAddress = async (data: toUpdate) => {
   try {
     const response = await axios.put(
-      `${base_url}${api.user.address.update(data._id)}`,
-      {address:data} ,
+      `${api.user.address.update(data._id)}`,
+      { address: data },
       config
     );
     return response.data as address;
@@ -55,7 +56,7 @@ const updateUserAddress = async (data: toUpdate) => {
 const deleteUserAddress = async (_id: string) => {
   try {
     const response = await axios.delete(
-      `${base_url}${api.user.address.delete(_id)}`,
+      `${api.user.address.delete(_id)}`,
       config
     );
     return response.data as address;

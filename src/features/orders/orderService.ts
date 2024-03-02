@@ -4,7 +4,7 @@ import { order } from "../../utils/types";
 
 const getOrders = async (id?:string):Promise<order[]> => {
  try {
-    const response = await axios.get(`${base_url}${api.user.order.getByUserId(id)}?populate=products.product`,config);
+    const response = await axios.get(`${api.user.order.getById(id||'')}?populate=products.product`,config);
 
     return response.data as order[];
  } catch (error:any) {
