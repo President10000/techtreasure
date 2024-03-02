@@ -79,10 +79,6 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.user = action.payload;
-        // localStorage.setItem("token", action.payload.token);
-        // if (state.isSuccess === true) {
-        // toast.info("SignUp Successfull");
-        // }
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -90,9 +86,6 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         const errMsg = action.error.message;
         state.Message = errMsg ? errMsg : "something went wrong <registerUser>";
-        // toast.error("unable to register try again later");
-        // if (state.isError === true) {
-        // }
       })
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
@@ -102,11 +95,6 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.user = action.payload;
-
-        // if (state.isSuccess === true) {
-        // localStorage.setItem("token", action.payload.token);
-        // toast.info("LogIn Successfull");
-        // }
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -114,10 +102,6 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         const errMsg = action.error.message;
         state.Message = errMsg ? errMsg : "something went wrong <loginUser>";
-
-        // if (state.isError === true) {
-        // toast.error("unable to login try again later");
-        // }
       });
   },
 });

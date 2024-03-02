@@ -7,7 +7,7 @@ export type mutateWishRes = { status: "added" | "removed"; wish: wishlist };
 const addOrRemoveToWishlist = async (id: string): Promise<mutateWishRes> => {
   try {
     const response = await axios.put(
-      `${base_url}${api.user.wishlist.addOrRemove(id)}`,
+      `${api.user.wishlist.addOrRemove(id)}`,
       {},
       config
     );
@@ -19,13 +19,10 @@ const addOrRemoveToWishlist = async (id: string): Promise<mutateWishRes> => {
 export type getWishlistArg = { user_id?: string; populate?: "product" | "" };
 
 const getUserWishlist = async (data: getWishlistArg): Promise<wishlist[]> => {
-  let { user_id, populate="" } = data;
- console.log({config})
+  let { user_id, populate = "" } = data;
   try {
     const response = await axios.get(
-      `${base_url}${api.user.wishlist.getByUserId(
-        user_id
-      )}?populate=${populate}`,
+      `${api.user.wishlist.getById(user_id)}?populate=${populate}`,
       config
     );
     return response.data;

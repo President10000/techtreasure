@@ -28,7 +28,7 @@ function decodeTokenPayload() {
     if (isTokenExpired(JSON.parse(customer).token)) {
       // Token is expired, remove it from local storage
       localStorage.removeItem("token");
-      localStorage.removeItem("customer")
+      localStorage.removeItem("customer");
       return null;
     } else {
       // if token is not expired then send it
@@ -43,50 +43,50 @@ export const local_user: loginAndRegisterRes = decodeTokenPayload();
 
 export const config = {
   headers: {
-    Authorization: `Bearer ${local_user? local_user.token : ""}`,
+    Authorization: `Bearer ${local_user ? local_user.token : ""}`,
     Accept: "application/json",
   },
 };
 export const api = {
   user: {
-    register: "user/register",
-    verify:{email:"user/verify/email"},
-    refresh: "user/refresh",
-    login: "user/login",
-    loginAdmin: "user/admin-login",
-    logout: "user/logout",
+    register: () => `${base_url}user/register`,
+    verify: { email: () => `${base_url}user/verify/email` },
+    refresh: () => `${base_url}user/refresh`,
+    login: () => `${base_url}user/login`,
+    loginAdmin: () => `${base_url}user/admin-login`,
+    logout: () => `${base_url}user/logout`,
     password: {
-      forgotPassword: "user/password/generate-reset-token",
-      reset: (token: string) => `user/password/reset/${token}`,
-      update: "user/password/update",
+      forgotPassword: () => `${base_url}user/password/generate-reset-token`,
+      reset: (token: string) => `${base_url}user/password/reset/${token}`,
+      update: () => `${base_url}user/password/update`,
     },
     cart: {
-      post: "user/cart",
-      delete: "user/cart",
-      coupon: "user/cart/applycoupon",
-      get: "user/cart",
+      post: () => `${base_url}user/cart`,
+      delete: () => `${base_url}user/cart`,
+      // coupon: "user/cart/applycoupon",
+      get: () => `${base_url}user/cart`,
     },
     order: {
-      payOnDelivery: "user/order/pay-on-delivery",
-      payNow: "user/order/pay-now",
-      getByUserId: (id?: string) => `user/order/by-user/${id}`,
-      getById: (id: string) => `user/order/by-id/${id}`,
+      payOnDelivery: () => `${base_url}user/order/pay-on-delivery`,
+      payNow: () => `${base_url}user/order/pay-now`,
+      // getByUserId: (id?: string) => `user/order/by-user/${id}`,
+      getById: (id?: string) => `${base_url}user/order/${id}`,
       // getAll: "user/order/all",
-      update: (id: string) => `user/order/update/${id}`,
+      update: (id: string) => `${base_url}user/order/update/${id}`,
     },
     wishlist: {
-      getByUserId: (id?: string) => `user/wishlist/by-user/${id}`,
-      getById: (id: string) => `user/wishlist/by-id/${id}`,
-      addOrRemove: (id: string) => `user/wishlist/${id}`,
+      // getByUserId: (id?: string) => `user/wishlist/by-user/${id}`,
+      getById: (id?: string) => `${base_url}user/wishlist/${id}`,
+      addOrRemove: (id: string) => `${base_url}user/wishlist/${id}`,
     },
     address: {
-      getByUserId: (id: string) => `user/address/by-user/${id}`,
-      getById: (id: string) => `user/address/by-id/${id}`,
-      post: "user/address/",
-      update: (id: string) => `user/address/${id}`,
-      delete: (id: string) => `user/address/${id}`,
+      // getByUserId: (id: string) => `user/address/by-user/${id}`,
+      getById: (id: string) => `${base_url}user/address/${id}`,
+      post: () => `${base_url}user/address`,
+      update: (id: string) => `${base_url}user/address/${id}`,
+      delete: (id: string) => `${base_url}user/address/${id}`,
     },
-    edit: "user/edit",
+    edit: `${base_url}user/edit`,
     // findById: (id:string)=>`user/find/${id}`,
     // findAll: "user/find",
     // block: (id:string)=>`user/block/${id}`,
@@ -97,23 +97,23 @@ export const api = {
     // post: "product/",
     // update: (id:string)=>`product/${id}`,
     // delete: (id:string)=>`product/${id}`,
-    getById: (id: string) => `product/${id}`,
-    rate: "product/rating",
-    getAll: "product/",
+    getById: (id: string) => `${base_url}product/${id}`,
+    // rate: "product/rating",
+    get: () =>`${base_url}product`,
   },
   search: {
-    product: "search/product",
+    product: () => `${base_url}search/product`,
   },
   image: {
-    post: "image",
-    delete: (id: string) => `image/${id}`,
+    post: () => `${base_url}image`,
+    delete: (id: string) => `${base_url}image/${id}`,
   },
   enquiry: {
-    post: "enquiry",
-    update: (id: string) => `enquiry/${id}`,
-    delete: (id: string) => `enquiry/${id}`,
-    getByUser: (id: string) => `enquiry/by-user/${id}`,
-    getById: (id: string) => `enquiry/by-id/${id}`,
+    post: () => `${base_url}enquiry`,
+    update: (id: string) => `${base_url}enquiry/${id}`,
+    delete: (id: string) => `${base_url}enquiry/${id}`,
+    // getByUser: (id: string) => `enquiry/by-user/${id}`,
+    getById: (id: string) => `${base_url}enquiry/${id}`,
     // getAll:"enquiry"
   },
 };

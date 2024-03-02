@@ -1,7 +1,7 @@
 import Meta from "../../components/Meta";
 import BreadCrumb from "../../components/BreadCrumb";
 import Container from "../../components/Container";
-import { productsToCompare } from "../../utils/Data";
+// import { productsToCompare } from "../../utils/Data";
 import "./wishlist_compare.css";
 const CompareProduct = () => {
   return (
@@ -11,7 +11,7 @@ const CompareProduct = () => {
       <Container class1="compare-product-wrapper home-wrapper-2 py-5 ">
         <div className="row row-gap-4">
           <p className="d-lg-none ">Desktop mode recomended </p>
-          {productsToCompare.map((pro, i) => {
+          {/* {productsToCompare.map((pro, i) => {
             return (
               <div key={i} className="col-12 col-md-4 col-lg-3">
                 <div className="compare-product-card position-relative ">
@@ -69,7 +69,7 @@ const CompareProduct = () => {
                 </div>
               </div>
             );
-          })}
+          })} */}
         </div>
       </Container>
     </>

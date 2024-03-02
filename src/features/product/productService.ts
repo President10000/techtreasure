@@ -8,7 +8,7 @@ const productByCategory = async (
 ): Promise<product[]> => {
   try {
     const response = await axios.get(
-      `${base_url}${api.product.getAll}?category.primary=${category}&as_draft=false`
+      `${api.product.get()}?category.primary=${category}&as_draft=false`
     );
     //  if (response.data) {
     return response.data;
@@ -21,8 +21,8 @@ const productByCategory = async (
 const productByFeature = async (feature: features): Promise<product[]> => {
   try {
     const response = await axios.get(
-      `${base_url}${
-        api.product.getAll
+      `${
+        api.product.get()
       }?featured_on=${feature.toLowerCase()}&as_draft=false`
     );
     //  if (response.data) {

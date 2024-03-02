@@ -51,7 +51,7 @@ export const createPayOnDeliveryOrder = createAsyncThunk(
   async (body: createCOD, thunkAPI): Promise<orderRes> => {
     try {
       const cod = await axios.post(
-        `${base_url}${api.user.order.payOnDelivery}`,
+        `${api.user.order.payOnDelivery()}`,
         body,
         config
       );
@@ -65,11 +65,7 @@ export const createPayNowOrder = createAsyncThunk(
   "createOrder/payNow",
   async (body: createCOD, thunkAPI): Promise<orderRes> => {
     try {
-      const cod = await axios.post(
-        `${base_url}${api.user.order.payNow}`,
-        body,
-        config
-      );
+      const cod = await axios.post(`${api.user.order.payNow()}`, body, config);
       return cod.data;
     } catch (error: any) {
       throw new Error(error.message);
@@ -87,7 +83,7 @@ export const updatePaymentIntent = createAsyncThunk(
     // const {}
     try {
       const cod = await axios.put(
-        `${base_url}${api.user.order.update(data.id)}`,
+        `${api.user.order.update(data.id)}`,
         { paymentIntent: data.paymentIntent },
         config
       );
